@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SSP — Digital Products Store</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@100;200;300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════
+       SPLASH / ENTRY
+  ══════════════════════════════════════ -->
+  <div id="splash">
+    <div id="splash-canvas"></div>
+    <button id="enter-btn">CLICK TO<br>ENTER!</button>
+    <p class="splash-brand">STUDIO STYLE PRO ®</p>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SITE
+  ══════════════════════════════════════ -->
+  <canvas id="flower-canvas"></canvas>
+  <div id="flower-overlay"></div>
+
+  <div id="site">
+
+    <!-- Fixed: 3D Canvas -->
+    <div id="model-wrap"></div>
+
+    <!-- Fixed: Selected Works -->
+    <a href="#" class="ui-works">START YOUR FREE TRIAL <span>↗</span></a>
+
+
+    <!-- Fixed: Receipt -->
+    <div class="ui-receipt">
+      <div class="r-row"><span>SSP</span><span>05/07/26</span></div>
+      <p class="r-div">----------------------</p>
+      <p class="r-title">** STUDIO STYLE PRO **</p>
+      <p class="r-div">----------------------</p>
+      <div id="receipt-lines"></div>
+    </div>
+
+    <!-- Left vertical scrolling marquee -->
+    <div class="left-marquee">
+      <div class="left-marquee-track">
+        <span>WELCOME TO STUDIO STYLE PRO — WELCOME TO STUDIO STYLE PRO —</span>
+        <span>WELCOME TO STUDIO STYLE PRO — WELCOME TO STUDIO STYLE PRO —</span>
+      </div>
+    </div>
+
+    <!-- ─────────────────────────────────
+         SECTION 1 — HERO
+    ───────────────────────────────── -->
+    <section id="s-hero">
+      <p class="hero-brand">STUDIO STYLE PRO ®</p>
+
+      <div class="hero-center">
+        <h1 class="hero-title">SALON<br>MANAGEMENT<br>REDEFINED</h1>
+        <p class="hero-for">FOR BEAUTY SALONS, SPAS AND HAIR STUDIOS THAT REFUSE TO OPERATE BELOW THEIR POTENTIAL.</p>
+      </div>
+
+
+      <p class="scroll-cta">SCROLL TO DISCOVER</p>
+    </section>
+
+    <!-- ─────────────────────────────────
+         SECTION 2 — STUDIO
+    ───────────────────────────────── -->
+    <section id="s-studio">
+      <nav class="prod-nav">
+        <a href="#">INVENTORY PRECISION <em>#01</em></a>
+        <a href="#">CLIENT ARCHIVE <em>#02</em></a>
+        <a href="#">ADMIN ANALYTICS <em>#03</em></a>
+        <a href="#">SALON MANAGEMENT <em>#04</em></a>
+      </nav>
+
+      <h2 class="studio-claim">
+        ® STUDIO STYLE PRO IS THE MANAGEMENT PLATFORM FOR SALONS THAT REFUSE TO CHOOSE BETWEEN BEAUTIFUL WORK AND A HEALTHY BUSINESS.
+      </h2>
+
+      <div class="studio-cols">
+        <p>WE BELIEVE MANAGEMENT SHOULD BE INVISIBLE. WHEN YOUR TOOLS WORK AT THE LEVEL YOU DO, YOU STOP THINKING ABOUT RUNNING THE SALON AND START FOCUSING ON THE ART.</p>
+        <p>WE BUILD FOR SALON OWNERS WHO WANT TO LEAD WITH CONFIDENCE. FROM THE FIRST APPOINTMENT TO THE LAST PRODUCT DROP — EVERY DECISION BECOMES DATA. EVERY ACTION BECOMES PRECISION.</p>
+      </div>
+
+    </section>
+
+    <!-- ─────────────────────────────────
+         SECTION 3 — DETAIL #01: DIGITAL BRANDING
+    ───────────────────────────────── -->
+    <section id="s-detail-01" class="detail-sec detail-01">
+
+      <!-- Badge: top center -->
+      <div class="d-badge d-badge--center">
+        <b>#01</b>
+        <small>INVENTORY<br>PRECISION</small>
+      </div>
+
+      <h2 class="d-title d-title--01">
+        EVERY DROP<br>COUNTS.
+      </h2>
+    </section>
+
+    <!-- ─────────────────────────────────
+         SECTION 7 — DESC #01
+    ───────────────────────────────── -->
+    <section id="s-desc-01" class="desc-sec">
+      <div class="two-col">
+        <div>
+          <p>EVERY FORMULA MIXED CARRIES A COST. EVERY GRAM USED IS DATA. STUDIO STYLE PRO TRACKS PRODUCT CONSUMPTION DOWN TO THE ML — PER STYLIST, PER SERVICE, PER CLIENT.</p>
+        </div>
+        <div>
+          <p>LOW-STOCK ALERTS, USAGE REPORTS, AND REAL-TIME SYNC MEAN YOU NEVER ORDER BLIND AGAIN. YOUR STOCK ROOM BECOMES A PRECISION SYSTEM — NOT A GUESSING GAME.</p>
+        </div>
+      </div>
+      <h2 class="large-claim">PROTECT YOUR MARGINS</h2>
+
+    </section>
+
+    <!-- ─────────────────────────────────
+         PRODUCT CARD #01 (after desc-01)
+    ───────────────────────────────── -->
+    <section id="s-scan" style="position:relative">
+      <div class="pcard" id="pcard-01">
+        <div class="pc-top">
+          <div class="pc-num">
+            <div class="num-track">
+              <b class="num-current">#01</b>
+              <b class="num-next">#02</b>
+            </div>
+            <div class="label-track">
+              <small class="label-current">INVENTORY<br>PRECISION</small>
+              <small class="label-next">CLIENT<br>ARCHIVE</small>
+            </div>
+          </div>
+          <p class="pc-tag">PROTECT YOUR MARGINS</p>
+        </div>
+        <div class="pc-mid"><p class="pc-slogan">EVERY DROP COUNTS.</p></div>
+        <div class="pc-bot">
+          <div class="pc-bc-wrap"><img src="./assets/barcode.svg" alt="" class="pc-barcode" /></div>
+          <span class="pc-purchased">PURCHASED</span>
+          <div class="pc-data">
+            <div class="pc-metrics">
+              <div class="pm header"><span>FOR</span><span>PROFESSIONAL USE</span></div>
+              <div class="pm"><span>ACCURACY</span><span>99.8%</span></div>
+              <div class="pm"><span>TRACKING UNIT</span><span>ML / G</span></div>
+              <div class="pm"><span>WASTE REDUCTION</span><span>ACTIVE</span></div>
+              <div class="pm"><span>REAL-TIME SYNC</span><span>96%</span></div>
+              <div class="pm"><span>MANUAL ERROR</span><span>0%</span></div>
+            </div>
+            <div class="pc-ing">
+              <p>Ingredients: Stock tracking, product consumption logs, per-stylist usage reports, low-stock alerts.</p>
+              <br><p>* Precision doesn't have an approximation.</p>
+              <br><p>BUILT FOR PRESTIGE SALONS.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────────────
+         SECTION 5 — DETAIL #02: VISUAL LANGUAGES
+    ───────────────────────────────── -->
+    <section id="s-detail-02" class="detail-sec">
+      <h2 class="d-title">THE BIOGRAPHY<br>OF BEAUTY</h2>
+    </section>
+
+    <!-- DESC #02 -->
+    <section id="s-desc-02" class="desc-sec">
+      <div class="three-col">
+        <p>EVERY CLIENT WHO SITS IN YOUR CHAIR ARRIVES WITH A HISTORY. FORMULAS THAT WORK. PREFERENCES THAT MATTER. NOTES THAT CHANGE EVERYTHING. THE CLIENT ARCHIVE STORES IT ALL — ACCESSIBLE IN SECONDS.</p>
+        <p>FROM THE FIRST APPOINTMENT TO THE HUNDREDTH, EVERY TREATMENT IS RECORDED. EVERY COLOR FORMULA SAVED. EVERY ALLERGY FLAGGED. YOUR ENTIRE TEAM KNOWS YOUR CLIENTS AS WELL AS YOU DO — ALWAYS.</p>
+        <p>YOUR MOST LOYAL CLIENTS DESERVE TO BE REMEMBERED IN FULL. LOYALTY TIERS, REWARD HISTORY, FAVORITE STYLIST — ALL OF IT, ORGANIZED AND READY BEFORE THEY SIT DOWN.</p>
+      </div>
+      <h2 class="large-claim">EVERY CLIENT HAS A STORY — WE BUILD THE TOOLS TO NEVER FORGET IT</h2>
+    </section>
+
+    <!-- ─────────────────────────────────
+         PRODUCT CARD #02 — VISUAL LANGUAGES
+    ───────────────────────────────── -->
+    <section id="s-scan-02" class="s-scan-card">
+      <div class="pcard" id="pcard-02">
+        <div class="pc-top">
+          <div class="pc-num"><div class="num-track"><b class="num-current">#02</b><b class="num-next">#03</b></div><div class="label-track"><small class="label-current">CLIENT<br>ARCHIVE</small><small class="label-next">ADMIN<br>INTELLIGENCE</small></div></div>
+          <p class="pc-tag">EVERY CLIENT HAS A STORY</p>
+        </div>
+        <div class="pc-mid"><p class="pc-slogan">THE BIOGRAPHY OF BEAUTY</p></div>
+        <div class="pc-bot">
+          <div class="pc-bc-wrap"><img src="./assets/barcode.svg" alt="" class="pc-barcode" /></div>
+          <span class="pc-purchased">PURCHASED</span>
+          <div class="pc-data">
+            <div class="pc-metrics">
+              <div class="pm header"><span>FOR</span><span>UNIFIED DATABASE</span></div>
+              <div class="pm"><span>HISTORY DEPTH</span><span>UNLIMITED</span></div>
+              <div class="pm"><span>FORMULA STORAGE</span><span>ACTIVE</span></div>
+              <div class="pm"><span>PREFERENCES</span><span>PERSONALIZED</span></div>
+              <div class="pm"><span>PRIVACY LEVEL</span><span>ENCRYPTED</span></div>
+              <div class="pm"><span>FORGOTTEN DATA</span><span>0%</span></div>
+            </div>
+            <div class="pc-ing">
+              <p>Ingredients: Treatment history, custom color formulas, personal notes, appointment timeline, loyalty status.</p>
+              <br><p>* Client data doesn't expire.</p>
+              <br><p>BUILT FOR PRESTIGE SALONS.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────────────
+         DETAIL #03 — INTERACTIVE WEBSITES
+    ───────────────────────────────── -->
+    <section id="s-detail-03" class="detail-sec">
+      <h2 class="d-title">SEE EVERYTHING.<br>MISS NOTHING.</h2>
+    </section>
+
+    <!-- DESC #03 -->
+    <section id="s-desc-03" class="desc-sec">
+      <div class="three-col">
+        <p>REVENUE IS NOT A FEELING — IT IS A NUMBER. STUDIO STYLE PRO SHOWS YOU EXACTLY WHERE IT COMES FROM. TRACK YOUR TOP PERFORMERS, YOUR SLOWEST DAYS, AND YOUR HIGHEST-VALUE CLIENTS IN REAL TIME, FROM ONE DASHBOARD.</p>
+        <p>EXPENSE TRACKING, STYLIST PERFORMANCE, AND CLIENT RETENTION — ALL IN ONE PLACE. NO SPREADSHEETS. NO GUESSWORK. JUST THE CLARITY THAT LETS YOU MAKE CONFIDENT DECISIONS EVERY DAY.</p>
+        <p>LOYALTY REWARDS, PRODUCT SPEND, AND SERVICE TRENDS TELL YOU WHERE YOUR SALON IS GOING — BEFORE YOU GET THERE. DAILY OPERATIONS BECOME STRATEGIC INTELLIGENCE.</p>
+      </div>
+      <h2 class="large-claim">REAL-TIME BUSINESS PULSE</h2>
+    </section>
+
+    <!-- ─────────────────────────────────
+         PRODUCT CARD #03 — INTERACTIVE WEBSITES
+    ───────────────────────────────── -->
+    <section id="s-scan-03" class="s-scan-card">
+      <div class="pcard" id="pcard-03">
+        <div class="pc-top">
+          <div class="pc-num"><div class="num-track"><b class="num-current">#03</b><b class="num-next">#04</b></div><div class="label-track"><small class="label-current">ADMIN<br>INTELLIGENCE</small><small class="label-next">SALON<br>MANAGEMENT</small></div></div>
+          <p class="pc-tag">REAL-TIME BUSINESS PULSE</p>
+        </div>
+        <div class="pc-mid"><p class="pc-slogan">SALON ANALYTICS & ROI</p></div>
+        <div class="pc-bot">
+          <div class="pc-bc-wrap"><img src="./assets/barcode.svg" alt="" class="pc-barcode" /></div>
+          <span class="pc-purchased">PURCHASED</span>
+          <div class="pc-data">
+            <div class="pc-metrics">
+              <div class="pm header"><span>FOR</span><span>OWNERS & MANAGERS</span></div>
+              <div class="pm"><span>REPORTING</span><span>REAL-TIME</span></div>
+              <div class="pm"><span>TOP TALENT</span><span>IDENTIFIED</span></div>
+              <div class="pm"><span>LOYAL CLIENTS</span><span>REWARDED</span></div>
+              <div class="pm"><span>EXPENSE TRACKING</span><span>ACTIVE</span></div>
+              <div class="pm"><span>GUESSWORK</span><span>0%</span></div>
+            </div>
+            <div class="pc-ing">
+              <p>Ingredients: Revenue dashboards, stylist performance, client retention rates, expense logs, loyalty reward triggers.</p>
+              <br><p>* Data-driven decisions don't cost extra.</p>
+              <br><p>BUILT FOR PRESTIGE SALONS.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────────────
+         DETAIL #04 — DISRUPTIVE COMM.
+    ───────────────────────────────── -->
+    <section id="s-detail-04" class="detail-sec detail-04">
+      <div class="d04-top">
+        <h2 class="d-title d04-title">THE SALON RUNS.<br>YOU LEAD.</h2>
+      </div>
+    </section>
+
+    <!-- DESC #04 -->
+    <section id="s-desc-04" class="desc-sec">
+      <div class="two-col">
+        <div>
+          <p>APPOINTMENTS, TEAM SCHEDULES, SERVICES, AND BILLING — ALL IN ONE SYSTEM BUILT FOR HOW SALONS ACTUALLY WORK. ASSIGN SERVICES PER STYLIST. MANAGE MULTIPLE LOCATIONS. NEVER DOUBLE-BOOK AGAIN.</p>
+        </div>
+        <div>
+          <p>STUDIO STYLE PRO REMOVES THE FRICTION BETWEEN MANAGING YOUR TEAM AND LEADING IT. YOUR STAFF KNOWS THEIR SCHEDULE. YOUR CLIENTS KNOW WHERE TO BOOK. YOU KNOW EVERYTHING.</p>
+        </div>
+      </div>
+      <h2 class="large-claim">ZERO DOUBLE BOOKINGS. ZERO EXCUSES.</h2>
+    </section>
+
+    <!-- ─────────────────────────────────
+         PRODUCT CARD #04 — DISRUPTIVE COMM.
+    ───────────────────────────────── -->
+    <section id="s-scan-04" class="s-scan-card">
+      <div class="pcard" id="pcard-04">
+        <div class="pc-top">
+          <div class="pc-num"><div class="num-track"><b class="num-current">#04</b></div><small>SALON<br>MANAGEMENT</small></div>
+          <p class="pc-tag">THE SALON RUNS. YOU LEAD.</p>
+        </div>
+        <div class="pc-mid"><p class="pc-slogan">SALON MANAGEMENT</p></div>
+        <div class="pc-bot">
+          <div class="pc-bc-wrap"><img src="./assets/barcode.svg" alt="" class="pc-barcode" /></div>
+          <span class="pc-purchased">PURCHASED</span>
+          <div class="pc-data">
+            <div class="pc-metrics">
+              <div class="pm header"><span>FOR</span><span>EVERY ROLE</span></div>
+              <div class="pm"><span>SCHEDULING</span><span>REAL-TIME</span></div>
+              <div class="pm"><span>DOUBLE BOOKINGS</span><span>0%</span></div>
+              <div class="pm"><span>TEAM ALIGNED</span><span>YES</span></div>
+              <div class="pm"><span>MULTI-LOCATION</span><span>YES</span></div>
+              <div class="pm"><span>CHAOS</span><span>0%</span></div>
+            </div>
+            <div class="pc-ing">
+              <p>Ingredients: Appointment scheduling, team management, multi-location support, service catalog, billing plans.</p>
+              <br><p>* Safe choices not included.</p>
+              <br><p>FOR SALONS THAT REFUSE TO BE INVISIBLE.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────────────
+         FOOTER
+    ───────────────────────────────── -->
+    <footer id="footer">
+
+      <a href="#" class="footer-back" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">BACK<br>TO TOP</a>
+
+      <h2 class="footer-headline">FIND YOUR<br>FORMULA.</h2>
+      <p class="footer-subhead">ONE PLATFORM. BUILT FOR EVERY STAGE.</p>
+
+      <div class="footer-plans">
+        <div class="plan">
+          <h3 class="plan-name">SOLO</h3>
+          <div class="plan-rule"></div>
+          <p class="plan-desc">FOR THE INDEPENDENT STYLIST WHO RUNS ALONE AND RUNS SHARP.</p>
+        </div>
+        <div class="plan">
+          <h3 class="plan-name">STARTER</h3>
+          <div class="plan-rule"></div>
+          <p class="plan-desc">FOR THE GROWING SALON READY TO BUILD ITS FIRST REAL TEAM.</p>
+        </div>
+        <div class="plan">
+          <h3 class="plan-name">STANDARD</h3>
+          <div class="plan-rule"></div>
+          <p class="plan-desc">FOR THE ESTABLISHED SALON THAT DEMANDS THE FULL PICTURE AND ACTS ON IT.</p>
+        </div>
+        <div class="plan">
+          <h3 class="plan-name">PREMIUM</h3>
+          <div class="plan-rule"></div>
+          <p class="plan-desc">FOR MULTI-LOCATION OPERATIONS THAT REFUSE TO LOSE CONTROL.</p>
+        </div>
+      </div>
+
+      <p class="footer-bridge">EVERY PLAN STARTS WITH A FREE TRIAL.<br>NO CONTRACTS. NO CREDIT CARD. NO EXCUSES.</p>
+
+      <a href="mailto:hello@studiostylepro.com" class="footer-talk">ENTER ↗</a>
+      <p class="footer-note">✦ NO CREDIT CARD REQUIRED ✦</p>
+      <p class="footer-copy">© 2025 STUDIO STYLE PRO — USAGE RIGHTS & IP COVERED IN OUR TERMS OF SERVICE.</p>
+    </footer>
+
+  </div><!-- #site -->
+
+  <script src="https://unpkg.com/lenis@1.1.16/dist/lenis.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

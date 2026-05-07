@@ -1,0 +1,5 @@
+.DS_Store
+*.zip
+flower sequence/
+node_modules/
+.env
