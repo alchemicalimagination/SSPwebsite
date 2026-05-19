@@ -3,11 +3,13 @@
 gsap.registerPlugin(ScrollTrigger);
 
 // ── FREE TRIAL BUTTON BOUNCE ────────────────────────────
-document.querySelector('.footer-talk')?.addEventListener('click', function () {
-  this.classList.remove('bouncing');
-  void this.offsetWidth; // force reflow so animation restarts
-  this.classList.add('bouncing');
-  this.addEventListener('animationend', () => this.classList.remove('bouncing'), { once: true });
+['.footer-talk', '.footer-back'].forEach(sel => {
+  document.querySelector(sel)?.addEventListener('click', function () {
+    this.classList.remove('bouncing');
+    void this.offsetWidth;
+    this.classList.add('bouncing');
+    this.addEventListener('animationend', () => this.classList.remove('bouncing'), { once: true });
+  });
 });
 
 // ── SMOOTH SCROLL ──────────────────────────────────────

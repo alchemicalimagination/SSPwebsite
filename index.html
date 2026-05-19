@@ -318,7 +318,10 @@
     ───────────────────────────────── -->
     <footer id="footer">
 
-      <a href="#" class="footer-back" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">BACK<br>TO TOP</a>
+      <a href="#" class="footer-back" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">
+        <div id="liquid-metal-back"></div>
+        <span>BACK<br>TO TOP</span>
+      </a>
 
       <h2 class="footer-headline">FIND YOUR<br>FORMULA.</h2>
       <p class="footer-subhead">ONE PLATFORM. BUILT FOR EVERY STAGE.</p>
@@ -366,22 +369,23 @@
   <script src="script.js"></script>
   <script type="module">
     import { liquidMetalFragmentShader, ShaderMount } from 'https://esm.sh/@paper-design/shaders';
+    const shaderParams = {
+      u_repetition: 1.2,
+      u_softness:   0.4,
+      u_shiftRed:   0.25,
+      u_shiftBlue:  0.25,
+      u_distortion: 0.1,
+      u_contour:    0,
+      u_angle:      110,
+      u_scale:      1.8,
+      u_shape:      0,
+      u_offsetX:    0.0,
+      u_offsetY:    0.0
+    };
     const btn = document.getElementById('liquid-metal-btn');
-    if (btn) {
-      new ShaderMount(btn, liquidMetalFragmentShader, {
-        u_repetition: 1.2,
-        u_softness:   0.4,
-        u_shiftRed:   0.25,
-        u_shiftBlue:  0.25,
-        u_distortion: 0.1,
-        u_contour:    0,
-        u_angle:      110,
-        u_scale:      1.8,
-        u_shape:      0,
-        u_offsetX:    0.0,
-        u_offsetY:    0.0
-      }, undefined, 0.5);
-    }
+    if (btn) new ShaderMount(btn, liquidMetalFragmentShader, shaderParams, undefined, 0.5);
+    const back = document.getElementById('liquid-metal-back');
+    if (back) new ShaderMount(back, liquidMetalFragmentShader, shaderParams, undefined, 0.5);
   </script>
 </body>
 </html>

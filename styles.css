@@ -981,7 +981,8 @@ section {
   width: 76px;
   height: 76px;
   border-radius: 50%;
-  border: 1px solid rgba(0,0,0,0.22);
+  border: none;
+  clip-path: inset(0 round 50%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -992,9 +993,41 @@ section {
   text-align: center;
   text-decoration: none;
   color: #0c0c0c;
-  transition: opacity 0.3s, transform 0.3s;
+  background: #0c0c0c;
+  overflow: hidden;
+  transition: opacity 0.15s ease;
+  cursor: pointer;
 }
-.footer-back:hover { opacity: 0.5; transform: translateY(-2px); }
+/* shader layer */
+#liquid-metal-back {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  z-index: 0;
+}
+#liquid-metal-back canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+/* text above shader */
+.footer-back span {
+  position: relative;
+  z-index: 1;
+  mix-blend-mode: multiply;
+  color: #0c0c0c;
+}
+/* white border outside clip */
+.footer-back::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.6);
+  pointer-events: none;
+  z-index: 2;
+}
+.footer-back:hover { opacity: 0.9; }
 
 .footer-headline {
   font-size: clamp(60px, 11vw, 150px);
