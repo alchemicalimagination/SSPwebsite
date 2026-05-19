@@ -40,6 +40,48 @@ function renderFlower(index) {
   flowerCtx.imageSmoothingQuality = 'high';
   flowerCtx.clearRect(0, 0, W, H);
   flowerCtx.drawImage(img, (W - w) / 2, (H - h) / 2, w, h);
+  renderASCII();
+}
+
+// ── ASCII OVERLAY ───────────────────────────────────────
+const asciiCanvas = document.getElementById('ascii-overlay');
+const asciiCtx    = asciiCanvas.getContext('2d');
+const CELL        = 11;
+const CHARS       = '   ..::++**##@@';  // weighted toward sparse
+
+function resizeASCII() {
+  asciiCanvas.width  = window.innerWidth;
+  asciiCanvas.height = window.innerHeight;
+}
+resizeASCII();
+window.addEventListener('resize', resizeASCII);
+
+function renderASCII() {
+  const W   = window.innerWidth;
+  const H   = window.innerHeight;
+  const dpr = window.devicePixelRatio || 1;
+  let   img;
+  try { img = flowerCtx.getImageData(0, 0, flowerCanvas.width, flowerCanvas.height); }
+  catch(e) { return; }
+
+  asciiCtx.clearRect(0, 0, W, H);
+  asciiCtx.font = `${CELL}px "Courier New", monospace`;
+  asciiCtx.textAlign   = 'left';
+  asciiCtx.textBaseline = 'top';
+
+  for (let y = 0; y < H; y += CELL) {
+    for (let x = 0; x < W; x += CELL) {
+      const px  = Math.min(Math.floor(x * dpr), flowerCanvas.width  - 1);
+      const py  = Math.min(Math.floor(y * dpr), flowerCanvas.height - 1);
+      const i   = (py * flowerCanvas.width + px) * 4;
+      const lum = (img.data[i] * 0.299 + img.data[i+1] * 0.587 + img.data[i+2] * 0.114) / 255;
+      const inv = 1 - lum;
+      const ch  = CHARS[Math.floor(inv * (CHARS.length - 1))];
+      if (!ch.trim()) continue;
+      asciiCtx.fillStyle = `rgba(255,255,255,${(inv * 0.6).toFixed(2)})`;
+      asciiCtx.fillText(ch, x, y);
+    }
+  }
 }
 
 for (let i = 1; i <= FRAME_COUNT; i++) {

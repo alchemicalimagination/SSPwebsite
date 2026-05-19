@@ -86,6 +86,17 @@ body {
   height: 100vh;
   z-index: 1;
 }
+#ascii-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 2;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  opacity: 0.55;
+}
 #flower-overlay {
   position: fixed;
   inset: 0;
