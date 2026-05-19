@@ -308,9 +308,9 @@ section {
   font-weight: 600;
   letter-spacing: 0.22em;
   border-radius: 0;
-  width: 320px;
-  height: 173px;
-  clip-path: path('M 92 4 Q 100 0 108 0 L 308 0 Q 320 0 320 17 L 320 87 Q 320 95 313 98 L 257 120 Q 250 123 250 131 L 250 157 Q 250 173 234 173 L 78 173 Q 70 173 70 165 L 70 111 Q 70 103 62 103 L 8 103 Q 0 103 0 95 L 0 49 Q 0 41 8 36 L 92 4 Z');
+  width: 340px;
+  height: 184px;
+  clip-path: path('M 98 4 Q 106 0 114 0 L 327 0 Q 340 0 340 18 L 340 92 Q 340 101 332 104 L 272 127 Q 265 130 265 139 L 265 166 Q 265 184 248 184 L 83 184 Q 74 184 74 175 L 74 118 Q 74 109 66 109 L 8 109 Q 0 109 0 101 L 0 52 Q 0 43 8 38 L 98 4 Z');
   background: #0c0c0c;
   color: #0c0c0c;
   overflow: hidden;
@@ -320,7 +320,7 @@ section {
   content: '';
   position: absolute;
   inset: 0;
-  clip-path: path('M 92 4 Q 100 0 108 0 L 308 0 Q 320 0 320 17 L 320 87 Q 320 95 313 98 L 257 120 Q 250 123 250 131 L 250 157 Q 250 173 234 173 L 78 173 Q 70 173 70 165 L 70 111 Q 70 103 62 103 L 8 103 Q 0 103 0 95 L 0 49 Q 0 41 8 36 L 92 4 Z');
+  clip-path: path('M 98 4 Q 106 0 114 0 L 327 0 Q 340 0 340 18 L 340 92 Q 340 101 332 104 L 272 127 Q 265 130 265 139 L 265 166 Q 265 184 248 184 L 83 184 Q 74 184 74 175 L 74 118 Q 74 109 66 109 L 8 109 Q 0 109 0 101 L 0 52 Q 0 43 8 38 L 98 4 Z');
   border: 1px solid rgba(255,255,255,0.6);
   pointer-events: none;
   z-index: 2;
