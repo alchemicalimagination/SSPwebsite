@@ -405,16 +405,18 @@ const receiptItems = [
 
 const receiptWidget = document.querySelector('.ui-receipt');
 
-// Receipt slides up — starts when card #01 is collapsed (60% into the pin)
+// Receipt slides up — scrubbed as #s-detail-02 enters (right after #01 collapses)
 gsap.set(receiptWidget, { yPercent: 160 });
-gsap.timeline({
+gsap.to(receiptWidget, {
+  yPercent: 0,
+  ease: 'none',
   scrollTrigger: {
-    trigger: '#s-scan',
-    start: `top+=${window.innerHeight * 0.55} top`,
-    end:   `top+=${window.innerHeight} top`,
+    trigger: '#s-detail-02',
+    start: 'top bottom',
+    end:   'top 30%',
     scrub: 1.5
   }
-}).to(receiptWidget, { yPercent: 0, ease: 'none' });
+});
 
 // Drive receipt printing off Lenis
 let receiptVisible = false;
