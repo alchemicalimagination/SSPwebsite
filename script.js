@@ -40,37 +40,38 @@ function renderFlower(index) {
   flowerCtx.imageSmoothingQuality = 'high';
   flowerCtx.clearRect(0, 0, W, H);
   flowerCtx.drawImage(img, (W - w) / 2, (H - h) / 2, w, h);
-  renderASCII();
+  updateASCIIPixels();
 }
 
 // ── ASCII OVERLAY ───────────────────────────────────────
 const asciiCanvas = document.getElementById('ascii-overlay');
 const asciiCtx    = asciiCanvas.getContext('2d');
-const CELL        = 11;
-const CHARS       = '   ..::++**##@@';
+const CELL        = 7;
+// full density map — dense chars on dark areas, sparse on bright
+const CHARS = '$@B%8&WM#*oahkbdpwmZO0QLCJUYXzcvunxrjft/|()1{}?-_+~<>i!lI;:,".` ';
+
+let cachedPixels = null;   // updated only when flower frame changes
+let asciiRafId   = null;
 
 function resizeASCII() {
   asciiCanvas.width  = window.innerWidth;
   asciiCanvas.height = window.innerHeight;
 }
 resizeASCII();
-window.addEventListener('resize', resizeASCII);
+window.addEventListener('resize', () => { resizeASCII(); cachedPixels = null; });
 
-// scroll progress 0→1 for fade-out
-let asciiScrollProgress = 0;
-lenis.on('scroll', ({ scroll }) => {
-  asciiScrollProgress = Math.min(scroll / (window.innerHeight * 1.2), 1);
-});
+function updateASCIIPixels() {
+  try { cachedPixels = flowerCtx.getImageData(0, 0, flowerCanvas.width, flowerCanvas.height); }
+  catch(e) { cachedPixels = null; }
+}
 
 function renderASCII() {
-  const W        = window.innerWidth;
-  const H        = window.innerHeight;
-  const dpr      = window.devicePixelRatio || 1;
-  const flicker  = (Math.sin(Date.now() * 0.003) * 0.04);  // subtle breathe
-  const fadeOut  = 1 - asciiScrollProgress;                 // fades as you scroll
-  let   imgData;
-  try { imgData = flowerCtx.getImageData(0, 0, flowerCanvas.width, flowerCanvas.height); }
-  catch(e) { return; }
+  if (!cachedPixels) return;
+  const W      = window.innerWidth;
+  const H      = window.innerHeight;
+  const dpr    = window.devicePixelRatio || 1;
+  const tick   = Date.now() * 0.002;
+  const flicker = Math.sin(tick) * 0.06 + Math.sin(tick * 2.3) * 0.03;
 
   asciiCtx.clearRect(0, 0, W, H);
   asciiCtx.font         = `${CELL}px "Courier New", monospace`;
@@ -79,31 +80,35 @@ function renderASCII() {
 
   for (let y = 0; y < H; y += CELL) {
     for (let x = 0; x < W; x += CELL) {
-      const px  = Math.min(Math.floor(x * dpr), flowerCanvas.width  - 1);
-      const py  = Math.min(Math.floor(y * dpr), flowerCanvas.height - 1);
-      const i   = (py * flowerCanvas.width + px) * 4;
-      const r   = imgData.data[i];
-      const g   = imgData.data[i + 1];
-      const b   = imgData.data[i + 2];
-      const lum = (r * 0.299 + g * 0.587 + b * 0.114) / 255;
-      const inv = 1 - lum;
-      const ch  = CHARS[Math.floor(inv * (CHARS.length - 1))];
-      if (!ch.trim()) continue;
-      const opacity = Math.max(0, (inv * 0.7 + flicker) * fadeOut);
-      // tint char colour from pixel, pulled toward white
-      const tr = Math.round(r + (255 - r) * 0.5);
-      const tg = Math.round(g + (255 - g) * 0.5);
-      const tb = Math.round(b + (255 - b) * 0.5);
-      asciiCtx.fillStyle = `rgba(${tr},${tg},${tb},${opacity.toFixed(2)})`;
+      const px = Math.min(Math.floor(x * dpr), cachedPixels.width  - 1);
+      const py = Math.min(Math.floor(y * dpr), cachedPixels.height - 1);
+      const i  = (py * cachedPixels.width + px) * 4;
+      const r  = cachedPixels.data[i];
+      const g  = cachedPixels.data[i + 1];
+      const b  = cachedPixels.data[i + 2];
+      const lum     = (r * 0.299 + g * 0.587 + b * 0.114) / 255;
+      const charIdx = Math.floor(lum * (CHARS.length - 1));
+      const ch      = CHARS[charIdx];
+      if (ch === ' ') continue;
+      const alpha = Math.min(1, 0.85 + flicker);
+      asciiCtx.fillStyle = `rgba(${r},${g},${b},${alpha.toFixed(2)})`;
       asciiCtx.fillText(ch, x, y);
     }
   }
+  asciiRafId = requestAnimationFrame(renderASCII);
+}
+
+// start loop once first frame loads
+function startASCII() {
+  if (asciiRafId) cancelAnimationFrame(asciiRafId);
+  updateASCIIPixels();
+  renderASCII();
 }
 
 for (let i = 1; i <= FRAME_COUNT; i++) {
   const img = new Image();
   img.src = `./flower%20sequence/ezgif-8a7cfed939556aa3-jpg/ezgif-frame-${padNum(i)}.jpg`;
-  img.onload = () => { loadedCount++; if (loadedCount === 1) renderFlower(0); };
+  img.onload = () => { loadedCount++; if (loadedCount === 1) { renderFlower(0); startASCII(); } };
   frames.push(img);
 }
 
