@@ -153,8 +153,8 @@ section { background: transparent !important; z-index: 4 !important; }
 .ui-works > span {
   position: relative;
   z-index: 1;
-  mix-blend-mode: multiply;
-  color: #0c0c0c;
+  mix-blend-mode: normal;
+  color: #ffffff;
 }
 .ui-works:hover { opacity: 0.9; }
 
