@@ -309,8 +309,8 @@ section {
   letter-spacing: 0.22em;
   border-radius: 0;
   width: 320px;
-  height: 120px;
-  clip-path: path('M 100 0 L 308 0 Q 320 0 320 12 L 320 78 Q 320 92 306 92 L 272 92 Q 260 92 260 100 L 20 100 L 20 120 L 0 120 L 0 30 Z');
+  height: 158px;
+  clip-path: path('M 100 0 L 308 0 Q 320 0 320 12 L 320 78 Q 320 92 306 92 L 272 92 Q 260 92 260 100 L 20 100 L 20 158 L 0 158 L 0 30 Z');
   background: #0c0c0c;
   color: #0c0c0c;
   overflow: hidden;
@@ -320,7 +320,7 @@ section {
   content: '';
   position: absolute;
   inset: 0;
-  clip-path: path('M 100 0 L 308 0 Q 320 0 320 12 L 320 78 Q 320 92 306 92 L 272 92 Q 260 92 260 100 L 20 100 L 20 120 L 0 120 L 0 30 Z');
+  clip-path: path('M 100 0 L 308 0 Q 320 0 320 12 L 320 78 Q 320 92 306 92 L 272 92 Q 260 92 260 100 L 20 100 L 20 158 L 0 158 L 0 30 Z');
   border: 1px solid rgba(255,255,255,0.6);
   pointer-events: none;
   z-index: 2;
