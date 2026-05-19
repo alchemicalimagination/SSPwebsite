@@ -411,7 +411,7 @@ gsap.to(receiptWidget, {
   yPercent: 0,
   ease: 'none',
   scrollTrigger: {
-    trigger: '#s-desc-01',
+    trigger: '#s-studio',
     start: 'bottom bottom',
     end:   'bottom top',
     scrub: 1
