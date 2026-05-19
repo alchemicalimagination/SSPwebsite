@@ -1067,7 +1067,7 @@ section {
   text-decoration: none;
   color: #0c0c0c;
   background: #0c0c0c;
-  border: 1px solid rgba(255,255,255,0.6);
+  border: none;
   border-radius: 999px;
   clip-path: inset(0 round 999px);
   text-align: center;
@@ -1094,6 +1094,15 @@ section {
   font-weight: 300;
   letter-spacing: 0.05em;
   color: #0c0c0c;
+}
+.footer-talk::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.6);
+  pointer-events: none;
+  z-index: 2;
 }
 .footer-talk:hover { opacity: 0.92; }
 .footer-talk:active { opacity: 1; }
