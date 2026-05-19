@@ -405,13 +405,13 @@ const receiptItems = [
 
 const receiptWidget = document.querySelector('.ui-receipt');
 
-// Receipt slides up tied to scroll — starts off-screen, scrubbed into position
+// Receipt slides up — starts when card #01 is collapsed (60% into the pin)
 gsap.set(receiptWidget, { yPercent: 160 });
 gsap.timeline({
   scrollTrigger: {
     trigger: '#s-scan',
-    start: 'top top',
-    end:   `+=${window.innerHeight}`,
+    start: `top+=${window.innerHeight * 0.55} top`,
+    end:   `top+=${window.innerHeight} top`,
     scrub: 1.5
   }
 }).to(receiptWidget, { yPercent: 0, ease: 'none' });
