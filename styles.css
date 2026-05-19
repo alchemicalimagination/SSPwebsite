@@ -147,16 +147,19 @@ section { background: transparent !important; z-index: 4 !important; }
   font-size: 10px;
   line-height: 1.7;
   letter-spacing: 0.05em;
-  background: var(--bg);
-  color: #0c0c0c;
-  border: 1px solid rgba(0,0,0,0.12);
+  background: rgba(255,252,248,0.18);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  border: 1px solid rgba(255,255,255,0.45);
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.9);
   padding: 12px 14px;
   min-width: 210px;
   text-transform: uppercase;
 }
 .r-row { display: flex; justify-content: space-between; }
-.r-div { color: var(--mid); }
-.r-title { text-align: center; font-weight: 700; }
+.r-div { color: rgba(255,255,255,0.35); }
+.r-title { text-align: center; font-weight: 700; color: rgba(255,255,255,0.95); }
 
 @keyframes printLine {
   from { max-height: 0; opacity: 0; }
