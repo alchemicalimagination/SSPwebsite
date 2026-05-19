@@ -58,7 +58,10 @@
          SECTION 1 — HERO
     ───────────────────────────────── -->
     <section id="s-hero">
-      <img src="./assets/logo.png" class="hero-logo" alt="Studio Style Pro" />
+      <div class="hero-brand">
+        <div id="liquid-metal-brand"></div>
+        <img src="./assets/logo.png" class="hero-brand-logo" alt="Studio Style Pro" />
+      </div>
 
       <div class="hero-center">
         <h1 class="hero-title">SALON<br>MANAGEMENT<br>REDEFINED</h1>
@@ -385,7 +388,7 @@
       u_offsetX:    0.0,
       u_offsetY:    0.0
     };
-    ['liquid-metal-btn','liquid-metal-back','liquid-metal-works'].forEach(id => {
+    ['liquid-metal-btn','liquid-metal-back','liquid-metal-works','liquid-metal-brand'].forEach(id => {
       const el = document.getElementById(id);
       if (el) new ShaderMount(el, liquidMetalFragmentShader, shaderParams, undefined, 0.5);
     });
