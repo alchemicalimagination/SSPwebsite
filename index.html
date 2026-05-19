@@ -348,7 +348,10 @@
 
       <p class="footer-bridge">EVERY PLAN STARTS WITH A FREE TRIAL.<br>NO CONTRACTS. NO CREDIT CARD. NO EXCUSES.</p>
 
-      <a href="mailto:hello@studiostylepro.com" class="footer-talk">ENTER ↗</a>
+      <a href="mailto:hello@studiostylepro.com" class="footer-talk">
+        <div id="liquid-metal-btn"></div>
+        <span>FREE TRIAL</span>
+      </a>
       <p class="footer-note">✦ NO CREDIT CARD REQUIRED ✦</p>
       <p class="footer-copy">© 2025 STUDIO STYLE PRO — USAGE RIGHTS & IP COVERED IN OUR TERMS OF SERVICE.</p>
     </footer>
@@ -361,5 +364,24 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="script.js"></script>
+  <script type="module">
+    import { liquidMetalFragmentShader, ShaderMount } from 'https://esm.sh/@paper-design/shaders';
+    const btn = document.getElementById('liquid-metal-btn');
+    if (btn) {
+      new ShaderMount(btn, liquidMetalFragmentShader, {
+        u_repetition: 1.2,
+        u_softness:   0.4,
+        u_shiftRed:   0.25,
+        u_shiftBlue:  0.25,
+        u_distortion: 0.1,
+        u_contour:    0,
+        u_angle:      110,
+        u_scale:      1.8,
+        u_shape:      1,
+        u_offsetX:    0.0,
+        u_offsetY:    0.0
+      }, undefined, 0.5);
+    }
+  </script>
 </body>
 </html>
