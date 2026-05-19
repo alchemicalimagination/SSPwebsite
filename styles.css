@@ -1065,8 +1065,9 @@ section {
   font-weight: 200;
   letter-spacing: -0.02em;
   text-decoration: none;
-  color: #fff;
+  color: #0c0c0c;
   background: #0c0c0c;
+  border: 1px solid rgba(0,0,0,0.7);
   border-radius: 999px;
   text-align: center;
   padding: clamp(10px, 1.5vw, 20px) clamp(40px, 5vw, 80px);
@@ -1088,9 +1089,10 @@ section {
 .footer-talk span {
   position: relative;
   z-index: 1;
-  mix-blend-mode: overlay;
+  mix-blend-mode: multiply;
   font-weight: 300;
   letter-spacing: 0.05em;
+  color: #0c0c0c;
 }
 .footer-talk:hover {
   transform: translateY(-3px);
