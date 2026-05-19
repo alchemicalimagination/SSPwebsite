@@ -405,15 +405,15 @@ const receiptItems = [
 
 const receiptWidget = document.querySelector('.ui-receipt');
 
-// Receipt slides up as #01 card enters from bottom of screen
+// Receipt slides up — triggered by #s-desc-01 bottom (right before card #01)
 gsap.set(receiptWidget, { yPercent: 160 });
 gsap.to(receiptWidget, {
   yPercent: 0,
   ease: 'none',
   scrollTrigger: {
-    trigger: '#s-scan',
-    start: 'top bottom',
-    end:   'top top',
+    trigger: '#s-desc-01',
+    start: 'bottom bottom',
+    end:   'bottom top',
     scrub: 1
   }
 });
