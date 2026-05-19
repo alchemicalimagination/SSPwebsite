@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #5a6272;
+    font-family: "DM Sans", sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    line-height: 1.7;
+    color: #fff;
+    text-transform: uppercase;
+  }
+
+  .puzzle-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    width: 900px;
+  }
+
+  /* shared glass style */
+  .card {
+    backdrop-filter: blur(28px) saturate(160%);
+    -webkit-backdrop-filter: blur(28px) saturate(160%);
+    background: rgba(255,255,255,0.13);
+    border: 1px solid rgba(255,255,255,0.3);
+    padding: 48px 44px;
+    color: #fff;
+    font-size: 11px;
+    line-height: 1.85;
+    letter-spacing: 0.06em;
+  }
+
+  /* Card 1 — tab protrudes on the right */
+  .card-left {
+    width: 460px;
+    clip-path: path('M 12 0 L 436 0 Q 448 0 448 12 L 448 110 L 476 110 Q 484 110 484 118 L 484 182 Q 484 190 476 190 L 448 190 L 448 288 Q 448 300 436 300 L 12 300 Q 0 300 0 288 L 0 12 Q 0 0 12 0 Z');
+    width: 484px;
+    height: 300px;
+    flex-shrink: 0;
+  }
+
+  /* Card 2 — matching notch on the left */
+  .card-right {
+    clip-path: path('M 36 0 L 404 0 Q 416 0 416 12 L 416 288 Q 416 300 404 300 L 12 300 Q 0 300 0 288 L 0 190 Q 0 182 8 182 L 36 182 L 36 110 Q 36 110 8 110 Q 0 110 0 102 L 0 12 Q 0 0 12 0 L 36 0 Z');
+    width: 416px;
+    height: 300px;
+    flex-shrink: 0;
+    margin-left: -36px;
+  }
+
+  h3 {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    opacity: 0.5;
+    margin-bottom: 16px;
+  }
+
+  p { word-spacing: 0.05em; text-align: justify; }
+</style>
+</head>
+<body>
+  <div class="puzzle-wrap">
+
+    <div class="card card-left">
+      <h3>01 — Philosophy</h3>
+      <p>We believe management should be invisible. When your tools work at the level you do, you stop thinking about running the salon and start focusing on the art.</p>
+    </div>
+
+    <div class="card card-right">
+      <h3>02 — Vision</h3>
+      <p>We build for salon owners who want to lead with confidence. From the first appointment to the last product drop — every decision becomes data. Every action becomes precision.</p>
+    </div>
+
+  </div>
+</body>
+</html>
