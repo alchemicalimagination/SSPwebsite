@@ -1067,7 +1067,7 @@ section {
   text-decoration: none;
   color: #0c0c0c;
   background: #0c0c0c;
-  border: 1px solid rgba(0,0,0,0.7);
+  border: 1px solid rgba(255,255,255,0.6);
   border-radius: 999px;
   text-align: center;
   padding: clamp(10px, 1.5vw, 20px) clamp(40px, 5vw, 80px);
@@ -1094,21 +1094,8 @@ section {
   letter-spacing: 0.05em;
   color: #0c0c0c;
 }
-.footer-talk:hover {
-  transform: translateY(-3px);
-  box-shadow:
-    0 28px 70px rgba(0,0,0,0.25),
-    0 8px 24px rgba(0,0,0,0.12),
-    inset 0 2px 0 rgba(255,255,255,1),
-    inset 0 -3px 6px rgba(0,0,0,0.1);
-}
-.footer-talk:active {
-  transform: scale(0.98) translateY(4px);
-  box-shadow:
-    0 4px 16px rgba(0,0,0,0.15),
-    inset 0 4px 12px rgba(0,0,0,0.18),
-    inset 0 1px 0 rgba(255,255,255,0.6);
-}
+.footer-talk:hover { opacity: 0.9; }
+.footer-talk:active { opacity: 0.8; }
 
 .footer-note {
   text-align: center;
