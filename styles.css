@@ -1074,7 +1074,7 @@ section {
   padding: clamp(10px, 1.5vw, 20px) clamp(40px, 5vw, 80px);
   overflow: hidden;
   box-shadow: 0 20px 60px rgba(0,0,0,0.3), 0 4px 16px rgba(0,0,0,0.15);
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  transition: opacity 0.15s ease;
   cursor: pointer;
 }
 #liquid-metal-btn {
