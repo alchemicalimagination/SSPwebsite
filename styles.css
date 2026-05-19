@@ -137,6 +137,16 @@ section { background: transparent !important; z-index: 4 !important; }
 }
 .ui-works:hover { background: rgba(255,255,255,0.25); }
 
+/* ─── CSS custom property for iridescent border angle ─── */
+@property --iri-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+@keyframes iriSpin {
+  to { --iri-angle: 360deg; }
+}
+
 /* ─── Fixed: Receipt ─── */
 .ui-receipt {
   position: fixed;
@@ -147,19 +157,43 @@ section { background: transparent !important; z-index: 4 !important; }
   font-size: 10px;
   line-height: 1.7;
   letter-spacing: 0.05em;
-  background: rgba(255,252,248,0.18);
+  background: rgba(255,252,250,0.22);
   backdrop-filter: blur(28px);
   -webkit-backdrop-filter: blur(28px);
-  border: 1px solid rgba(255,255,255,0.45);
-  border-bottom: 1px solid rgba(255,255,255,0.2);
-  color: rgba(255,255,255,0.9);
+  border: none;
+  color: #0c0c0c;
   padding: 12px 14px;
   min-width: 210px;
   text-transform: uppercase;
+  border-radius: 2px;
+}
+/* iridescent border via pseudo-element + mask */
+.ui-receipt::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 3px;
+  background: conic-gradient(
+    from var(--iri-angle),
+    rgba(255,180,180,0.9),
+    rgba(255,230,120,0.9),
+    rgba(160,255,200,0.9),
+    rgba(130,190,255,0.9),
+    rgba(210,150,255,0.9),
+    rgba(255,180,180,0.9)
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  padding: 1px;
+  animation: iriSpin 5s linear infinite;
+  opacity: 0.75;
 }
 .r-row { display: flex; justify-content: space-between; }
-.r-div { color: rgba(255,255,255,0.35); }
-.r-title { text-align: center; font-weight: 700; color: rgba(255,255,255,0.95); }
+.r-div { color: rgba(0,0,0,0.25); }
+.r-title { text-align: center; font-weight: 700; color: #0c0c0c; }
 
 @keyframes printLine {
   from { max-height: 0; opacity: 0; }
