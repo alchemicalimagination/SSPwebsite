@@ -1069,6 +1069,7 @@ section {
   background: #0c0c0c;
   border: 1px solid rgba(255,255,255,0.6);
   border-radius: 999px;
+  clip-path: inset(0 round 999px);
   text-align: center;
   padding: clamp(10px, 1.5vw, 20px) clamp(40px, 5vw, 80px);
   overflow: hidden;
