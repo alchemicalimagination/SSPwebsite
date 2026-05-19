@@ -423,8 +423,8 @@ lenis.on('scroll', ({ scroll }) => {
   if (sScanPinStart === null) return;
 
   const pinLength  = window.innerHeight;
-  const slideStart = sScanPinStart + pinLength * 0.55;
-  const slideEnd   = sScanPinStart + pinLength;
+  const slideStart = sScanPinStart - pinLength; // #01 square enters from bottom
+  const slideEnd   = sScanPinStart + pinLength * 0.5; // card fully collapsed
   const progress   = Math.max(0, Math.min(1, (scroll - slideStart) / (slideEnd - slideStart)));
   gsap.set(receiptWidget, { yPercent: 160 * (1 - progress) });
 });
