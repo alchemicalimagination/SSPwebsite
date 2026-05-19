@@ -334,7 +334,7 @@ section {
 .hero-brand-logo {
   position: relative;
   z-index: 1;
-  width: clamp(140px, 18vw, 260px);
+  width: clamp(200px, 26vw, 340px);
   height: auto;
   display: block;
   mix-blend-mode: screen;
