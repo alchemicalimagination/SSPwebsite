@@ -403,7 +403,25 @@ const receiptItems = [
   { section: '#s-scan-04', lines: [' ', 'SALON MGMT.     x1', '  REF: SHH-0004'] },
 ];
 
-// Drive receipt checks off Lenis — avoids GSAP ScrollTrigger init-firing issue
+const receiptWidget = document.querySelector('.ui-receipt');
+
+// Show receipt only when card #01 is fully collapsed (after pin ends)
+ScrollTrigger.create({
+  trigger: '#s-scan',
+  start: `top+=${window.innerHeight * 0.85} top`,
+  onEnter:     () => gsap.to(receiptWidget, { opacity: 1, duration: 0.6 }),
+  onLeaveBack: () => gsap.to(receiptWidget, { opacity: 0, duration: 0.4 })
+});
+
+// Hide receipt when scrolling back into hero
+ScrollTrigger.create({
+  trigger: '#s-hero',
+  start: 'top top',
+  end:   'bottom top',
+  onEnterBack: () => gsap.to(receiptWidget, { opacity: 0, duration: 0.3 })
+});
+
+// Drive receipt printing off Lenis
 let receiptVisible = false;
 lenis.on('scroll', () => {
   receiptItems.forEach(({ section, lines }, idx) => {
@@ -412,10 +430,7 @@ lenis.on('scroll', () => {
     if (!el) return;
     const rect = el.getBoundingClientRect();
     if (rect.top < window.innerHeight * 0.65) {
-      if (!receiptVisible) {
-        receiptVisible = true;
-        document.querySelector('.ui-receipt').style.opacity = '1';
-      }
+      if (!receiptVisible) receiptVisible = true;
       printed.add(idx);
       lines.forEach(line => typeLine(line));
       if (idx === receiptItems.length - 1) {
