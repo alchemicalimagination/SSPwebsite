@@ -81,7 +81,7 @@ function renderASCII() {
       const charIdx = Math.floor(lum * (CHARS.length - 1));
       const ch      = CHARS[charIdx];
       if (ch === ' ') continue;
-      asciiCtx.fillStyle = `rgba(${r},${g},${b},0.9)`;
+      asciiCtx.fillStyle = `rgba(255,255,255,${(0.4 + lum * 0.6).toFixed(2)})`;
       asciiCtx.fillText(ch, x, y);
     }
   }
