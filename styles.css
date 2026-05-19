@@ -308,15 +308,9 @@ section {
   font-weight: 600;
   letter-spacing: 0.22em;
   border-radius: 0;
-  clip-path: polygon(
-    22px 0%,
-    100% 0%,
-    100% calc(100% - 18px),
-    calc(100% - 26px) calc(100% - 18px),
-    calc(100% - 26px) 100%,
-    0% 100%,
-    0% 22px
-  );
+  width: 320px;
+  height: 80px;
+  clip-path: path('M 100 0 L 308 0 Q 320 0 320 12 L 320 60 Q 320 74 306 74 L 272 74 Q 260 74 260 80 L 20 80 L 20 66 L 0 66 L 0 30 Z');
   background: #0c0c0c;
   color: #0c0c0c;
   overflow: hidden;
