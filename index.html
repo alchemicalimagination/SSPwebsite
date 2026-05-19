@@ -31,7 +31,10 @@
     <div id="model-wrap"></div>
 
     <!-- Fixed: Selected Works -->
-    <a href="#" class="ui-works">START YOUR FREE TRIAL <span>↗</span></a>
+    <a href="#" class="ui-works">
+      <div id="liquid-metal-works"></div>
+      <span>START YOUR FREE TRIAL ↗</span>
+    </a>
 
 
     <!-- Fixed: Receipt -->
@@ -55,7 +58,10 @@
          SECTION 1 — HERO
     ───────────────────────────────── -->
     <section id="s-hero">
-      <p class="hero-brand">STUDIO STYLE PRO ®</p>
+      <p class="hero-brand">
+        <div id="liquid-metal-brand"></div>
+        <span>STUDIO STYLE PRO ®</span>
+      </p>
 
       <div class="hero-center">
         <h1 class="hero-title">SALON<br>MANAGEMENT<br>REDEFINED</h1>
@@ -382,10 +388,10 @@
       u_offsetX:    0.0,
       u_offsetY:    0.0
     };
-    const btn = document.getElementById('liquid-metal-btn');
-    if (btn) new ShaderMount(btn, liquidMetalFragmentShader, shaderParams, undefined, 0.5);
-    const back = document.getElementById('liquid-metal-back');
-    if (back) new ShaderMount(back, liquidMetalFragmentShader, shaderParams, undefined, 0.5);
+    ['liquid-metal-btn','liquid-metal-back','liquid-metal-works','liquid-metal-brand'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) new ShaderMount(el, liquidMetalFragmentShader, shaderParams, undefined, 0.5);
+    });
   </script>
 </body>
 </html>

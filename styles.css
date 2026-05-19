@@ -121,21 +121,42 @@ section { background: transparent !important; z-index: 4 !important; }
   z-index: 200;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  border: 1px solid rgba(255,255,255,0.4);
+  border: none;
   border-radius: 99px;
+  clip-path: inset(0 round 99px);
   padding: 8px 22px;
   font-size: 10px;
   font-weight: 500;
   letter-spacing: 0.18em;
   text-decoration: none;
-  color: #fff;
-  background: rgba(255,255,255,0.12);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  transition: background 0.3s;
+  color: #0c0c0c;
+  background: #0c0c0c;
+  overflow: hidden;
+  transition: opacity 0.15s;
+  cursor: pointer;
 }
-.ui-works:hover { background: rgba(255,255,255,0.25); }
+.ui-works::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 99px;
+  border: 1px solid rgba(255,255,255,0.6);
+  pointer-events: none;
+  z-index: 2;
+}
+#liquid-metal-works {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+#liquid-metal-works canvas { display: block; width: 100% !important; height: 100% !important; }
+.ui-works > span {
+  position: relative;
+  z-index: 1;
+  mix-blend-mode: multiply;
+  color: #0c0c0c;
+}
+.ui-works:hover { opacity: 0.9; }
 
 /* ─── Iridescent border spin ─── */
 @property --iri-angle {
@@ -260,7 +281,7 @@ section {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 80px var(--margin);
+  padding: 120px var(--margin) 80px;
   text-align: center;
 }
 
@@ -269,9 +290,40 @@ section {
   top: 28px;
   left: 50%;
   transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 20px;
   font-size: 11px;
   font-weight: 400;
   letter-spacing: 0.28em;
+  border-radius: 99px;
+  clip-path: inset(0 round 99px);
+  background: #0c0c0c;
+  color: #0c0c0c;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.hero-brand::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 99px;
+  border: 1px solid rgba(255,255,255,0.6);
+  pointer-events: none;
+  z-index: 2;
+}
+#liquid-metal-brand {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+#liquid-metal-brand canvas { display: block; width: 100% !important; height: 100% !important; }
+.hero-brand > span {
+  position: relative;
+  z-index: 1;
+  mix-blend-mode: multiply;
+  color: #0c0c0c;
 }
 
 .hero-center {
