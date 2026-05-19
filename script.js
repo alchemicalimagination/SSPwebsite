@@ -405,28 +405,17 @@ const receiptItems = [
 
 const receiptWidget = document.querySelector('.ui-receipt');
 
-// Receipt slides up — tied to raw scroll position during #s-scan pin
+// Receipt slides up as #01 card enters from bottom of screen
 gsap.set(receiptWidget, { yPercent: 160 });
-const sScanSection = document.querySelector('#s-scan');
-let sScanPinStart = null;
-
-ScrollTrigger.addEventListener('refresh', () => {
-  if (sScanSection) {
-    sScanPinStart = sScanSection.getBoundingClientRect().top + window.scrollY;
+gsap.to(receiptWidget, {
+  yPercent: 0,
+  ease: 'none',
+  scrollTrigger: {
+    trigger: '#s-scan',
+    start: 'top bottom',
+    end:   'top top',
+    scrub: 1
   }
-});
-
-lenis.on('scroll', ({ scroll }) => {
-  if (sScanPinStart === null && sScanSection) {
-    sScanPinStart = sScanSection.getBoundingClientRect().top + window.scrollY;
-  }
-  if (sScanPinStart === null) return;
-
-  const pinLength  = window.innerHeight;
-  const slideStart = sScanPinStart - pinLength; // #01 square enters from bottom
-  const slideEnd   = sScanPinStart + pinLength * 0.5; // card fully collapsed
-  const progress   = Math.max(0, Math.min(1, (scroll - slideStart) / (slideEnd - slideStart)));
-  gsap.set(receiptWidget, { yPercent: 160 * (1 - progress) });
 });
 
 // Drive receipt printing off Lenis
