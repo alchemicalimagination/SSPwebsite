@@ -307,8 +307,16 @@ section {
   font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.22em;
-  border-radius: 0 6px 6px 0;
-  clip-path: polygon(28px 0%, 100% 0%, 100% 100%, 0% 100%, 0% 28px);
+  border-radius: 0;
+  clip-path: polygon(
+    22px 0%,
+    100% 0%,
+    100% calc(100% - 18px),
+    calc(100% - 26px) calc(100% - 18px),
+    calc(100% - 26px) 100%,
+    0% 100%,
+    0% 22px
+  );
   background: #0c0c0c;
   color: #0c0c0c;
   overflow: hidden;
@@ -318,9 +326,16 @@ section {
   content: '';
   position: absolute;
   inset: 0;
-  clip-path: polygon(28px 0%, 100% 0%, 100% 100%, 0% 100%, 0% 28px);
+  clip-path: polygon(
+    22px 0%,
+    100% 0%,
+    100% calc(100% - 18px),
+    calc(100% - 26px) calc(100% - 18px),
+    calc(100% - 26px) 100%,
+    0% 100%,
+    0% 22px
+  );
   border: 1px solid rgba(255,255,255,0.6);
-  border-radius: 0 6px 6px 0;
   pointer-events: none;
   z-index: 2;
 }
