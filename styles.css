@@ -116,8 +116,8 @@ section { background: transparent !important; z-index: 4 !important; }
 /* ─── Fixed: Selected Works ─── */
 .ui-works {
   position: fixed;
-  top: 24px;
-  right: 24px;
+  top: 28px;
+  left: var(--margin);
   z-index: 200;
   display: inline-flex;
   align-items: center;
@@ -297,9 +297,9 @@ section {
 
 .hero-brand {
   position: absolute;
-  top: 50%;
+  top: 28px;
   right: var(--margin);
-  transform: translateY(-50%);
+  transform: none;
   display: inline-flex;
   align-items: center;
   justify-content: center;
