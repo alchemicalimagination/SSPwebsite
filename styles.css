@@ -94,8 +94,8 @@ body {
   height: 100vh;
   z-index: 2;
   pointer-events: none;
-  mix-blend-mode: soft-light;
-  opacity: 0.9;
+  mix-blend-mode: screen;
+  opacity: 0.6;
 }
 #flower-overlay {
   position: fixed;

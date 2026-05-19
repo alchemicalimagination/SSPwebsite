@@ -47,7 +47,7 @@ function renderFlower(index) {
 const asciiCanvas = document.getElementById('ascii-overlay');
 const asciiCtx    = asciiCanvas.getContext('2d');
 const CELL        = 11;
-const CHAR        = '·';  // single char — opacity carries all the grain
+const CHARS       = '   ..::++**##@@';
 
 function resizeASCII() {
   asciiCanvas.width  = window.innerWidth;
@@ -87,14 +87,15 @@ function renderASCII() {
       const b   = imgData.data[i + 2];
       const lum = (r * 0.299 + g * 0.587 + b * 0.114) / 255;
       const inv = 1 - lum;
-      if (inv < 0.15) continue;  // skip very bright areas
-      const opacity = Math.max(0, (inv * 0.65 + flicker) * fadeOut);
-      // use actual pixel colour tinted toward white
+      const ch  = CHARS[Math.floor(inv * (CHARS.length - 1))];
+      if (!ch.trim()) continue;
+      const opacity = Math.max(0, (inv * 0.7 + flicker) * fadeOut);
+      // tint char colour from pixel, pulled toward white
       const tr = Math.round(r + (255 - r) * 0.5);
       const tg = Math.round(g + (255 - g) * 0.5);
       const tb = Math.round(b + (255 - b) * 0.5);
       asciiCtx.fillStyle = `rgba(${tr},${tg},${tb},${opacity.toFixed(2)})`;
-      asciiCtx.fillText(CHAR, x, y);
+      asciiCtx.fillText(ch, x, y);
     }
   }
 }
