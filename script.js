@@ -40,38 +40,29 @@ function renderFlower(index) {
   flowerCtx.imageSmoothingQuality = 'high';
   flowerCtx.clearRect(0, 0, W, H);
   flowerCtx.drawImage(img, (W - w) / 2, (H - h) / 2, w, h);
-  updateASCIIPixels();
+  renderASCII();
 }
 
 // ── ASCII OVERLAY ───────────────────────────────────────
 const asciiCanvas = document.getElementById('ascii-overlay');
 const asciiCtx    = asciiCanvas.getContext('2d');
-const CELL        = 7;
-// full density map — dense chars on dark areas, sparse on bright
-const CHARS = '$@B%8&WM#*oahkbdpwmZO0QLCJUYXzcvunxrjft/|()1{}?-_+~<>i!lI;:,".` ';
-
-let cachedPixels = null;   // updated only when flower frame changes
-let asciiRafId   = null;
+const CELL  = 7;
+const CHARS = '$@B%8&WM#*oahkbdpwmZO0QLCJUYXzcvunxrjft/|()1{}?-_+~<>i!lI;:,". ';
 
 function resizeASCII() {
   asciiCanvas.width  = window.innerWidth;
   asciiCanvas.height = window.innerHeight;
 }
 resizeASCII();
-window.addEventListener('resize', () => { resizeASCII(); cachedPixels = null; });
-
-function updateASCIIPixels() {
-  try { cachedPixels = flowerCtx.getImageData(0, 0, flowerCanvas.width, flowerCanvas.height); }
-  catch(e) { cachedPixels = null; }
-}
+window.addEventListener('resize', resizeASCII);
 
 function renderASCII() {
-  if (!cachedPixels) return;
-  const W      = window.innerWidth;
-  const H      = window.innerHeight;
-  const dpr    = window.devicePixelRatio || 1;
-  const tick   = Date.now() * 0.002;
-  const flicker = Math.sin(tick) * 0.06 + Math.sin(tick * 2.3) * 0.03;
+  const W   = window.innerWidth;
+  const H   = window.innerHeight;
+  const dpr = window.devicePixelRatio || 1;
+  let   pixels;
+  try { pixels = flowerCtx.getImageData(0, 0, flowerCanvas.width, flowerCanvas.height); }
+  catch(e) { return; }
 
   asciiCtx.clearRect(0, 0, W, H);
   asciiCtx.font         = `${CELL}px "Courier New", monospace`;
@@ -80,35 +71,26 @@ function renderASCII() {
 
   for (let y = 0; y < H; y += CELL) {
     for (let x = 0; x < W; x += CELL) {
-      const px = Math.min(Math.floor(x * dpr), cachedPixels.width  - 1);
-      const py = Math.min(Math.floor(y * dpr), cachedPixels.height - 1);
-      const i  = (py * cachedPixels.width + px) * 4;
-      const r  = cachedPixels.data[i];
-      const g  = cachedPixels.data[i + 1];
-      const b  = cachedPixels.data[i + 2];
+      const px = Math.min(Math.floor(x * dpr), pixels.width  - 1);
+      const py = Math.min(Math.floor(y * dpr), pixels.height - 1);
+      const i  = (py * pixels.width + px) * 4;
+      const r  = pixels.data[i];
+      const g  = pixels.data[i + 1];
+      const b  = pixels.data[i + 2];
       const lum     = (r * 0.299 + g * 0.587 + b * 0.114) / 255;
       const charIdx = Math.floor(lum * (CHARS.length - 1));
       const ch      = CHARS[charIdx];
       if (ch === ' ') continue;
-      const alpha = Math.min(1, 0.85 + flicker);
-      asciiCtx.fillStyle = `rgba(${r},${g},${b},${alpha.toFixed(2)})`;
+      asciiCtx.fillStyle = `rgba(${r},${g},${b},0.9)`;
       asciiCtx.fillText(ch, x, y);
     }
   }
-  asciiRafId = requestAnimationFrame(renderASCII);
-}
-
-// start loop once first frame loads
-function startASCII() {
-  if (asciiRafId) cancelAnimationFrame(asciiRafId);
-  updateASCIIPixels();
-  renderASCII();
 }
 
 for (let i = 1; i <= FRAME_COUNT; i++) {
   const img = new Image();
   img.src = `./flower%20sequence/ezgif-8a7cfed939556aa3-jpg/ezgif-frame-${padNum(i)}.jpg`;
-  img.onload = () => { loadedCount++; if (loadedCount === 1) { renderFlower(0); startASCII(); } };
+  img.onload = () => { loadedCount++; if (loadedCount === 1) renderFlower(0); };
   frames.push(img);
 }
 
