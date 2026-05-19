@@ -116,7 +116,7 @@ section { background: transparent !important; z-index: 4 !important; }
 /* ─── Fixed: Selected Works ─── */
 .ui-works {
   position: absolute;
-  bottom: 3cm;
+  bottom: 2cm;
   left: calc(var(--margin) - 2cm);
   z-index: 200;
   display: inline-flex;
@@ -124,8 +124,8 @@ section { background: transparent !important; z-index: 4 !important; }
   border: none;
   border-radius: 99px;
   clip-path: inset(0 round 99px);
-  padding: 8px 22px;
-  font-size: 12px;
+  padding: 12px 32px;
+  font-size: 15px;
   font-weight: 600;
   letter-spacing: 0.14em;
   text-decoration: none;
@@ -188,7 +188,6 @@ section { background: transparent !important; z-index: 4 !important; }
   text-transform: uppercase;
   border-radius: 3px;
   isolation: isolate;
-  opacity: 0;
 }
 /* iridescent border only — mask trick so background stays clean */
 .ui-receipt::before {

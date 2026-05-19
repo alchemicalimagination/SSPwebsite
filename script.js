@@ -405,21 +405,16 @@ const receiptItems = [
 
 const receiptWidget = document.querySelector('.ui-receipt');
 
-// Show receipt when card #01 collapsed square is visible (section after pin)
-ScrollTrigger.create({
-  trigger: '#s-detail-02',
-  start: 'top 90%',
-  onEnter:     () => gsap.to(receiptWidget, { opacity: 1, duration: 0.6, overwrite: true }),
-  onLeaveBack: () => gsap.to(receiptWidget, { opacity: 0, duration: 0.4, overwrite: true })
-});
-
-// Also hide when scrolling back into hero
-ScrollTrigger.create({
-  trigger: '#s-hero',
-  start: 'top top',
-  end:   'bottom top',
-  onEnterBack: () => gsap.to(receiptWidget, { opacity: 0, duration: 0.3, overwrite: true })
-});
+// Receipt slides up tied to scroll — starts off-screen, scrubbed into position
+gsap.set(receiptWidget, { yPercent: 160 });
+gsap.timeline({
+  scrollTrigger: {
+    trigger: '#s-scan',
+    start: 'top top',
+    end:   `+=${window.innerHeight}`,
+    scrub: 1.5
+  }
+}).to(receiptWidget, { yPercent: 0, ease: 'none' });
 
 // Drive receipt printing off Lenis
 let receiptVisible = false;
