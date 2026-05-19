@@ -1094,8 +1094,21 @@ section {
   letter-spacing: 0.05em;
   color: #0c0c0c;
 }
-.footer-talk:hover { opacity: 0.9; }
-.footer-talk:active { opacity: 0.8; }
+.footer-talk:hover { opacity: 0.92; }
+.footer-talk:active { opacity: 1; }
+
+@keyframes btnBounce {
+  0%   { transform: translateY(0); }
+  25%  { transform: translateY(-10px); }
+  50%  { transform: translateY(0); }
+  70%  { transform: translateY(-5px); }
+  85%  { transform: translateY(0); }
+  95%  { transform: translateY(-2px); }
+  100% { transform: translateY(0); }
+}
+.footer-talk.bouncing {
+  animation: btnBounce 0.55s cubic-bezier(0.36, 0.07, 0.19, 0.97) forwards;
+}
 
 .footer-note {
   text-align: center;

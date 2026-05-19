@@ -2,6 +2,14 @@
 
 gsap.registerPlugin(ScrollTrigger);
 
+// ── FREE TRIAL BUTTON BOUNCE ────────────────────────────
+document.querySelector('.footer-talk')?.addEventListener('click', function () {
+  this.classList.remove('bouncing');
+  void this.offsetWidth; // force reflow so animation restarts
+  this.classList.add('bouncing');
+  this.addEventListener('animationend', () => this.classList.remove('bouncing'), { once: true });
+});
+
 // ── SMOOTH SCROLL ──────────────────────────────────────
 const lenis = new Lenis();
 lenis.on('scroll', ScrollTrigger.update);
