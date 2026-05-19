@@ -342,7 +342,7 @@ section {
   mix-blend-mode: screen;
   transform: translateY(-0.5cm);
 }
-.hero-center { margin-top: 2cm; }
+.hero-center { margin-top: -2cm; }
 
 .hero-center {
   width: 100%;
