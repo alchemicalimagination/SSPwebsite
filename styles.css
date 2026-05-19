@@ -334,7 +334,7 @@ section {
 
 .hero-title {
   font-size: clamp(64px, 13vw, 170px);
-  font-weight: 200;
+  font-weight: 300;
   line-height: 0.92;
   letter-spacing: -0.02em;
   text-align: center;
