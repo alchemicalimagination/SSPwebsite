@@ -338,6 +338,7 @@ section {
   height: auto;
   display: block;
   mix-blend-mode: screen;
+  transform: translateY(-0.5cm);
 }
 .hero-center { margin-top: 2cm; }
 
