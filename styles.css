@@ -187,6 +187,7 @@ section { background: transparent !important; z-index: 4 !important; }
   );
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask-composite: exclude;
   animation: iriSpin 6s linear infinite;
   pointer-events: none;
@@ -1065,31 +1066,31 @@ section {
   letter-spacing: -0.02em;
   text-decoration: none;
   color: #fff;
-  background: #111;
+  background: #0c0c0c;
   border-radius: 999px;
   text-align: center;
   padding: clamp(10px, 1.5vw, 20px) clamp(40px, 5vw, 80px);
   overflow: hidden;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.35), 0 4px 16px rgba(0,0,0,0.2);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3), 0 4px 16px rgba(0,0,0,0.15);
   transition: transform 0.15s ease, box-shadow 0.15s ease;
   cursor: pointer;
 }
-/* shader fills the button */
 #liquid-metal-btn {
   position: absolute;
   inset: 0;
-  border-radius: 999px;
   z-index: 0;
-  overflow: hidden;
 }
 #liquid-metal-btn canvas {
+  display: block;
   width: 100% !important;
   height: 100% !important;
 }
-/* text above shader */
 .footer-talk span {
   position: relative;
   z-index: 1;
+  mix-blend-mode: overlay;
+  font-weight: 300;
+  letter-spacing: 0.05em;
 }
 .footer-talk:hover {
   transform: translateY(-3px);
