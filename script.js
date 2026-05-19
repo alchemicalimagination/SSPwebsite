@@ -47,7 +47,7 @@ function renderFlower(index) {
 const asciiCanvas = document.getElementById('ascii-overlay');
 const asciiCtx    = asciiCanvas.getContext('2d');
 const CELL        = 11;
-const CHARS       = '   ..::++**##@@';  // weighted toward sparse
+const CHAR        = '·';  // single char — opacity carries all the grain
 
 function resizeASCII() {
   asciiCanvas.width  = window.innerWidth;
@@ -56,17 +56,25 @@ function resizeASCII() {
 resizeASCII();
 window.addEventListener('resize', resizeASCII);
 
+// scroll progress 0→1 for fade-out
+let asciiScrollProgress = 0;
+lenis.on('scroll', ({ scroll }) => {
+  asciiScrollProgress = Math.min(scroll / (window.innerHeight * 1.2), 1);
+});
+
 function renderASCII() {
-  const W   = window.innerWidth;
-  const H   = window.innerHeight;
-  const dpr = window.devicePixelRatio || 1;
-  let   img;
-  try { img = flowerCtx.getImageData(0, 0, flowerCanvas.width, flowerCanvas.height); }
+  const W        = window.innerWidth;
+  const H        = window.innerHeight;
+  const dpr      = window.devicePixelRatio || 1;
+  const flicker  = (Math.sin(Date.now() * 0.003) * 0.04);  // subtle breathe
+  const fadeOut  = 1 - asciiScrollProgress;                 // fades as you scroll
+  let   imgData;
+  try { imgData = flowerCtx.getImageData(0, 0, flowerCanvas.width, flowerCanvas.height); }
   catch(e) { return; }
 
   asciiCtx.clearRect(0, 0, W, H);
-  asciiCtx.font = `${CELL}px "Courier New", monospace`;
-  asciiCtx.textAlign   = 'left';
+  asciiCtx.font         = `${CELL}px "Courier New", monospace`;
+  asciiCtx.textAlign    = 'left';
   asciiCtx.textBaseline = 'top';
 
   for (let y = 0; y < H; y += CELL) {
@@ -74,12 +82,19 @@ function renderASCII() {
       const px  = Math.min(Math.floor(x * dpr), flowerCanvas.width  - 1);
       const py  = Math.min(Math.floor(y * dpr), flowerCanvas.height - 1);
       const i   = (py * flowerCanvas.width + px) * 4;
-      const lum = (img.data[i] * 0.299 + img.data[i+1] * 0.587 + img.data[i+2] * 0.114) / 255;
+      const r   = imgData.data[i];
+      const g   = imgData.data[i + 1];
+      const b   = imgData.data[i + 2];
+      const lum = (r * 0.299 + g * 0.587 + b * 0.114) / 255;
       const inv = 1 - lum;
-      const ch  = CHARS[Math.floor(inv * (CHARS.length - 1))];
-      if (!ch.trim()) continue;
-      asciiCtx.fillStyle = `rgba(255,255,255,${(inv * 0.6).toFixed(2)})`;
-      asciiCtx.fillText(ch, x, y);
+      if (inv < 0.15) continue;  // skip very bright areas
+      const opacity = Math.max(0, (inv * 0.65 + flicker) * fadeOut);
+      // use actual pixel colour tinted toward white
+      const tr = Math.round(r + (255 - r) * 0.5);
+      const tg = Math.round(g + (255 - g) * 0.5);
+      const tb = Math.round(b + (255 - b) * 0.5);
+      asciiCtx.fillStyle = `rgba(${tr},${tg},${tb},${opacity.toFixed(2)})`;
+      asciiCtx.fillText(CHAR, x, y);
     }
   }
 }
