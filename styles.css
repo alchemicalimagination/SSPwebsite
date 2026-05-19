@@ -944,7 +944,7 @@ section {
   -webkit-backdrop-filter: blur(60px);
   border-top: 1px solid rgba(255,255,255,0.4);
   color: #0c0c0c;
-  padding: 48px var(--margin) 1cm;
+  padding: 36px var(--margin) 24px;
   display: flex;
   flex-direction: column;
   gap: 0;
@@ -1036,7 +1036,7 @@ section {
   letter-spacing: -0.02em;
   word-spacing: -0.14em;
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
 }
 .footer-subhead {
   font-size: clamp(13px, 1.2vw, 18px);
@@ -1044,7 +1044,7 @@ section {
   letter-spacing: 0.08em;
   color: rgba(0,0,0,0.55);
   text-align: center;
-  margin-bottom: 36px;
+  margin-bottom: 20px;
 }
 .footer-plans {
   display: grid;
@@ -1052,8 +1052,8 @@ section {
   gap: 0 clamp(20px, 2.5vw, 36px);
   justify-content: center;
   width: fit-content;
-  margin: 0 auto 36px;
-  padding: 28px 0 36px;
+  margin: 0 auto 20px;
+  padding: 18px 0 24px;
   border-top: 1px solid rgba(0,0,0,0.12);
   border-bottom: 1px solid rgba(0,0,0,0.1);
 }
@@ -1083,7 +1083,7 @@ section {
   letter-spacing: 0.08em;
   line-height: 1.9;
   color: rgba(0,0,0,0.55);
-  margin-bottom: 32px;
+  margin-bottom: 20px;
 }
 
 .footer-talk {
@@ -1159,7 +1159,7 @@ section {
   font-weight: 500;
   letter-spacing: 0.2em;
   color: rgba(0,0,0,0.5);
-  margin-top: 16px;
+  margin-top: 10px;
 }
 .footer-copy {
   position: absolute;
