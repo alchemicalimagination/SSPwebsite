@@ -404,6 +404,7 @@ const receiptItems = [
 ];
 
 // Drive receipt checks off Lenis — avoids GSAP ScrollTrigger init-firing issue
+let receiptVisible = false;
 lenis.on('scroll', () => {
   receiptItems.forEach(({ section, lines }, idx) => {
     if (printed.has(idx)) return;
@@ -411,6 +412,10 @@ lenis.on('scroll', () => {
     if (!el) return;
     const rect = el.getBoundingClientRect();
     if (rect.top < window.innerHeight * 0.65) {
+      if (!receiptVisible) {
+        receiptVisible = true;
+        document.querySelector('.ui-receipt').style.opacity = '1';
+      }
       printed.add(idx);
       lines.forEach(line => typeLine(line));
       if (idx === receiptItems.length - 1) {
