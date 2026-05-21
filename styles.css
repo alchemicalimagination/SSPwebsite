@@ -1296,7 +1296,7 @@ section {
   .hero-brand-logo { width: 160px; }
   .hero-center { margin-top: 0 !important; margin-bottom: 0; }
   .hero-title {
-    font-size: clamp(42px, 12vw, 68px);
+    font-size: clamp(40px, 12vw, 66px);
     text-align: left;
     line-height: 0.95;
     word-break: break-word;
