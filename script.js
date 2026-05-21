@@ -33,7 +33,7 @@ function resizeFlower() {
   flowerCanvas.width  = window.innerWidth  * dpr;
   flowerCanvas.height = window.innerHeight * dpr;
   flowerCtx.scale(dpr, dpr);
-  flowerCtx.fillStyle = '#f5f3f0';
+  flowerCtx.fillStyle = '#3a3448';
   flowerCtx.fillRect(0, 0, window.innerWidth, window.innerHeight);
   renderFlower(flowerFrame);
 }

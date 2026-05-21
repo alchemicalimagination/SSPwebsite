@@ -11,7 +11,7 @@
   --margin: clamp(40px, 4cm, 140px);
 }
 
-html { background: var(--bg); }
+html { background: #3a3448; }
 
 body {
   font-family: var(--f);
