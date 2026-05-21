@@ -1281,7 +1281,7 @@ section {
     align-items: flex-start;
     justify-content: flex-start;
     flex-direction: column;
-    gap: 28px;
+    gap: 0;
     min-height: 100vh;
   }
   .hero-brand {
@@ -1379,7 +1379,7 @@ section {
   }
 
   /* ── Scroll CTA ── */
-  .scroll-cta { font-size: 9px; margin-top: 12px; }
+  .scroll-cta { font-size: 9px; margin-top: 16px; }
 
   /* ── Navigation pills in nav ── */
   .d-badge { font-size: 9px; padding: 8px 10px; }
