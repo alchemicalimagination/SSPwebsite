@@ -1379,7 +1379,15 @@ section {
   }
 
   /* ── Scroll CTA ── */
-  .scroll-cta { font-size: 9px; margin-top: 16px; }
+  .scroll-cta {
+    position: relative !important;
+    bottom: auto !important;
+    left: auto !important;
+    transform: none !important;
+    font-size: 9px;
+    text-align: center;
+    margin-top: 16px;
+  }
 
   /* ── Navigation pills in nav ── */
   .d-badge { font-size: 9px; padding: 8px 10px; }
