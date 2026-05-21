@@ -1386,7 +1386,8 @@ section {
     transform: none !important;
     font-size: 9px;
     text-align: center;
-    margin-top: 16px;
+    width: 100%;
+    margin-top: 2cm;
   }
 
   /* ── Navigation pills in nav ── */
