@@ -1259,7 +1259,7 @@ section {
 @media (max-width: 768px) {
 
   html, body { overflow-x: hidden; max-width: 100vw; }
-  #s-hero .hero-title { font-size: 48px !important; }
+  #s-hero .hero-title { font-size: 50px !important; }
 
   /* ── ASCII overlay: lighter on mobile ── */
   #ascii-overlay { opacity: 0.4; }
@@ -1301,7 +1301,7 @@ section {
   .hero-brand-logo { width: 220px; }
   .hero-center { margin-top: 1cm !important; margin-bottom: 0; }
   .hero-title {
-    font-size: 48px !important;
+    font-size: 50px !important;
     -webkit-text-size-adjust: none;
     text-align: left;
     line-height: 0.95;
