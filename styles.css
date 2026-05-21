@@ -1286,14 +1286,15 @@ section {
     top: auto !important;
     right: auto !important;
     transform: none !important;
-    width: 307px;
-    height: 166px;
-    clip-path: path('M 89 3 Q 96 0 103 0 L 295 0 Q 307 0 307 16 L 307 83 Q 307 91 300 93 L 245 115 Q 240 117 240 125 L 240 150 Q 240 166 224 166 L 75 166 Q 66 166 66 158 L 66 107 Q 66 98 60 98 L 7 98 Q 0 98 0 91 L 0 47 Q 0 39 7 34 L 89 3 Z') !important;
+    margin-left: 1cm;
+    width: 269px;
+    height: 145px;
+    clip-path: path('M 78 3 Q 84 0 90 0 L 258 0 Q 269 0 269 14 L 269 73 Q 269 80 263 81 L 215 101 Q 210 103 210 110 L 210 131 Q 210 145 196 145 L 66 145 Q 58 145 58 138 L 58 94 Q 58 86 53 86 L 6 86 Q 0 86 0 80 L 0 41 Q 0 34 6 30 L 78 3 Z') !important;
   }
   .hero-brand::after {
-    clip-path: path('M 89 3 Q 96 0 103 0 L 295 0 Q 307 0 307 16 L 307 83 Q 307 91 300 93 L 245 115 Q 240 117 240 125 L 240 150 Q 240 166 224 166 L 75 166 Q 66 166 66 158 L 66 107 Q 66 98 60 98 L 7 98 Q 0 98 0 91 L 0 47 Q 0 39 7 34 L 89 3 Z') !important;
+    clip-path: path('M 78 3 Q 84 0 90 0 L 258 0 Q 269 0 269 14 L 269 73 Q 269 80 263 81 L 215 101 Q 210 103 210 110 L 210 131 Q 210 145 196 145 L 66 145 Q 58 145 58 138 L 58 94 Q 58 86 53 86 L 6 86 Q 0 86 0 80 L 0 41 Q 0 34 6 30 L 78 3 Z') !important;
   }
-  .hero-brand-logo { width: 160px; }
+  .hero-brand-logo { width: 140px; }
   .hero-center { margin-top: 0 !important; margin-bottom: 0; }
   .hero-title {
     font-size: clamp(40px, 12vw, 66px);
