@@ -1272,31 +1272,42 @@ section {
     font-size: 10px;
   }
 
-  /* ── Hero ── */
+  /* ── Hero — stacked: shape → title → pill ── */
   #s-hero {
-    padding: 80px 24px 60px;
+    padding: 60px 24px 48px;
     align-items: flex-start;
-    justify-content: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: 28px;
     min-height: 100vh;
   }
-  .hero-brand { display: none; }
-  .hero-center { margin-top: 0; margin-bottom: 32px; }
+  .hero-brand {
+    position: relative !important;
+    top: auto !important;
+    right: auto !important;
+    transform: none !important;
+    width: 307px;
+    height: 166px;
+    clip-path: path('M 89 3 Q 96 0 103 0 L 295 0 Q 307 0 307 16 L 307 83 Q 307 91 300 93 L 245 115 Q 240 117 240 125 L 240 150 Q 240 166 224 166 L 75 166 Q 66 166 66 158 L 66 107 Q 66 98 60 98 L 7 98 Q 0 98 0 91 L 0 47 Q 0 39 7 34 L 89 3 Z') !important;
+  }
+  .hero-brand::after {
+    clip-path: path('M 89 3 Q 96 0 103 0 L 295 0 Q 307 0 307 16 L 307 83 Q 307 91 300 93 L 245 115 Q 240 117 240 125 L 240 150 Q 240 166 224 166 L 75 166 Q 66 166 66 158 L 66 107 Q 66 98 60 98 L 7 98 Q 0 98 0 91 L 0 47 Q 0 39 7 34 L 89 3 Z') !important;
+  }
+  .hero-brand-logo { width: 160px; }
+  .hero-center { margin-top: 0 !important; margin-bottom: 0; }
   .hero-title {
     font-size: clamp(42px, 12vw, 68px);
     text-align: left;
-    line-height: 1.0;
+    line-height: 0.95;
     word-break: break-word;
   }
   .hero-for { display: none; }
-
-  /* ── Pill — smaller, top left, no overlap ── */
   .ui-works {
-    position: fixed;
-    top: 16px;
-    left: 16px;
-    bottom: auto;
-    padding: 7px 16px;
-    font-size: 9px;
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    padding: 10px 24px;
+    font-size: 11px;
   }
 
   /* ── Left marquee ── */
