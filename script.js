@@ -208,7 +208,7 @@ try {
   console.warn('Three.js init failed:', e);
 }
 
-// ── CARD ANIMATION: reveal internals → collapse to square (scroll-scrubbed) ──
+// ── CARD ANIMATION: desktop only ──────────────────────
 if (window.innerWidth > 768) {
 const card01 = document.getElementById('pcard-01');
 
