@@ -1380,7 +1380,9 @@ section {
   .footer-headline { font-size: clamp(36px, 12vw, 60px); }
   .footer-subhead { font-size: 12px; }
   .footer-plans {
-    grid-template-columns: repeat(2, minmax(0, 160px));
+    grid-template-columns: repeat(2, 1fr);
+    width: 100%;
+    gap: 20px 24px;
     margin-bottom: 24px;
     padding: 20px 0 24px;
   }
@@ -1418,7 +1420,7 @@ section {
 
 @media (max-width: 480px) {
   .hero-title { font-size: clamp(40px, 15vw, 60px); }
-  .footer-plans { grid-template-columns: 1fr; }
+  .footer-plans { grid-template-columns: repeat(2, 1fr); }
   .footer-headline { font-size: clamp(30px, 12vw, 48px); }
   #footer { padding: 28px 20px 20px; }
 }
