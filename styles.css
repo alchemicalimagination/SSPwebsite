@@ -1352,7 +1352,16 @@ section {
   .d04-split { grid-template-columns: 1fr; gap: 24px; }
 
   /* ── Nav ── */
-  nav.studio-nav { display: none; }
+  nav.studio-nav { display: block; }
+  .prod-nav {
+    flex-wrap: wrap;
+    gap: 12px 0;
+    justify-content: flex-start;
+  }
+  .prod-nav a {
+    width: 50%;
+    font-size: 10px;
+  }
 
   /* ── Footer ── */
   #footer {
