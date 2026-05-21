@@ -1259,8 +1259,7 @@ section {
 @media (max-width: 768px) {
 
   html, body { overflow-x: hidden; position: relative; }
-  section { width: 100% !important; max-width: 100vw; overflow-x: clip; }
-  .pcard, .s-scan-card, #s-scan { overflow-x: clip; }
+  section { width: 100% !important; max-width: 100vw; }
   #footer { width: 100% !important; max-width: 100vw; overflow-x: hidden; }
   #s-hero .hero-title { font-size: 50px !important; }
 

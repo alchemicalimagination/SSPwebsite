@@ -209,6 +209,7 @@ try {
 }
 
 // ── CARD ANIMATION: reveal internals → collapse to square (scroll-scrubbed) ──
+if (window.innerWidth > 768) {
 const card01 = document.getElementById('pcard-01');
 
 gsap.set('#pcard-01', { overflow: 'hidden' });
@@ -330,6 +331,7 @@ function setupCardAnimation(cardId, sectionId, hasNext, pinExtra = 0) {
 setupCardAnimation('pcard-02', '#s-scan-02', true);
 setupCardAnimation('pcard-03', '#s-scan-03', true);
 setupCardAnimation('pcard-04', '#s-scan-04', false, window.innerHeight);
+} // end desktop-only card animations
 
 // ── START YOUR FREE TRIAL — hero only ──────────────────
 ScrollTrigger.create({
