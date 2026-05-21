@@ -1299,7 +1299,7 @@ section {
     clip-path: path('M 78 3 Q 84 0 90 0 L 258 0 Q 269 0 269 14 L 269 73 Q 269 80 263 81 L 215 101 Q 210 103 210 110 L 210 131 Q 210 145 196 145 L 66 145 Q 58 145 58 138 L 58 94 Q 58 86 53 86 L 6 86 Q 0 86 0 80 L 0 41 Q 0 34 6 30 L 78 3 Z') !important;
   }
   .hero-brand-logo { width: 140px; }
-  .hero-center { margin-top: 0 !important; margin-bottom: 0; }
+  .hero-center { margin-top: 1cm !important; margin-bottom: 0; }
   .hero-title {
     font-size: 48px !important;
     -webkit-text-size-adjust: none;
