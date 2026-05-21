@@ -1287,8 +1287,8 @@ section {
   .hero-brand {
     position: absolute !important;
     top: 3mm !important;
-    left: 3mm !important;
-    right: auto !important;
+    left: auto !important;
+    right: 3mm !important;
     transform: none !important;
     margin: 0 !important;
     width: 269px;
