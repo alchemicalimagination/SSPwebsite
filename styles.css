@@ -1277,7 +1277,7 @@ section {
 
   /* ── Hero — stacked: shape → title → pill ── */
   #s-hero {
-    padding: 155px 24px 48px;
+    padding: 175px 24px 48px;
     align-items: flex-start;
     justify-content: flex-start;
     flex-direction: column;
