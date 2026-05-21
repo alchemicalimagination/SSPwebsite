@@ -1274,27 +1274,30 @@ section {
 
   /* ── Hero ── */
   #s-hero {
-    padding: 100px 24px 60px;
+    padding: 80px 24px 60px;
     align-items: flex-start;
-    justify-content: flex-end;
+    justify-content: center;
     min-height: 100vh;
   }
-  .hero-brand {
-    width: 220px;
-    height: 120px;
-    top: 16px;
-    right: 16px;
-    clip-path: path('M 60 0 L 205 0 Q 220 0 220 12 L 220 58 Q 220 67 213 69 L 173 81 Q 165 83 165 90 L 165 110 Q 165 120 155 120 L 50 120 Q 42 120 42 112 L 42 75 Q 42 67 34 67 L 5 67 Q 0 67 0 62 L 0 30 Q 0 22 5 19 L 60 0 Z');
-  }
-  .hero-brand-logo { width: 130px; transform: translateY(-0.3cm); }
-  #liquid-metal-brand canvas { width: 100% !important; height: 100% !important; }
-  .hero-center { margin-top: 0; }
+  .hero-brand { display: none; }
+  .hero-center { margin-top: 0; margin-bottom: 32px; }
   .hero-title {
-    font-size: clamp(48px, 14vw, 80px);
+    font-size: clamp(42px, 12vw, 68px);
     text-align: left;
+    line-height: 1.0;
+    word-break: break-word;
   }
   .hero-for { display: none; }
-  .hero-center { margin-bottom: 24px; }
+
+  /* ── Pill — smaller, top left, no overlap ── */
+  .ui-works {
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    bottom: auto;
+    padding: 7px 16px;
+    font-size: 9px;
+  }
 
   /* ── Left marquee ── */
   .left-marquee { display: none; }
