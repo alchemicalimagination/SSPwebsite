@@ -1322,7 +1322,7 @@ section {
 
   /* ── Sections ── */
   section { min-height: auto !important; }
-  #s-hero { min-height: 100vh !important; }
+  #s-hero { min-height: auto !important; }
 
   /* ── Studio section ── */
   #s-studio { padding: 60px 24px; }
@@ -1402,6 +1402,15 @@ section {
 
   /* ── Navigation pills in nav ── */
   .d-badge { font-size: 9px; padding: 8px 10px; }
+  .d-badge--center {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    transform: none !important;
+    align-self: center;
+    margin-bottom: 20px;
+  }
+  .detail-01 { justify-content: flex-start !important; }
 }
 
 @media (max-width: 480px) {
