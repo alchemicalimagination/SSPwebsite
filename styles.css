@@ -1337,16 +1337,17 @@ section {
   .large-claim { font-size: clamp(28px, 8vw, 48px); text-align: left; padding: 0 24px; }
 
   /* ── Desc sections ── */
-  .desc-sec { padding: 40px 24px 0; }
-  #s-desc-01 { margin-top: -2cm; }
-  #s-desc-02 { margin-top: 0; }
-  #s-desc-03 { margin-top: 0; }
-  #s-desc-04 { margin-top: -2cm; }
+  /* ── Reset ALL desktop negative margins ── */
+  #s-desc-01, #s-desc-02, #s-desc-03, #s-desc-04 { margin-top: 0; }
+  #s-detail-02, #s-detail-03, #s-detail-04 { margin-top: 0; }
 
-  /* ── Product cards ── */
-  .s-scan-card { padding: 40px 0; }
-  .pcard { width: 240px; }
-  #s-scan { padding: 0; }
+  /* ── Consistent section spacing ── */
+  .detail-sec { padding: 48px 24px 32px; min-height: auto; }
+  .desc-sec   { padding: 32px 24px; }
+  .s-scan-card { padding: 32px 24px; }
+  #s-studio   { padding: 40px 24px; }
+  #s-scan     { padding: 0; }
+  .pcard      { width: 240px; }
 
   /* ── Detail 04 ── */
   .d04-split { grid-template-columns: 1fr; gap: 24px; }
@@ -1396,7 +1397,7 @@ section {
     font-size: 9px;
     text-align: center;
     width: 100%;
-    margin-top: 2cm;
+    margin-top: 1cm;
   }
 
   /* ── Navigation pills in nav ── */
