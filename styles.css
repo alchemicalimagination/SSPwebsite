@@ -1312,7 +1312,7 @@ section {
     position: relative !important;
     top: auto !important;
     left: auto !important;
-    margin: 1cm auto 2cm;
+    margin: 1cm auto 0.8cm;
     padding: 10px 24px;
     font-size: 11px;
   }
