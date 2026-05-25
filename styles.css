@@ -168,67 +168,7 @@ section { background: transparent !important; z-index: 4 !important; }
   to { --iri-angle: 360deg; }
 }
 
-/* ─── Fixed: Receipt ─── */
-.ui-receipt {
-  position: fixed;
-  bottom: 1mm;
-  right: 1mm;
-  z-index: 200;
-  font-family: 'Courier New', monospace;
-  font-size: 10px;
-  line-height: 1.7;
-  letter-spacing: 0.05em;
-  background: rgba(255,252,250,0.15);
-  backdrop-filter: blur(28px) saturate(160%);
-  -webkit-backdrop-filter: blur(28px) saturate(160%);
-  border: none;
-  color: #0c0c0c;
-  padding: 12px 14px;
-  min-width: 210px;
-  text-transform: uppercase;
-  border-radius: 3px;
-  isolation: isolate;
-}
-/* iridescent border only — mask trick so background stays clean */
-.ui-receipt::before {
-  content: '';
-  position: absolute;
-  inset: -1px;
-  border-radius: 4px;
-  padding: 1px;
-  background: conic-gradient(
-    from var(--iri-angle),
-    rgba(255,180,180,0.8),
-    rgba(255,230,120,0.8),
-    rgba(160,255,200,0.8),
-    rgba(130,190,255,0.8),
-    rgba(210,150,255,0.8),
-    rgba(255,180,180,0.8)
-  );
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  mask-composite: exclude;
-  animation: iriSpin 6s linear infinite;
-  pointer-events: none;
-}
-.r-row { display: flex; justify-content: space-between; }
-.r-div { color: rgba(0,0,0,0.22); }
-.r-title { text-align: center; font-weight: 700; }
 
-@keyframes printLine {
-  from { max-height: 0; opacity: 0; }
-  to   { max-height: 3em; opacity: 1; }
-}
-#receipt-lines p {
-  overflow: hidden;
-  max-height: 3em;
-}
-#receipt-lines p.r-print {
-  max-height: 0;
-  opacity: 0;
-  animation: printLine 0.1s ease-out forwards;
-}
 
 /* ─── Left vertical scrolling marquee ─── */
 .left-marquee {
@@ -1266,7 +1206,6 @@ section {
   #ascii-overlay { opacity: 0.4; }
 
   /* ── Fixed UI ── */
-  .ui-receipt { display: none; }
   .ui-works {
     position: fixed;
     top: 16px;
