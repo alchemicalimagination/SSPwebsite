@@ -416,25 +416,33 @@ document.querySelectorAll('.d-badge, .d-hot, .d-icons, .circle-badge, .d-sub, .d
 function initScaleAnimation() {
   const valueEl  = document.querySelector('.scale-value');
   const statusEl = document.querySelector('.scale-status');
+  const labelEl  = document.querySelector('.scale-label');
   const drop     = document.querySelector('.scale-drop');
   const liquid   = document.querySelector('.scale-liquid');
   const readout  = document.querySelector('.scale-readout');
 
   if (!valueEl || !drop || !liquid) return;
 
+  const products = [
+    { name: 'COLOUR',    unit: 'g',  steps: [18.0, 36.0, 52.0] },
+    { name: 'OX 20 VOL', unit: 'ml', steps: [20.0, 40.0, 60.0] },
+    { name: 'TONER',     unit: 'g',  steps: [12.0, 24.0, 35.0] },
+  ];
+  let productIdx = 0;
   const weight = { val: 0.0 };
 
-  function reset() {
+  function reset(p) {
     gsap.set(drop,   { y: 0, opacity: 0 });
     gsap.set(liquid, { scaleY: 0.1, transformOrigin: 'bottom center' });
     weight.val = 0.0;
-    valueEl.textContent      = '0.0 g';
-    statusEl.textContent     = 'MEASURING';
-    statusEl.style.color     = 'rgba(255,255,255,0.5)';
+    if (labelEl) labelEl.textContent = p.name;
+    valueEl.textContent        = '0.0 ' + p.unit;
+    statusEl.textContent       = 'MEASURING';
+    statusEl.style.color       = 'rgba(255,255,255,0.5)';
     statusEl.style.borderColor = 'rgba(255,255,255,0.3)';
   }
 
-  function dropStep(tl, targetScaleY, targetVal, initialDelay) {
+  function dropStep(tl, targetScaleY, targetVal, unit, initialDelay) {
     tl.set(drop, { y: 0, opacity: 0 })
       .to(drop, { opacity: 1, duration: 0.06, delay: initialDelay })
       .to(drop, { y: 68, duration: 0.52, ease: 'power2.in' })
@@ -442,25 +450,27 @@ function initScaleAnimation() {
       .to(liquid, { scaleY: targetScaleY, duration: 0.28, ease: 'power2.out' }, '-=0.06')
       .to(weight, {
         val: targetVal, duration: 0.32, ease: 'power1.out',
-        onUpdate: () => { valueEl.textContent = weight.val.toFixed(1) + ' g'; }
+        onUpdate: () => { valueEl.textContent = weight.val.toFixed(1) + ' ' + unit; }
       }, '-=0.2');
   }
 
   function runCycle() {
-    reset();
+    const p = products[productIdx];
+    productIdx = (productIdx + 1) % products.length;
+    reset(p);
+
     const tl = gsap.timeline({ onComplete: () => gsap.delayedCall(0.3, runCycle) });
 
-    dropStep(tl, 0.36, 17.5, 0.2);
-    dropStep(tl, 0.68, 34.2, 0.7);
-    dropStep(tl, 1.0,  52.0, 0.7);
+    dropStep(tl, 0.36, p.steps[0], p.unit, 0.2);
+    dropStep(tl, 0.68, p.steps[1], p.unit, 0.7);
+    dropStep(tl, 1.0,  p.steps[2], p.unit, 0.7);
 
     tl.call(() => {
-        statusEl.textContent     = 'SAVED';
-        statusEl.style.color     = '#a8dadc';
+        statusEl.textContent       = 'SAVED';
+        statusEl.style.color       = '#a8dadc';
         statusEl.style.borderColor = '#a8dadc';
       })
       .to({}, { duration: 2.2 })
-      // Smooth drain before reset
       .to(readout, { opacity: 0, duration: 0.4 })
       .to(liquid,  { scaleY: 0.1, duration: 0.55, ease: 'power2.in' }, '-=0.25')
       .to(readout, { opacity: 1, duration: 0.3 });
