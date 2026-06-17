@@ -676,6 +676,7 @@ section {
   border-radius: 4px;
   padding: 10px;
   box-sizing: border-box;
+  overflow: hidden;
 }
 .cc-header {
   display: flex;

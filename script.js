@@ -488,12 +488,15 @@ function initArchiveAnimation() {
   const card = document.querySelector('.client-card');
   if (!card) return;
 
-  const secTitle = card.querySelector('.cc-sec-title');
-  const swatches = card.querySelectorAll('.cc-swatch');
-  const rows     = card.querySelectorAll('.cc-detail-row');
-  const tagline  = card.querySelector('.cc-tagline');
+  const secTitle  = card.querySelector('.cc-sec-title');
+  const swatches  = card.querySelectorAll('.cc-swatch');
+  const rows      = card.querySelectorAll('.cc-detail-row');
+  const tagline   = card.querySelector('.cc-tagline');
+  const ccSection = card.querySelector('.cc-section');
+  const ccDetails = card.querySelector('.cc-details');
+  const slideEls  = [ccSection, ccDetails, tagline];
 
-  // Same client, 3 different profile sections
+  // Same client, 3 different profile sections — header stays fixed
   const views = [
     {
       title: 'FORMULA HISTORY',
@@ -545,9 +548,14 @@ function initArchiveAnimation() {
   function cycle() {
     idx = (idx + 1) % views.length;
     gsap.timeline({ onComplete: () => gsap.delayedCall(3, cycle) })
-      .to(card, { opacity: 0, y: -6, duration: 0.35, ease: 'power2.in' })
-      .call(() => setView(views[idx]))
-      .to(card, { opacity: 1, y: 0,  duration: 0.4,  ease: 'power2.out' });
+      // Slide body out to the left
+      .to(slideEls, { x: -18, opacity: 0, duration: 0.3, ease: 'power2.in', stagger: 0.03 })
+      .call(() => {
+        setView(views[idx]);
+        gsap.set(slideEls, { x: 18 }); // reset to right side, ready to slide in
+      })
+      // Slide new content in from the right
+      .to(slideEls, { x: 0, opacity: 1, duration: 0.38, ease: 'power2.out', stagger: 0.03 });
   }
 
   gsap.delayedCall(3, cycle);
