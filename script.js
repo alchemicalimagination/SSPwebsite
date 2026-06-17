@@ -118,6 +118,55 @@ resizeFlower();
 // ── VERTICAL MARQUEES ──────────────────────────────────
 gsap.fromTo('.left-marquee-track', { y: '-50%' }, { y: '0%', duration: 22, ease: 'none', repeat: -1 });
 
+// ── FIXED BADGE ────────────────────────────────────────
+const fixedBadge = document.querySelector('.fixed-badge');
+const badgeNum   = fixedBadge?.querySelector('b');
+const badgeLabel = fixedBadge?.querySelector('small');
+
+const badgeData = [
+  { num: '#01', label: 'INVENTORY<br>PRECISION',  section: '#s-scan' },
+  { num: '#02', label: 'CLIENT<br>ARCHIVE',        section: '#s-scan-02' },
+  { num: '#03', label: 'ADMIN<br>INTELLIGENCE',    section: '#s-scan-03' },
+  { num: '#04', label: 'SALON<br>MANAGEMENT',      section: '#s-scan-04' }
+];
+
+function setBadge(num, label) {
+  if (!badgeNum || !badgeLabel) return;
+  badgeNum.textContent = num;
+  badgeLabel.innerHTML = label;
+}
+
+if (fixedBadge) {
+  // Show when card #01 starts its collapse phase, hide if scrolling back up
+  ScrollTrigger.create({
+    trigger: '#s-scan',
+    start: 'top top',
+    onEnter:     () => gsap.to(fixedBadge, { opacity: 1, duration: 0.4 }),
+    onLeaveBack: () => gsap.to(fixedBadge, { opacity: 0, duration: 0.3 })
+  });
+
+  // Update badge label as each product card section enters
+  badgeData.forEach(({ num, label, section }, i) => {
+    ScrollTrigger.create({
+      trigger: section,
+      start: 'top 60%',
+      onEnter:     () => setBadge(num, label),
+      onLeaveBack: () => {
+        const prev = badgeData[i - 1];
+        if (prev) setBadge(prev.num, prev.label);
+      }
+    });
+  });
+
+  // Hide badge when footer slides into view
+  ScrollTrigger.create({
+    trigger: '#s-scan-04',
+    start: `top+=${window.innerHeight} top`,
+    onEnter:     () => gsap.to(fixedBadge, { opacity: 0, duration: 0.3 }),
+    onLeaveBack: () => gsap.to(fixedBadge, { opacity: 1, duration: 0.3 })
+  });
+}
+
 // ── THREE.JS SCENE ─────────────────────────────────────
 try {
   const scene    = new THREE.Scene();
@@ -210,8 +259,6 @@ try {
 
 // ── CARD ANIMATION: desktop only ──────────────────────
 if (window.innerWidth > 768) {
-const card01 = document.getElementById('pcard-01');
-
 gsap.set('#pcard-01', { overflow: 'hidden' });
 // Start fully empty — all content and dividers hidden
 gsap.set('#pcard-01 .num-next',    { x: 120, opacity: 0 });
@@ -352,15 +399,19 @@ document.querySelectorAll('.two-col p, .three-col p, .studio-cols p').forEach(el
 
 
 // ── FOOTER — slides up over pinned #04 square ──────────
-gsap.set('#footer', { yPercent: 100 });
-gsap.timeline({
-  scrollTrigger: {
-    trigger: '#s-scan-04',
-    start: `top+=${window.innerHeight} top`,
-    end:   `top+=${window.innerHeight * 2} top`,
-    scrub: 1
-  }
-}).to('#footer', { yPercent: 0, ease: 'none' });
+if (window.innerWidth > 768) {
+  gsap.set('#footer', { yPercent: 100 });
+  gsap.timeline({
+    scrollTrigger: {
+      trigger: '#s-scan-04',
+      start: `top+=${window.innerHeight} top`,
+      end:   `top+=${window.innerHeight * 2} top`,
+      scrub: 1
+    }
+  }).to('#footer', { yPercent: 0, ease: 'none' });
+} else {
+  gsap.set('#footer', { yPercent: 0 });
+}
 
 // ── SCROLL REVEAL ANIMATIONS ───────────────────────────
 // Simple opacity reveals — no clipPath hiding content
@@ -407,3 +458,190 @@ document.querySelectorAll('.d-badge, .d-hot, .d-icons, .circle-badge, .d-sub, .d
     opacity: 0, y: 16, duration: 0.7, ease: 'power3.out'
   });
 });
+
+// ── CARD INLINE ANIMATIONS ─────────────────────────────
+function initScaleAnimation() {
+  const valueEl = document.querySelector('.scale-value');
+  const statusEl = document.querySelector('.scale-status');
+  const drop = document.querySelector('.scale-drop');
+  const liquid = document.querySelector('.scale-liquid');
+
+  if (!valueEl || !drop || !liquid) return;
+
+  const tl = gsap.timeline({ repeat: -1, repeatDelay: 1.5 });
+  const weightObj = { val: 0.0 };
+  
+  tl.set(drop, { y: 0, opacity: 0 })
+    .set(liquid, { scaleY: 0.1, transformOrigin: "bottom center" })
+    .set(weightObj, { val: 0.0 })
+    .set(statusEl, { textContent: "ACTIVE", borderColor: "rgba(255,255,255,0.3)", color: "rgba(255,255,255,0.5)" })
+    .add(() => { valueEl.textContent = "0.0 g"; });
+
+  // Drop 1
+  tl.to(drop, { opacity: 1, duration: 0.05 })
+    .to(drop, { y: 65, duration: 0.6, ease: "power1.in" })
+    .to(drop, { opacity: 0, duration: 0.05 })
+    .to(liquid, { scaleY: 0.4, duration: 0.3, ease: "power2.out" }, "-=0.05")
+    .to(weightObj, {
+      val: 18.4,
+      duration: 0.4,
+      ease: "power1.out",
+      onUpdate: () => { valueEl.textContent = weightObj.val.toFixed(1) + " g"; }
+    }, "-=0.3");
+
+  // Drop 2
+  tl.set(drop, { y: 0, opacity: 0 })
+    .to(drop, { opacity: 1, duration: 0.05, delay: 0.4 })
+    .to(drop, { y: 65, duration: 0.6, ease: "power1.in" })
+    .to(drop, { opacity: 0, duration: 0.05 })
+    .to(liquid, { scaleY: 0.75, duration: 0.3, ease: "power2.out" }, "-=0.05")
+    .to(weightObj, {
+      val: 34.1,
+      duration: 0.4,
+      ease: "power1.out",
+      onUpdate: () => { valueEl.textContent = weightObj.val.toFixed(1) + " g"; }
+    }, "-=0.3");
+
+  // Drop 3
+  tl.set(drop, { y: 0, opacity: 0 })
+    .to(drop, { opacity: 1, duration: 0.05, delay: 0.4 })
+    .to(drop, { y: 65, duration: 0.6, ease: "power1.in" })
+    .to(drop, { opacity: 0, duration: 0.05 })
+    .to(liquid, { scaleY: 1.0, duration: 0.3, ease: "power2.out" }, "-=0.05")
+    .to(weightObj, {
+      val: 42.5,
+      duration: 0.4,
+      ease: "power1.out",
+      onUpdate: () => { valueEl.textContent = weightObj.val.toFixed(1) + " g"; }
+    }, "-=0.3")
+    .to(statusEl, {
+      textContent: "SAVED",
+      color: "#a8dadc",
+      borderColor: "#a8dadc",
+      duration: 0.3
+    })
+    .to({}, { duration: 2 });
+}
+
+function initArchiveAnimation() {
+  const card = document.querySelector('.client-card');
+  if (!card) return;
+
+  const name = card.querySelector('.cc-name');
+  const id = card.querySelector('.cc-id');
+  const swatches = card.querySelectorAll('.cc-swatch');
+  const detail1 = card.querySelector('.cc-detail-row:nth-child(1) span:last-child');
+  const detail2 = card.querySelector('.cc-detail-row:nth-child(2) span:last-child');
+  const tag = card.querySelector('.cc-tagline');
+
+  const tl = gsap.timeline({ repeat: -1, repeatDelay: 2 });
+
+  tl.to(card, { opacity: 0, y: -5, duration: 0.4, delay: 3 })
+    .call(() => {
+      name.textContent = "EMILY R.";
+      id.textContent = "#8823";
+      swatches[0].style.background = "#DDA15E";
+      swatches[1].style.background = "#BC6C25";
+      swatches[2].style.background = "#588157";
+      detail1.textContent = "6A + 6GG (1:2)";
+      detail2.textContent = "10 VOL";
+      tag.textContent = "UPDATED 10M AGO";
+    })
+    .to(card, { opacity: 1, y: 0, duration: 0.4 })
+    .to(card, { opacity: 0, y: -5, duration: 0.4, delay: 3 })
+    .call(() => {
+      name.textContent = "SARAH M.";
+      id.textContent = "#9481";
+      swatches[0].style.background = "#EED6A5";
+      swatches[1].style.background = "#D4A373";
+      swatches[2].style.background = "#B5838D";
+      detail1.textContent = "7N + 8GG (1:1)";
+      detail2.textContent = "20 VOL";
+      tag.textContent = "SAVED 2 MINS AGO";
+    })
+    .to(card, { opacity: 1, y: 0, duration: 0.4 });
+}
+
+function initAdminAnimation() {
+  const line = document.querySelector('.graph-line');
+  const dot = document.querySelector('.graph-dot');
+  const valueEl = document.querySelector('.ad-value');
+  const changeEl = document.querySelector('.ad-change');
+
+  if (!line || !dot || !valueEl) return;
+
+  const length = line.getTotalLength ? line.getTotalLength() : 110;
+  gsap.set(line, { strokeDasharray: length, strokeDashoffset: length });
+  gsap.set(dot, { opacity: 0 });
+
+  const tl = gsap.timeline({ repeat: -1, repeatDelay: 2 });
+  const salesVal = { val: 12400 };
+
+  tl.set(line, { strokeDashoffset: length })
+    .set(dot, { opacity: 0 })
+    .set(salesVal, { val: 12400 })
+    .set(changeEl, { textContent: "+0.0%" })
+    .to(line, { strokeDashoffset: 0, duration: 1.5, ease: "power2.out" })
+    .to(salesVal, {
+      val: 14820,
+      duration: 1.5,
+      ease: "power2.out",
+      onUpdate: () => {
+        valueEl.textContent = "$" + Math.floor(salesVal.val).toLocaleString();
+      }
+    }, 0)
+    .to(changeEl, {
+      textContent: "+24.3%",
+      duration: 0.5,
+      ease: "none"
+    }, 1.0)
+    .to(dot, { opacity: 1, scale: 1.4, duration: 0.3 })
+    .to(dot, { scale: 1.0, duration: 0.3 })
+    .to({}, { duration: 2 });
+}
+
+function initBookingAnimation() {
+  const container = document.querySelector('.booking-calendar');
+  if (!container) return;
+
+  const emptySlot = container.querySelector('.bc-slot.empty');
+  const bookedSlot = container.querySelector('.bc-slot.booked');
+
+  if (!emptySlot || !bookedSlot) return;
+
+  const tl = gsap.timeline({ repeat: -1, repeatDelay: 2.5 });
+
+  tl.set(bookedSlot, { opacity: 0, height: 0, paddingTop: 0, paddingBottom: 0, marginTop: 0, overflow: 'hidden' })
+    .set(emptySlot, { opacity: 1, height: 'auto', padding: '5px 6px', display: 'flex' })
+    .to(emptySlot, { opacity: 0.3, duration: 0.5, delay: 1.5 })
+    .to(emptySlot, { opacity: 0, height: 0, padding: 0, duration: 0.3 })
+    .to(bookedSlot, { 
+      opacity: 1, 
+      height: 'auto', 
+      paddingTop: 5, 
+      paddingBottom: 5, 
+      marginTop: 0, 
+      duration: 0.5, 
+      ease: "power2.out" 
+    })
+    .fromTo(bookedSlot.querySelector('.bc-status-dot'), 
+      { scale: 0, opacity: 0 }, 
+      { scale: 1, opacity: 1, duration: 0.3, ease: "back.out(2)" }
+    )
+    .to({}, { duration: 3.5 });
+}
+
+// Start visual loops once DOM loaded
+document.addEventListener('DOMContentLoaded', () => {
+  initScaleAnimation();
+  initArchiveAnimation();
+  initAdminAnimation();
+  initBookingAnimation();
+});
+// Also fallback if DOM already loaded
+if (document.readyState === "complete" || document.readyState === "interactive") {
+  initScaleAnimation();
+  initArchiveAnimation();
+  initAdminAnimation();
+  initBookingAnimation();
+}

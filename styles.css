@@ -454,10 +454,12 @@ section {
   top: 24px;
   left: 24px;
   z-index: 200;
-  border: 1px solid var(--fg);
+  border: 1px solid rgba(255,255,255,0.35);
   padding: 10px 14px;
   text-align: center;
-  background: var(--bg);
+  background: rgba(255,255,255,0.18);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
   opacity: 0;
   pointer-events: none;
   line-height: 1.3;
@@ -467,11 +469,13 @@ section {
   font-size: 20px;
   font-weight: 300;
   letter-spacing: -0.02em;
+  color: #fff;
 }
 .fixed-badge small {
   font-size: 8px;
   font-weight: 400;
   letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.75);
 }
 
 /* ── Large section background text (left edge, per section) ── */
@@ -587,18 +591,306 @@ section {
 .pc-mid {
   flex: 1;
   display: flex;
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
-  padding: 16px;
-  min-height: 200px;
+  justify-content: space-between;
+  padding: 12px;
+  min-height: 0;
+  gap: 10px;
 }
 .pc-slogan {
   font-size: 8px;
   font-weight: 400;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   writing-mode: vertical-rl;
   transform: rotate(180deg);
-  color: var(--mid);
+  color: rgba(255,255,255,0.4);
+  flex-shrink: 0;
+  margin: 0;
+}
+
+/* --- Card Visual Containers --- */
+.pc-visual {
+  flex: 1;
+  height: 190px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.06);
+  background: rgba(255,255,255,0.03);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  overflow: hidden;
+  position: relative;
+  box-shadow: inset 0 1px 1px rgba(255,255,255,0.05);
+}
+
+/* --- Visual 1: Scale --- */
+.visual-scale {
+  padding: 8px;
+}
+.svg-inventory {
+  width: 100%;
+  height: 110px;
+}
+.scale-readout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: -8px;
+  font-family: monospace;
+  text-align: center;
+}
+.scale-label {
+  font-size: 6px;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 0.1em;
+}
+.scale-value {
+  font-size: 13px;
+  font-weight: 300;
+  color: #fff;
+  letter-spacing: 0.05em;
+  margin: 2px 0;
+}
+.scale-status {
+  font-size: 6px;
+  color: rgba(255,255,255,0.5);
+  border: 0.5px solid rgba(255,255,255,0.3);
+  padding: 1px 5px;
+  border-radius: 9px;
+  letter-spacing: 0.1em;
+  transition: all 0.3s ease;
+}
+
+/* --- Visual 2: Archive Client Card --- */
+.visual-archive {
+  padding: 10px;
+}
+.client-card {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 4px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+.cc-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.cc-name {
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+}
+.cc-id {
+  font-size: 7px;
+  color: rgba(255,255,255,0.3);
+}
+.cc-divider {
+  height: 1px;
+  background: rgba(255,255,255,0.08);
+  margin: 5px 0;
+}
+.cc-section {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  align-items: flex-start;
+}
+.cc-sec-title {
+  font-size: 6px;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 0.08em;
+}
+.cc-swatches {
+  display: flex;
+  gap: 4px;
+}
+.cc-swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 0.5px solid rgba(255,255,255,0.2);
+}
+.cc-details {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-top: 4px;
+}
+.cc-detail-row {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 6.5px;
+  color: rgba(255,255,255,0.6);
+}
+.cc-detail-row span:last-child {
+  color: #fff;
+  font-weight: 500;
+}
+.cc-badge-ppd {
+  background: rgba(255, 255, 255, 0.12);
+  padding: 1px 4px;
+  border-radius: 2px;
+  font-size: 5.5px;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+.cc-tagline {
+  font-size: 5.5px;
+  color: rgba(255,255,255,0.25);
+  text-align: right;
+  margin-top: 4px;
+  letter-spacing: 0.05em;
+}
+
+/* --- Visual 3: Admin Graph --- */
+.visual-admin {
+  padding: 8px 10px;
+}
+.admin-dashboard {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.ad-metric {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.ad-title {
+  font-size: 6px;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 0.08em;
+}
+.ad-value {
+  font-size: 14px;
+  font-weight: 300;
+  letter-spacing: 0.05em;
+  font-family: monospace;
+}
+.ad-change {
+  font-size: 6.5px;
+  color: #a8dadc;
+  letter-spacing: 0.05em;
+  margin-top: -1px;
+}
+.ad-graph {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  margin: 4px 0;
+}
+.svg-graph {
+  width: 100%;
+  height: 55px;
+  overflow: visible;
+}
+.ad-row {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  padding-top: 5px;
+}
+.ad-submetric {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  align-items: flex-start;
+}
+.ad-submetric span {
+  font-size: 5.5px;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 0.05em;
+}
+.ad-submetric b {
+  font-size: 8px;
+  font-weight: 500;
+}
+
+/* --- Visual 4: Booking Schedule --- */
+.visual-booking {
+  padding: 10px;
+}
+.booking-calendar {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  justify-content: center;
+}
+.bc-time-marker {
+  font-size: 6px;
+  color: rgba(255,255,255,0.3);
+  letter-spacing: 0.05em;
+  text-align: left;
+}
+.bc-slot {
+  border-radius: 4px;
+  padding: 5px 6px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+.bc-slot.empty {
+  border: 1px dashed rgba(255,255,255,0.1);
+  background: transparent;
+}
+.bc-slot-time {
+  font-size: 6px;
+  color: rgba(255,255,255,0.4);
+}
+.bc-slot-action {
+  font-size: 5.5px;
+  color: rgba(255,255,255,0.25);
+  letter-spacing: 0.05em;
+}
+.bc-slot.booked {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  position: relative;
+  overflow: hidden;
+}
+.bc-booked-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  text-align: left;
+}
+.bc-client {
+  font-size: 8px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+.bc-service {
+  font-size: 6px;
+  color: rgba(255,255,255,0.6);
+}
+.bc-stylist {
+  font-size: 5px;
+  color: rgba(255,255,255,0.4);
+}
+.bc-status-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #a8dadc;
+  box-shadow: 0 0 4px #a8dadc;
 }
 
 .pc-bot {
@@ -659,6 +951,48 @@ section {
   padding: 60px var(--margin) 80px var(--margin);
   min-height: 100vh;
   position: relative;
+}
+
+/* --- Description Side-by-Side Layout --- */
+.desc-side-by-side {
+  display: grid !important;
+  grid-template-columns: 4fr 6fr !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 40px max(var(--margin), calc((100% - 1100px) / 2)) !important;
+  gap: 60px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  min-height: auto !important;
+  flex-direction: row !important;
+}
+
+.desc-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  box-sizing: border-box;
+}
+
+.desc-left .large-claim {
+  font-size: clamp(24px, 2.8vw, 42px) !important;
+  font-weight: 300 !important;
+  line-height: 1.15 !important;
+  letter-spacing: -0.01em !important;
+  word-spacing: normal !important;
+  text-align: left !important;
+  margin: 0 !important;
+  text-transform: uppercase !important;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+.desc-right {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* ── Detail #01 specific ── */
@@ -806,6 +1140,7 @@ section {
 #s-desc-03   { margin-top: -2cm; }
 #s-detail-04 { margin-top: -10cm; }
 #s-desc-04   { margin-top: -12cm; }
+
 
 .three-col {
   display: grid;
@@ -1206,6 +1541,7 @@ section {
   #ascii-overlay { opacity: 0.4; }
 
   /* ── Fixed UI ── */
+  .fixed-badge { display: none; }
   .ui-works {
     position: fixed;
     top: 16px;
@@ -1274,7 +1610,26 @@ section {
   .detail-sec { padding: 60px 24px; min-height: auto; }
   .d-title { font-size: clamp(40px, 12vw, 72px); }
   .d-title--01 { font-size: clamp(48px, 14vw, 90px); }
-  .large-claim { font-size: clamp(28px, 8vw, 48px); text-align: left; padding: 0 24px; }
+
+  /* ── Desc sections ── */
+  .desc-side-by-side {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 24px !important;
+    padding: 32px 24px !important;
+  }
+  .desc-left {
+    width: 100% !important;
+  }
+  .desc-left .large-claim {
+    font-size: clamp(24px, 6vw, 32px) !important;
+    text-align: left !important;
+    padding: 0 !important;
+  }
+  .desc-right {
+    width: 100% !important;
+  }
 
   /* ── Desc sections ── */
   /* ── Reset ALL desktop negative margins ── */
@@ -1282,8 +1637,6 @@ section {
   #s-detail-02, #s-detail-03, #s-detail-04 { margin-top: 0; }
 
   /* ── Consistent section spacing ── */
-  .detail-sec { padding: 48px 24px 32px; min-height: auto; }
-  .desc-sec   { padding: 32px 24px; }
   .s-scan-card { padding: 32px 24px; }
   #s-studio   { padding: 40px 24px; }
   #s-scan     { padding: 0; }

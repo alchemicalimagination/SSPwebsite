@@ -34,6 +34,9 @@
 
 
 
+    <!-- Fixed: current product badge -->
+    <div class="fixed-badge"><b>#01</b><small>INVENTORY<br>PRECISION</small></div>
+
     <!-- Left vertical scrolling marquee -->
     <div class="left-marquee">
       <div class="left-marquee-track">
@@ -68,10 +71,10 @@
     ───────────────────────────────── -->
     <section id="s-studio">
       <nav class="prod-nav">
-        <a href="#">INVENTORY PRECISION <em>#01</em></a>
-        <a href="#">CLIENT ARCHIVE <em>#02</em></a>
-        <a href="#">ADMIN ANALYTICS <em>#03</em></a>
-        <a href="#">SALON MANAGEMENT <em>#04</em></a>
+        <a href="#s-detail-01">INVENTORY PRECISION <em>#01</em></a>
+        <a href="#s-detail-02">CLIENT ARCHIVE <em>#02</em></a>
+        <a href="#s-detail-03">ADMIN ANALYTICS <em>#03</em></a>
+        <a href="#s-detail-04">SALON MANAGEMENT <em>#04</em></a>
       </nav>
 
       <h2 class="studio-claim">
@@ -104,17 +107,20 @@
     <!-- ─────────────────────────────────
          SECTION 7 — DESC #01
     ───────────────────────────────── -->
-    <section id="s-desc-01" class="desc-sec">
-      <div class="two-col">
-        <div>
-          <p>EVERY FORMULA MIXED CARRIES A COST. EVERY GRAM USED IS DATA. STUDIO STYLE PRO TRACKS PRODUCT CONSUMPTION DOWN TO THE ML — PER STYLIST, PER SERVICE, PER CLIENT.</p>
-        </div>
-        <div>
-          <p>LOW-STOCK ALERTS, USAGE REPORTS, AND REAL-TIME SYNC MEAN YOU NEVER ORDER BLIND AGAIN. YOUR STOCK ROOM BECOMES A PRECISION SYSTEM — NOT A GUESSING GAME.</p>
+    <section id="s-desc-01" class="desc-sec desc-side-by-side">
+      <div class="desc-left">
+        <h2 class="large-claim">PROTECT YOUR MARGINS</h2>
+      </div>
+      <div class="desc-right">
+        <div class="two-col">
+          <div>
+            <p>EVERY FORMULA MIXED CARRIES A COST. EVERY GRAM USED IS DATA. STUDIO STYLE PRO TRACKS PRODUCT CONSUMPTION DOWN TO THE ML — PER STYLIST, PER SERVICE, PER CLIENT.</p>
+          </div>
+          <div>
+            <p>LOW-STOCK ALERTS, USAGE REPORTS, AND REAL-TIME SYNC MEAN YOU NEVER ORDER BLIND AGAIN. YOUR STOCK ROOM BECOMES A PRECISION SYSTEM — NOT A GUESSING GAME.</p>
+          </div>
         </div>
       </div>
-      <h2 class="large-claim">PROTECT YOUR MARGINS</h2>
-
     </section>
 
     <!-- ─────────────────────────────────
@@ -135,7 +141,26 @@
           </div>
           <p class="pc-tag">PROTECT YOUR MARGINS</p>
         </div>
-        <div class="pc-mid"><p class="pc-slogan">EVERY DROP COUNTS.</p></div>
+        <div class="pc-mid">
+          <p class="pc-slogan">EVERY DROP COUNTS.</p>
+          <div class="pc-visual visual-scale">
+            <svg viewBox="0 0 120 120" class="svg-inventory">
+              <line x1="10" y1="90" x2="110" y2="90" stroke="rgba(255,255,255,0.15)" stroke-width="1" />
+              <line x1="20" y1="95" x2="100" y2="95" stroke="rgba(255,255,255,0.08)" stroke-width="1" />
+              <rect x="30" y="80" width="60" height="8" rx="2" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.2)" stroke-width="0.5" />
+              <line x1="35" y1="88" x2="85" y2="88" stroke="rgba(255,255,255,0.3)" stroke-width="1" />
+              <path d="M 40 55 C 40 75, 80 75, 80 55 Z" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.25)" stroke-width="0.75" />
+              <path class="scale-liquid" d="M 42 63 C 48 70, 72 70, 78 63 C 78 63, 78 74, 60 74 C 42 74, 42 63, 42 63 Z" fill="rgba(255,255,255,0.25)" />
+              <circle class="scale-drop" cx="60" cy="25" r="2" fill="#fff" opacity="0" />
+              <rect x="57" y="10" width="6" height="10" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.2)" stroke-width="0.5" />
+            </svg>
+            <div class="scale-readout">
+              <span class="scale-label">MIX WEIGHT</span>
+              <span class="scale-value">0.0 g</span>
+              <span class="scale-status">ACTIVE</span>
+            </div>
+          </div>
+        </div>
         <div class="pc-bot">
           <div class="pc-bc-wrap"><img src="./assets/barcode.svg" alt="" class="pc-barcode" /></div>
           <span class="pc-purchased">PURCHASED</span>
@@ -162,17 +187,25 @@
          SECTION 5 — DETAIL #02: VISUAL LANGUAGES
     ───────────────────────────────── -->
     <section id="s-detail-02" class="detail-sec">
+      <div class="d-badge d-badge--center">
+        <b>#02</b>
+        <small>CLIENT<br>ARCHIVE</small>
+      </div>
       <h2 class="d-title">THE BIOGRAPHY<br>OF BEAUTY</h2>
     </section>
 
     <!-- DESC #02 -->
-    <section id="s-desc-02" class="desc-sec">
-      <div class="three-col">
-        <p>EVERY CLIENT WHO SITS IN YOUR CHAIR ARRIVES WITH A HISTORY. FORMULAS THAT WORK. PREFERENCES THAT MATTER. NOTES THAT CHANGE EVERYTHING. THE CLIENT ARCHIVE STORES IT ALL — ACCESSIBLE IN SECONDS.</p>
-        <p>FROM THE FIRST APPOINTMENT TO THE HUNDREDTH, EVERY TREATMENT IS RECORDED. EVERY COLOR FORMULA SAVED. EVERY ALLERGY FLAGGED. YOUR ENTIRE TEAM KNOWS YOUR CLIENTS AS WELL AS YOU DO — ALWAYS.</p>
-        <p>YOUR MOST LOYAL CLIENTS DESERVE TO BE REMEMBERED IN FULL. LOYALTY TIERS, REWARD HISTORY, FAVORITE STYLIST — ALL OF IT, ORGANIZED AND READY BEFORE THEY SIT DOWN.</p>
+    <section id="s-desc-02" class="desc-sec desc-side-by-side">
+      <div class="desc-left">
+        <h2 class="large-claim">EVERY CLIENT HAS A STORY — WE BUILD THE TOOLS TO NEVER FORGET IT</h2>
       </div>
-      <h2 class="large-claim">EVERY CLIENT HAS A STORY — WE BUILD THE TOOLS TO NEVER FORGET IT</h2>
+      <div class="desc-right">
+        <div class="three-col">
+          <p>EVERY CLIENT WHO SITS IN YOUR CHAIR ARRIVES WITH A HISTORY. FORMULAS THAT WORK. PREFERENCES THAT MATTER. NOTES THAT CHANGE EVERYTHING. THE CLIENT ARCHIVE STORES IT ALL — ACCESSIBLE IN SECONDS.</p>
+          <p>FROM THE FIRST APPOINTMENT TO THE HUNDREDTH, EVERY TREATMENT IS RECORDED. EVERY COLOR FORMULA SAVED. EVERY ALLERGY FLAGGED. YOUR ENTIRE TEAM KNOWS YOUR CLIENTS AS WELL AS YOU DO — ALWAYS.</p>
+          <p>YOUR MOST LOYAL CLIENTS DESERVE TO BE REMEMBERED IN FULL. LOYALTY TIERS, REWARD HISTORY, FAVORITE STYLIST — ALL OF IT, ORGANIZED AND READY BEFORE THEY SIT DOWN.</p>
+        </div>
+      </div>
     </section>
 
     <!-- ─────────────────────────────────
@@ -184,7 +217,41 @@
           <div class="pc-num"><div class="num-track"><b class="num-current">#02</b><b class="num-next">#03</b></div><div class="label-track"><small class="label-current">CLIENT<br>ARCHIVE</small><small class="label-next">ADMIN<br>INTELLIGENCE</small></div></div>
           <p class="pc-tag">EVERY CLIENT HAS A STORY</p>
         </div>
-        <div class="pc-mid"><p class="pc-slogan">THE BIOGRAPHY OF BEAUTY</p></div>
+        <div class="pc-mid">
+          <p class="pc-slogan">THE BIOGRAPHY OF BEAUTY</p>
+          <div class="pc-visual visual-archive">
+            <div class="client-card">
+              <div class="cc-header">
+                <span class="cc-name">SARAH M.</span>
+                <span class="cc-id">#9481</span>
+              </div>
+              <div class="cc-divider"></div>
+              <div class="cc-section">
+                <span class="cc-sec-title">FORMULA HISTORY</span>
+                <div class="cc-swatches">
+                  <span class="cc-swatch" style="background:#EED6A5"></span>
+                  <span class="cc-swatch" style="background:#D4A373"></span>
+                  <span class="cc-swatch" style="background:#B5838D"></span>
+                </div>
+              </div>
+              <div class="cc-details">
+                <div class="cc-detail-row">
+                  <span>BASE</span>
+                  <span>7N + 8GG (1:1)</span>
+                </div>
+                <div class="cc-detail-row">
+                  <span>DEV</span>
+                  <span>20 VOL</span>
+                </div>
+                <div class="cc-detail-row">
+                  <span>ALLERGY</span>
+                  <span class="cc-badge-ppd">PPD FREE</span>
+                </div>
+              </div>
+              <div class="cc-tagline">SAVED 2 MINS AGO</div>
+            </div>
+          </div>
+        </div>
         <div class="pc-bot">
           <div class="pc-bc-wrap"><img src="./assets/barcode.svg" alt="" class="pc-barcode" /></div>
           <span class="pc-purchased">PURCHASED</span>
@@ -211,17 +278,25 @@
          DETAIL #03 — INTERACTIVE WEBSITES
     ───────────────────────────────── -->
     <section id="s-detail-03" class="detail-sec">
+      <div class="d-badge d-badge--center">
+        <b>#03</b>
+        <small>ADMIN<br>INTELLIGENCE</small>
+      </div>
       <h2 class="d-title">SEE EVERYTHING.<br>MISS NOTHING.</h2>
     </section>
 
     <!-- DESC #03 -->
-    <section id="s-desc-03" class="desc-sec">
-      <div class="three-col">
-        <p>REVENUE IS NOT A FEELING — IT IS A NUMBER. STUDIO STYLE PRO SHOWS YOU EXACTLY WHERE IT COMES FROM. TRACK YOUR TOP PERFORMERS, YOUR SLOWEST DAYS, AND YOUR HIGHEST-VALUE CLIENTS IN REAL TIME, FROM ONE DASHBOARD.</p>
-        <p>EXPENSE TRACKING, STYLIST PERFORMANCE, AND CLIENT RETENTION — ALL IN ONE PLACE. NO SPREADSHEETS. NO GUESSWORK. JUST THE CLARITY THAT LETS YOU MAKE CONFIDENT DECISIONS EVERY DAY.</p>
-        <p>LOYALTY REWARDS, PRODUCT SPEND, AND SERVICE TRENDS TELL YOU WHERE YOUR SALON IS GOING — BEFORE YOU GET THERE. DAILY OPERATIONS BECOME STRATEGIC INTELLIGENCE.</p>
+    <section id="s-desc-03" class="desc-sec desc-side-by-side">
+      <div class="desc-left">
+        <h2 class="large-claim">REAL-TIME BUSINESS PULSE</h2>
       </div>
-      <h2 class="large-claim">REAL-TIME BUSINESS PULSE</h2>
+      <div class="desc-right">
+        <div class="three-col">
+          <p>REVENUE IS NOT A FEELING — IT IS A NUMBER. STUDIO STYLE PRO SHOWS YOU EXACTLY WHERE IT COMES FROM. TRACK YOUR TOP PERFORMERS, YOUR SLOWEST DAYS, AND YOUR HIGHEST-VALUE CLIENTS IN REAL TIME, FROM ONE DASHBOARD.</p>
+          <p>EXPENSE TRACKING, STYLIST PERFORMANCE, AND CLIENT RETENTION — ALL IN ONE PLACE. NO SPREADSHEETS. NO GUESSWORK. JUST THE CLARITY THAT LETS YOU MAKE CONFIDENT DECISIONS EVERY DAY.</p>
+          <p>LOYALTY REWARDS, PRODUCT SPEND, AND SERVICE TRENDS TELL YOU WHERE YOUR SALON IS GOING — BEFORE YOU GET THERE. DAILY OPERATIONS BECOME STRATEGIC INTELLIGENCE.</p>
+        </div>
+      </div>
     </section>
 
     <!-- ─────────────────────────────────
@@ -233,7 +308,44 @@
           <div class="pc-num"><div class="num-track"><b class="num-current">#03</b><b class="num-next">#04</b></div><div class="label-track"><small class="label-current">ADMIN<br>INTELLIGENCE</small><small class="label-next">SALON<br>MANAGEMENT</small></div></div>
           <p class="pc-tag">REAL-TIME BUSINESS PULSE</p>
         </div>
-        <div class="pc-mid"><p class="pc-slogan">SALON ANALYTICS & ROI</p></div>
+        <div class="pc-mid">
+          <p class="pc-slogan">SALON ANALYTICS & ROI</p>
+          <div class="pc-visual visual-admin">
+            <div class="admin-dashboard">
+              <div class="ad-metric">
+                <span class="ad-title">NET SALES</span>
+                <span class="ad-value">$12,400</span>
+                <span class="ad-change">+0.0%</span>
+              </div>
+              <div class="ad-graph">
+                <svg viewBox="0 0 100 45" class="svg-graph">
+                  <line x1="0" y1="10" x2="100" y2="10" stroke="rgba(255,255,255,0.05)" stroke-width="0.5" />
+                  <line x1="0" y1="25" x2="100" y2="25" stroke="rgba(255,255,255,0.05)" stroke-width="0.5" />
+                  <line x1="0" y1="40" x2="100" y2="40" stroke="rgba(255,255,255,0.05)" stroke-width="0.5" />
+                  <path d="M 0 45 L 0 35 Q 20 20 40 28 T 80 12 L 100 5 L 100 45 Z" fill="url(#graph-grad)" opacity="0.15" />
+                  <path class="graph-line" d="M 0 35 Q 20 20 40 28 T 80 12 L 100 5" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="1.5" />
+                  <circle class="graph-dot" cx="100" cy="5" r="2.5" fill="#fff" />
+                  <defs>
+                    <linearGradient id="graph-grad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="#ffffff" />
+                      <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+              </div>
+              <div class="ad-row">
+                <div class="ad-submetric">
+                  <span>RETENTION</span>
+                  <b>94%</b>
+                </div>
+                <div class="ad-submetric">
+                  <span>BOOKED</span>
+                  <b>88%</b>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="pc-bot">
           <div class="pc-bc-wrap"><img src="./assets/barcode.svg" alt="" class="pc-barcode" /></div>
           <span class="pc-purchased">PURCHASED</span>
@@ -261,21 +373,29 @@
     ───────────────────────────────── -->
     <section id="s-detail-04" class="detail-sec detail-04">
       <div class="d04-top">
+        <div class="d04-badge">
+          <b>#04</b>
+          <small>SALON<br>MANAGEMENT</small>
+        </div>
         <h2 class="d-title d04-title">THE SALON RUNS.<br>YOU LEAD.</h2>
       </div>
     </section>
 
     <!-- DESC #04 -->
-    <section id="s-desc-04" class="desc-sec">
-      <div class="two-col">
-        <div>
-          <p>APPOINTMENTS, TEAM SCHEDULES, SERVICES, AND BILLING — ALL IN ONE SYSTEM BUILT FOR HOW SALONS ACTUALLY WORK. ASSIGN SERVICES PER STYLIST. MANAGE MULTIPLE LOCATIONS. NEVER DOUBLE-BOOK AGAIN.</p>
-        </div>
-        <div>
-          <p>STUDIO STYLE PRO REMOVES THE FRICTION BETWEEN MANAGING YOUR TEAM AND LEADING IT. YOUR STAFF KNOWS THEIR SCHEDULE. YOUR CLIENTS KNOW WHERE TO BOOK. YOU KNOW EVERYTHING.</p>
+    <section id="s-desc-04" class="desc-sec desc-side-by-side">
+      <div class="desc-left">
+        <h2 class="large-claim">ZERO DOUBLE BOOKINGS. ZERO EXCUSES.</h2>
+      </div>
+      <div class="desc-right">
+        <div class="two-col">
+          <div>
+            <p>APPOINTMENTS, TEAM SCHEDULES, SERVICES, AND BILLING — ALL IN ONE SYSTEM BUILT FOR HOW SALONS ACTUALLY WORK. ASSIGN SERVICES PER STYLIST. MANAGE MULTIPLE LOCATIONS. NEVER DOUBLE-BOOK AGAIN.</p>
+          </div>
+          <div>
+            <p>STUDIO STYLE PRO REMOVES THE FRICTION BETWEEN MANAGING YOUR TEAM AND LEADING IT. YOUR STAFF KNOWS THEIR SCHEDULE. YOUR CLIENTS KNOW WHERE TO BOOK. YOU KNOW EVERYTHING.</p>
+          </div>
         </div>
       </div>
-      <h2 class="large-claim">ZERO DOUBLE BOOKINGS. ZERO EXCUSES.</h2>
     </section>
 
     <!-- ─────────────────────────────────
@@ -284,10 +404,34 @@
     <section id="s-scan-04" class="s-scan-card">
       <div class="pcard" id="pcard-04">
         <div class="pc-top">
-          <div class="pc-num"><div class="num-track"><b class="num-current">#04</b></div><small>SALON<br>MANAGEMENT</small></div>
+          <div class="pc-num"><div class="num-track"><b class="num-current">#04</b></div><div class="label-track"><small class="label-current">SALON<br>MANAGEMENT</small></div></div>
           <p class="pc-tag">THE SALON RUNS. YOU LEAD.</p>
         </div>
-        <div class="pc-mid"><p class="pc-slogan">SALON MANAGEMENT</p></div>
+        <div class="pc-mid">
+          <p class="pc-slogan">SALON MANAGEMENT</p>
+          <div class="pc-visual visual-booking">
+            <div class="booking-calendar">
+              <div class="bc-time-marker">11:00 AM</div>
+              <div class="bc-slot empty">
+                <span class="bc-slot-time">11:15 AM</span>
+                <span class="bc-slot-action">+ QUICK BOOK</span>
+              </div>
+              <div class="bc-slot booked">
+                <div class="bc-booked-content">
+                  <span class="bc-client">MARCUS T.</span>
+                  <span class="bc-service">HAIRCUT & STYLE</span>
+                  <span class="bc-stylist">with CHLOE</span>
+                </div>
+                <span class="bc-status-dot"></span>
+              </div>
+              <div class="bc-time-marker">12:00 PM</div>
+              <div class="bc-slot empty">
+                <span class="bc-slot-time">12:15 PM</span>
+                <span class="bc-slot-action">+ QUICK BOOK</span>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="pc-bot">
           <div class="pc-bc-wrap"><img src="./assets/barcode.svg" alt="" class="pc-barcode" /></div>
           <span class="pc-purchased">PURCHASED</span>
