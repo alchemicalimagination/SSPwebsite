@@ -488,36 +488,65 @@ function initArchiveAnimation() {
   const card = document.querySelector('.client-card');
   if (!card) return;
 
-  const name    = card.querySelector('.cc-name');
-  const id      = card.querySelector('.cc-id');
+  const secTitle = card.querySelector('.cc-sec-title');
   const swatches = card.querySelectorAll('.cc-swatch');
-  const detail1 = card.querySelector('.cc-detail-row:nth-child(1) span:last-child');
-  const detail2 = card.querySelector('.cc-detail-row:nth-child(2) span:last-child');
-  const tag     = card.querySelector('.cc-tagline');
+  const rows     = card.querySelectorAll('.cc-detail-row');
+  const tagline  = card.querySelector('.cc-tagline');
 
-  const clients = [
-    { name: 'SARAH M.',  id: '#9481', sw: ['#EED6A5','#D4A373','#B5838D'], base: '7N + 8GG (1:1)', dev: '20 VOL', tag: 'SAVED 2 MINS AGO' },
-    { name: 'EMILY R.',  id: '#8823', sw: ['#DDA15E','#BC6C25','#588157'], base: '6A + 6GG (1:2)', dev: '10 VOL', tag: 'UPDATED 10M AGO'  },
-    { name: 'DIANA K.',  id: '#7104', sw: ['#C9B8A8','#A0856C','#E8D5B7'], base: '9N + 10AA (2:1)', dev: '30 VOL', tag: 'SAVED YESTERDAY'  },
+  // Same client, 3 different profile sections
+  const views = [
+    {
+      title: 'FORMULA HISTORY',
+      sw:   ['#EED6A5', '#D4A373', '#B5838D'],
+      rows: [
+        { label: 'BASE',       value: '7N + 8GG (1:1)', badge: false },
+        { label: 'DEV',        value: '20 VOL',          badge: false },
+        { label: 'ALLERGY',    value: 'PPD FREE',         badge: true  },
+      ],
+      tag: 'SAVED 2 MINS AGO'
+    },
+    {
+      title: 'PURCHASE HISTORY',
+      sw:   ['#B0C4D8', '#8AAFC4', '#6492AE'],
+      rows: [
+        { label: 'LAST VISIT',  value: '14 DAYS AGO', badge: false },
+        { label: 'TOTAL SPEND', value: '£2,840',       badge: false },
+        { label: 'VISITS / YR', value: '12',           badge: false },
+      ],
+      tag: 'CLIENT SINCE JAN 2022'
+    },
+    {
+      title: 'LOYALTY STATUS',
+      sw:   ['#D4AF37', '#C49A22', '#A67C10'],
+      rows: [
+        { label: 'TIER',        value: 'GOLD MEMBER', badge: false },
+        { label: 'POINTS',      value: '2,840 PTS',   badge: false },
+        { label: 'NEXT REWARD', value: '£20 OFF',      badge: false },
+      ],
+      tag: 'REWARD UNLOCKED'
+    }
   ];
   let idx = 0;
 
-  function setClient(c) {
-    name.textContent  = c.name;
-    id.textContent    = c.id;
-    swatches.forEach((s, i) => { s.style.background = c.sw[i]; });
-    detail1.textContent = c.base;
-    detail2.textContent = c.dev;
-    tag.textContent   = c.tag;
+  function setView(v) {
+    secTitle.textContent = v.title;
+    swatches.forEach((s, i) => { s.style.background = v.sw[i]; });
+    rows.forEach((row, i) => {
+      row.querySelector('span:first-child').textContent = v.rows[i].label;
+      const val = row.querySelector('span:last-child');
+      val.textContent = v.rows[i].value;
+      val.className   = v.rows[i].badge ? 'cc-badge-ppd' : '';
+    });
+    tagline.textContent = v.tag;
   }
 
-  setClient(clients[0]);
+  setView(views[0]);
 
   function cycle() {
-    idx = (idx + 1) % clients.length;
+    idx = (idx + 1) % views.length;
     gsap.timeline({ onComplete: () => gsap.delayedCall(3, cycle) })
       .to(card, { opacity: 0, y: -6, duration: 0.35, ease: 'power2.in' })
-      .call(() => setClient(clients[idx]))
+      .call(() => setView(views[idx]))
       .to(card, { opacity: 1, y: 0,  duration: 0.4,  ease: 'power2.out' });
   }
 
