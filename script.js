@@ -631,17 +631,15 @@ function initBookingAnimation() {
     .to({}, { duration: 3.5 });
 }
 
-// Start visual loops once DOM loaded
-document.addEventListener('DOMContentLoaded', () => {
+// Start visual loops + recalculate ScrollTrigger after everything loads
+window.addEventListener('load', () => {
+  // Refresh ScrollTrigger so all pinned sections are correctly measured
+  // (critical for Vercel / hosted deployments where layout may shift during load)
+  ScrollTrigger.refresh();
+
+  // Start card visual animations
   initScaleAnimation();
   initArchiveAnimation();
   initAdminAnimation();
   initBookingAnimation();
 });
-// Also fallback if DOM already loaded
-if (document.readyState === "complete" || document.readyState === "interactive") {
-  initScaleAnimation();
-  initArchiveAnimation();
-  initAdminAnimation();
-  initBookingAnimation();
-}
