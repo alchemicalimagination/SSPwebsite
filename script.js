@@ -414,174 +414,185 @@ document.querySelectorAll('.d-badge, .d-hot, .d-icons, .circle-badge, .d-sub, .d
 
 // ── CARD INLINE ANIMATIONS ─────────────────────────────
 function initScaleAnimation() {
-  const valueEl = document.querySelector('.scale-value');
+  const valueEl  = document.querySelector('.scale-value');
   const statusEl = document.querySelector('.scale-status');
-  const drop = document.querySelector('.scale-drop');
-  const liquid = document.querySelector('.scale-liquid');
+  const drop     = document.querySelector('.scale-drop');
+  const liquid   = document.querySelector('.scale-liquid');
+  const readout  = document.querySelector('.scale-readout');
 
   if (!valueEl || !drop || !liquid) return;
 
-  const tl = gsap.timeline({ repeat: -1, repeatDelay: 1.5 });
-  const weightObj = { val: 0.0 };
-  
-  tl.set(drop, { y: 0, opacity: 0 })
-    .set(liquid, { scaleY: 0.1, transformOrigin: "bottom center" })
-    .set(weightObj, { val: 0.0 })
-    .set(statusEl, { textContent: "ACTIVE", borderColor: "rgba(255,255,255,0.3)", color: "rgba(255,255,255,0.5)" })
-    .add(() => { valueEl.textContent = "0.0 g"; });
+  const weight = { val: 0.0 };
 
-  // Drop 1
-  tl.to(drop, { opacity: 1, duration: 0.05 })
-    .to(drop, { y: 65, duration: 0.6, ease: "power1.in" })
-    .to(drop, { opacity: 0, duration: 0.05 })
-    .to(liquid, { scaleY: 0.4, duration: 0.3, ease: "power2.out" }, "-=0.05")
-    .to(weightObj, {
-      val: 18.4,
-      duration: 0.4,
-      ease: "power1.out",
-      onUpdate: () => { valueEl.textContent = weightObj.val.toFixed(1) + " g"; }
-    }, "-=0.3");
+  function reset() {
+    gsap.set(drop,   { y: 0, opacity: 0 });
+    gsap.set(liquid, { scaleY: 0.1, transformOrigin: 'bottom center' });
+    weight.val = 0.0;
+    valueEl.textContent      = '0.0 g';
+    statusEl.textContent     = 'MEASURING';
+    statusEl.style.color     = 'rgba(255,255,255,0.5)';
+    statusEl.style.borderColor = 'rgba(255,255,255,0.3)';
+  }
 
-  // Drop 2
-  tl.set(drop, { y: 0, opacity: 0 })
-    .to(drop, { opacity: 1, duration: 0.05, delay: 0.4 })
-    .to(drop, { y: 65, duration: 0.6, ease: "power1.in" })
-    .to(drop, { opacity: 0, duration: 0.05 })
-    .to(liquid, { scaleY: 0.75, duration: 0.3, ease: "power2.out" }, "-=0.05")
-    .to(weightObj, {
-      val: 34.1,
-      duration: 0.4,
-      ease: "power1.out",
-      onUpdate: () => { valueEl.textContent = weightObj.val.toFixed(1) + " g"; }
-    }, "-=0.3");
+  function dropStep(tl, targetScaleY, targetVal, initialDelay) {
+    tl.set(drop, { y: 0, opacity: 0 })
+      .to(drop, { opacity: 1, duration: 0.06, delay: initialDelay })
+      .to(drop, { y: 68, duration: 0.52, ease: 'power2.in' })
+      .to(drop, { opacity: 0, duration: 0.06 })
+      .to(liquid, { scaleY: targetScaleY, duration: 0.28, ease: 'power2.out' }, '-=0.06')
+      .to(weight, {
+        val: targetVal, duration: 0.32, ease: 'power1.out',
+        onUpdate: () => { valueEl.textContent = weight.val.toFixed(1) + ' g'; }
+      }, '-=0.2');
+  }
 
-  // Drop 3
-  tl.set(drop, { y: 0, opacity: 0 })
-    .to(drop, { opacity: 1, duration: 0.05, delay: 0.4 })
-    .to(drop, { y: 65, duration: 0.6, ease: "power1.in" })
-    .to(drop, { opacity: 0, duration: 0.05 })
-    .to(liquid, { scaleY: 1.0, duration: 0.3, ease: "power2.out" }, "-=0.05")
-    .to(weightObj, {
-      val: 42.5,
-      duration: 0.4,
-      ease: "power1.out",
-      onUpdate: () => { valueEl.textContent = weightObj.val.toFixed(1) + " g"; }
-    }, "-=0.3")
-    .to(statusEl, {
-      textContent: "SAVED",
-      color: "#a8dadc",
-      borderColor: "#a8dadc",
-      duration: 0.3
-    })
-    .to({}, { duration: 2 });
+  function runCycle() {
+    reset();
+    const tl = gsap.timeline({ onComplete: () => gsap.delayedCall(0.3, runCycle) });
+
+    dropStep(tl, 0.36, 17.5, 0.2);
+    dropStep(tl, 0.68, 34.2, 0.7);
+    dropStep(tl, 1.0,  52.0, 0.7);
+
+    tl.call(() => {
+        statusEl.textContent     = 'SAVED';
+        statusEl.style.color     = '#a8dadc';
+        statusEl.style.borderColor = '#a8dadc';
+      })
+      .to({}, { duration: 2.2 })
+      // Smooth drain before reset
+      .to(readout, { opacity: 0, duration: 0.4 })
+      .to(liquid,  { scaleY: 0.1, duration: 0.55, ease: 'power2.in' }, '-=0.25')
+      .to(readout, { opacity: 1, duration: 0.3 });
+  }
+
+  runCycle();
 }
 
 function initArchiveAnimation() {
   const card = document.querySelector('.client-card');
   if (!card) return;
 
-  const name = card.querySelector('.cc-name');
-  const id = card.querySelector('.cc-id');
+  const name    = card.querySelector('.cc-name');
+  const id      = card.querySelector('.cc-id');
   const swatches = card.querySelectorAll('.cc-swatch');
   const detail1 = card.querySelector('.cc-detail-row:nth-child(1) span:last-child');
   const detail2 = card.querySelector('.cc-detail-row:nth-child(2) span:last-child');
-  const tag = card.querySelector('.cc-tagline');
+  const tag     = card.querySelector('.cc-tagline');
 
-  const tl = gsap.timeline({ repeat: -1, repeatDelay: 2 });
+  const clients = [
+    { name: 'SARAH M.',  id: '#9481', sw: ['#EED6A5','#D4A373','#B5838D'], base: '7N + 8GG (1:1)', dev: '20 VOL', tag: 'SAVED 2 MINS AGO' },
+    { name: 'EMILY R.',  id: '#8823', sw: ['#DDA15E','#BC6C25','#588157'], base: '6A + 6GG (1:2)', dev: '10 VOL', tag: 'UPDATED 10M AGO'  },
+    { name: 'DIANA K.',  id: '#7104', sw: ['#C9B8A8','#A0856C','#E8D5B7'], base: '9N + 10AA (2:1)', dev: '30 VOL', tag: 'SAVED YESTERDAY'  },
+  ];
+  let idx = 0;
 
-  tl.to(card, { opacity: 0, y: -5, duration: 0.4, delay: 3 })
-    .call(() => {
-      name.textContent = "EMILY R.";
-      id.textContent = "#8823";
-      swatches[0].style.background = "#DDA15E";
-      swatches[1].style.background = "#BC6C25";
-      swatches[2].style.background = "#588157";
-      detail1.textContent = "6A + 6GG (1:2)";
-      detail2.textContent = "10 VOL";
-      tag.textContent = "UPDATED 10M AGO";
-    })
-    .to(card, { opacity: 1, y: 0, duration: 0.4 })
-    .to(card, { opacity: 0, y: -5, duration: 0.4, delay: 3 })
-    .call(() => {
-      name.textContent = "SARAH M.";
-      id.textContent = "#9481";
-      swatches[0].style.background = "#EED6A5";
-      swatches[1].style.background = "#D4A373";
-      swatches[2].style.background = "#B5838D";
-      detail1.textContent = "7N + 8GG (1:1)";
-      detail2.textContent = "20 VOL";
-      tag.textContent = "SAVED 2 MINS AGO";
-    })
-    .to(card, { opacity: 1, y: 0, duration: 0.4 });
+  function setClient(c) {
+    name.textContent  = c.name;
+    id.textContent    = c.id;
+    swatches.forEach((s, i) => { s.style.background = c.sw[i]; });
+    detail1.textContent = c.base;
+    detail2.textContent = c.dev;
+    tag.textContent   = c.tag;
+  }
+
+  setClient(clients[0]);
+
+  function cycle() {
+    idx = (idx + 1) % clients.length;
+    gsap.timeline({ onComplete: () => gsap.delayedCall(3, cycle) })
+      .to(card, { opacity: 0, y: -6, duration: 0.35, ease: 'power2.in' })
+      .call(() => setClient(clients[idx]))
+      .to(card, { opacity: 1, y: 0,  duration: 0.4,  ease: 'power2.out' });
+  }
+
+  gsap.delayedCall(3, cycle);
 }
 
 function initAdminAnimation() {
-  const line = document.querySelector('.graph-line');
-  const dot = document.querySelector('.graph-dot');
-  const valueEl = document.querySelector('.ad-value');
+  const line     = document.querySelector('.graph-line');
+  const dot      = document.querySelector('.graph-dot');
+  const valueEl  = document.querySelector('.ad-value');
   const changeEl = document.querySelector('.ad-change');
+  const graphWrap = document.querySelector('.ad-graph');
 
   if (!line || !dot || !valueEl) return;
 
-  const length = line.getTotalLength ? line.getTotalLength() : 110;
-  gsap.set(line, { strokeDasharray: length, strokeDashoffset: length });
-  gsap.set(dot, { opacity: 0 });
+  const len = line.getTotalLength ? line.getTotalLength() : 110;
+  gsap.set(line, { strokeDasharray: len, strokeDashoffset: len });
+  gsap.set(dot,  { opacity: 0, scale: 1 });
 
-  const tl = gsap.timeline({ repeat: -1, repeatDelay: 2 });
   const salesVal = { val: 12400 };
 
-  tl.set(line, { strokeDashoffset: length })
-    .set(dot, { opacity: 0 })
-    .set(salesVal, { val: 12400 })
-    .set(changeEl, { textContent: "+0.0%" })
-    .to(line, { strokeDashoffset: 0, duration: 1.5, ease: "power2.out" })
-    .to(salesVal, {
-      val: 14820,
-      duration: 1.5,
-      ease: "power2.out",
-      onUpdate: () => {
-        valueEl.textContent = "$" + Math.floor(salesVal.val).toLocaleString();
-      }
-    }, 0)
-    .to(changeEl, {
-      textContent: "+24.3%",
-      duration: 0.5,
-      ease: "none"
-    }, 1.0)
-    .to(dot, { opacity: 1, scale: 1.4, duration: 0.3 })
-    .to(dot, { scale: 1.0, duration: 0.3 })
-    .to({}, { duration: 2 });
+  function runCycle() {
+    salesVal.val         = 12400;
+    valueEl.textContent  = '$12,400';
+    changeEl.textContent = '+0.0%';
+
+    const tl = gsap.timeline({ onComplete: () => gsap.delayedCall(1.5, runCycle) });
+
+    // Draw graph + count up revenue
+    tl.to(line, { strokeDashoffset: 0, duration: 1.8, ease: 'power2.out' })
+      .to(salesVal, {
+        val: 14820, duration: 1.8, ease: 'power2.out',
+        onUpdate: () => { valueEl.textContent = '$' + Math.floor(salesVal.val).toLocaleString(); }
+      }, 0)
+      .call(() => { changeEl.textContent = '+19.5%'; }, [], 1.1)
+      .to(dot, { opacity: 1, scale: 1.5, duration: 0.25, ease: 'back.out(2)' })
+      .to(dot, { scale: 1.0, duration: 0.25 })
+      .to({}, { duration: 2.2 })
+      // Smooth erase: line draws back from right to left, then fade
+      .to(dot,      { opacity: 0, duration: 0.25 })
+      .to(line,     { strokeDashoffset: len, duration: 0.9, ease: 'power2.in' }, '-=0.15')
+      .to(graphWrap, { opacity: 0, duration: 0.25 })
+      .call(() => {
+        salesVal.val         = 12400;
+        valueEl.textContent  = '$12,400';
+        changeEl.textContent = '+0.0%';
+        gsap.set(line, { strokeDashoffset: len });
+        gsap.set(dot,  { opacity: 0, scale: 1 });
+      })
+      .to(graphWrap, { opacity: 1, duration: 0.3 });
+  }
+
+  runCycle();
 }
 
 function initBookingAnimation() {
-  const container = document.querySelector('.booking-calendar');
+  const container  = document.querySelector('.booking-calendar');
   if (!container) return;
 
-  const emptySlot = container.querySelector('.bc-slot.empty');
+  const emptySlot  = container.querySelector('.bc-slot.empty');
   const bookedSlot = container.querySelector('.bc-slot.booked');
+  const statusDot  = bookedSlot?.querySelector('.bc-status-dot');
 
   if (!emptySlot || !bookedSlot) return;
 
-  const tl = gsap.timeline({ repeat: -1, repeatDelay: 2.5 });
+  function runCycle() {
+    // Reset to empty
+    gsap.set(bookedSlot, { opacity: 0, height: 0, paddingTop: 0, paddingBottom: 0, overflow: 'hidden' });
+    gsap.set(emptySlot,  { opacity: 1, height: 'auto', padding: '5px 6px', display: 'flex' });
+    if (statusDot) gsap.set(statusDot, { scale: 0, opacity: 0 });
 
-  tl.set(bookedSlot, { opacity: 0, height: 0, paddingTop: 0, paddingBottom: 0, marginTop: 0, overflow: 'hidden' })
-    .set(emptySlot, { opacity: 1, height: 'auto', padding: '5px 6px', display: 'flex' })
-    .to(emptySlot, { opacity: 0.3, duration: 0.5, delay: 1.5 })
-    .to(emptySlot, { opacity: 0, height: 0, padding: 0, duration: 0.3 })
-    .to(bookedSlot, { 
-      opacity: 1, 
-      height: 'auto', 
-      paddingTop: 5, 
-      paddingBottom: 5, 
-      marginTop: 0, 
-      duration: 0.5, 
-      ease: "power2.out" 
-    })
-    .fromTo(bookedSlot.querySelector('.bc-status-dot'), 
-      { scale: 0, opacity: 0 }, 
-      { scale: 1, opacity: 1, duration: 0.3, ease: "back.out(2)" }
-    )
-    .to({}, { duration: 3.5 });
+    const tl = gsap.timeline({ onComplete: () => gsap.delayedCall(2, runCycle) });
+
+    // Slot pulses — someone is booking
+    tl.to(emptySlot, { opacity: 0.4, duration: 0.4, delay: 1.2, yoyo: true, repeat: 1 })
+      .to(emptySlot, { opacity: 0, height: 0, padding: 0, duration: 0.3, ease: 'power2.in' })
+      // Appointment locks in
+      .to(bookedSlot, { opacity: 1, height: 'auto', paddingTop: 5, paddingBottom: 5, duration: 0.45, ease: 'power2.out' })
+      .to(statusDot,  { scale: 1, opacity: 1, duration: 0.35, ease: 'back.out(2)' })
+      .to({}, { duration: 3.2 })
+      // Smooth fade out before next cycle
+      .to(bookedSlot, { opacity: 0, duration: 0.4, ease: 'power2.in' })
+      .call(() => {
+        gsap.set(bookedSlot, { height: 0, paddingTop: 0, paddingBottom: 0 });
+        gsap.set(emptySlot,  { opacity: 0, height: 'auto', padding: '5px 6px', display: 'flex' });
+      })
+      .to(emptySlot, { opacity: 1, duration: 0.35 });
+  }
+
+  runCycle();
 }
 
 // Start visual loops once DOM loaded
