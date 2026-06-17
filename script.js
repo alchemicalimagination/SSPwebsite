@@ -424,70 +424,51 @@ function initScaleAnimation() {
   if (!valueEl || !drop || !liquid || !labelEl) return;
 
   const products = [
-    { name: 'COLOUR',    unit: 'g',  steps: [12.0, 24.0, 36.0] },
-    { name: 'TONER',     unit: 'g',  steps: [4.0,  8.0,  12.0] },
-    { name: 'OX 20 VOL', unit: 'ml', steps: [20.0, 40.0, 60.0] },
+    { name: 'COLOUR',    unit: 'g',  target: 36.0 },
+    { name: 'TONER',     unit: 'g',  target: 12.0 },
+    { name: 'OX 20 VOL', unit: 'ml', target: 60.0 },
   ];
-  const scaleTargets = [0.36, 0.68, 1.0];
+  let idx = 0;
 
-  function addProduct(tl, p, isFirst) {
+  gsap.set(liquid, { scaleY: 0.1, transformOrigin: 'bottom center' });
+  gsap.set(readout, { opacity: 0 });
+
+  function runNext() {
+    const p = products[idx];
+    idx = (idx + 1) % products.length;
+
     const weight = { val: 0.0 };
 
-    if (!isFirst) {
-      // Smooth transition between products
-      tl.to(readout, { opacity: 0, duration: 0.3 })
-        .to(liquid,  { scaleY: 0.1, duration: 0.4, ease: 'power2.in' }, '-=0.15')
-        .call(() => {
-          labelEl.textContent        = p.name;
-          valueEl.textContent        = '0.0 ' + p.unit;
-          statusEl.textContent       = 'MEASURING';
-          statusEl.style.color       = 'rgba(255,255,255,0.5)';
-          statusEl.style.borderColor = 'rgba(255,255,255,0.3)';
-        })
-        .to(readout, { opacity: 1, duration: 0.3 });
-    }
+    labelEl.textContent        = p.name;
+    valueEl.textContent        = '0.0 ' + p.unit;
+    statusEl.textContent       = 'MEASURING';
+    statusEl.style.color       = 'rgba(255,255,255,0.5)';
+    statusEl.style.borderColor = 'rgba(255,255,255,0.3)';
+    gsap.set(drop, { y: 0, opacity: 0 });
+    gsap.set(liquid, { scaleY: 0.1 });
 
-    // 3 drops — y:38 lands the drop inside the bowl
-    p.steps.forEach((target, i) => {
-      tl.set(drop, { y: 0, opacity: 0 })
-        .to(drop, { opacity: 1, duration: 0.06, delay: i === 0 ? 0.3 : 0.65 })
-        .to(drop, { y: 38, duration: 0.48, ease: 'power2.in' })
-        .to(drop, { opacity: 0, duration: 0.06 })
-        .to(liquid, { scaleY: scaleTargets[i], duration: 0.28, ease: 'power2.out' }, '-=0.06')
-        .to(weight, {
-          val: target, duration: 0.32, ease: 'power1.out',
-          onUpdate: () => { valueEl.textContent = weight.val.toFixed(1) + ' ' + p.unit; }
-        }, '-=0.2');
-    });
+    const tl = gsap.timeline({ onComplete: () => gsap.delayedCall(0.5, runNext) });
 
-    tl.call(() => {
+    tl.to(readout, { opacity: 1, duration: 0.3 })
+      .to(drop, { opacity: 1, duration: 0.06, delay: 0.5 })
+      .to(drop, { y: 38, duration: 0.5, ease: 'power2.in' })
+      .to(drop, { opacity: 0, duration: 0.06 })
+      .to(liquid, { scaleY: 1.0, duration: 0.4, ease: 'power2.out' }, '-=0.06')
+      .to(weight, {
+        val: p.target, duration: 0.55, ease: 'power1.out',
+        onUpdate: () => { valueEl.textContent = weight.val.toFixed(1) + ' ' + p.unit; }
+      }, '-=0.3')
+      .call(() => {
         statusEl.textContent       = 'SAVED';
         statusEl.style.color       = '#a8dadc';
         statusEl.style.borderColor = '#a8dadc';
       })
-      .to({}, { duration: 1.4 });
+      .to({}, { duration: 1.8 })
+      .to(readout, { opacity: 0, duration: 0.35 })
+      .to(liquid,  { scaleY: 0.1, duration: 0.45, ease: 'power2.in' }, '-=0.2');
   }
 
-  function runCycle() {
-    gsap.set(drop,   { y: 0, opacity: 0 });
-    gsap.set(liquid, { scaleY: 0.1, transformOrigin: 'bottom center' });
-    labelEl.textContent        = products[0].name;
-    valueEl.textContent        = '0.0 g';
-    statusEl.textContent       = 'MEASURING';
-    statusEl.style.color       = 'rgba(255,255,255,0.5)';
-    statusEl.style.borderColor = 'rgba(255,255,255,0.3)';
-
-    const tl = gsap.timeline({ onComplete: () => gsap.delayedCall(0.6, runCycle) });
-
-    products.forEach((p, i) => addProduct(tl, p, i === 0));
-
-    // Final drain before full restart
-    tl.to(readout, { opacity: 0, duration: 0.4 })
-      .to(liquid,  { scaleY: 0.1, duration: 0.5, ease: 'power2.in' }, '-=0.25')
-      .to(readout, { opacity: 1, duration: 0.3 });
-  }
-
-  runCycle();
+  runNext();
 }
 
 function initArchiveAnimation() {
