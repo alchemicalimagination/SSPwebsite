@@ -637,6 +637,10 @@ window.addEventListener('load', () => {
   // (critical for Vercel / hosted deployments where layout may shift during load)
   ScrollTrigger.refresh();
 
+  // Reset fixed badge to hidden — refresh() may have accidentally triggered onEnter
+  const badge = document.querySelector('.fixed-badge');
+  if (badge) gsap.set(badge, { opacity: 0 });
+
   // Start card visual animations
   initScaleAnimation();
   initArchiveAnimation();
