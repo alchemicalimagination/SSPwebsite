@@ -424,9 +424,9 @@ function initScaleAnimation() {
   if (!valueEl || !drop || !liquid) return;
 
   const products = [
-    { name: 'COLOUR',    unit: 'g',  steps: [18.0, 36.0, 52.0] },
+    { name: 'COLOUR',    unit: 'g',  steps: [12.0, 24.0, 36.0] },
+    { name: 'TONER',     unit: 'g',  steps: [4.0,  8.0,  12.0] },
     { name: 'OX 20 VOL', unit: 'ml', steps: [20.0, 40.0, 60.0] },
-    { name: 'TONER',     unit: 'g',  steps: [12.0, 24.0, 35.0] },
   ];
   let productIdx = 0;
   const weight = { val: 0.0 };
