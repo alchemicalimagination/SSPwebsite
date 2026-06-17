@@ -421,58 +421,69 @@ function initScaleAnimation() {
   const liquid   = document.querySelector('.scale-liquid');
   const readout  = document.querySelector('.scale-readout');
 
-  if (!valueEl || !drop || !liquid) return;
+  if (!valueEl || !drop || !liquid || !labelEl) return;
 
   const products = [
     { name: 'COLOUR',    unit: 'g',  steps: [12.0, 24.0, 36.0] },
     { name: 'TONER',     unit: 'g',  steps: [4.0,  8.0,  12.0] },
     { name: 'OX 20 VOL', unit: 'ml', steps: [20.0, 40.0, 60.0] },
   ];
-  let productIdx = 0;
-  const weight = { val: 0.0 };
+  const scaleTargets = [0.36, 0.68, 1.0];
 
-  function reset(p) {
-    gsap.set(drop,   { y: 0, opacity: 0 });
-    gsap.set(liquid, { scaleY: 0.1, transformOrigin: 'bottom center' });
-    weight.val = 0.0;
-    if (labelEl) labelEl.textContent = p.name;
-    valueEl.textContent        = '0.0 ' + p.unit;
-    statusEl.textContent       = 'MEASURING';
-    statusEl.style.color       = 'rgba(255,255,255,0.5)';
-    statusEl.style.borderColor = 'rgba(255,255,255,0.3)';
-  }
+  function addProduct(tl, p, isFirst) {
+    const weight = { val: 0.0 };
 
-  function dropStep(tl, targetScaleY, targetVal, unit, initialDelay) {
-    tl.set(drop, { y: 0, opacity: 0 })
-      .to(drop, { opacity: 1, duration: 0.06, delay: initialDelay })
-      .to(drop, { y: 68, duration: 0.52, ease: 'power2.in' })
-      .to(drop, { opacity: 0, duration: 0.06 })
-      .to(liquid, { scaleY: targetScaleY, duration: 0.28, ease: 'power2.out' }, '-=0.06')
-      .to(weight, {
-        val: targetVal, duration: 0.32, ease: 'power1.out',
-        onUpdate: () => { valueEl.textContent = weight.val.toFixed(1) + ' ' + unit; }
-      }, '-=0.2');
-  }
+    if (!isFirst) {
+      // Smooth transition between products
+      tl.to(readout, { opacity: 0, duration: 0.3 })
+        .to(liquid,  { scaleY: 0.1, duration: 0.4, ease: 'power2.in' }, '-=0.15')
+        .call(() => {
+          labelEl.textContent        = p.name;
+          valueEl.textContent        = '0.0 ' + p.unit;
+          statusEl.textContent       = 'MEASURING';
+          statusEl.style.color       = 'rgba(255,255,255,0.5)';
+          statusEl.style.borderColor = 'rgba(255,255,255,0.3)';
+        })
+        .to(readout, { opacity: 1, duration: 0.3 });
+    }
 
-  function runCycle() {
-    const p = products[productIdx];
-    productIdx = (productIdx + 1) % products.length;
-    reset(p);
-
-    const tl = gsap.timeline({ onComplete: () => gsap.delayedCall(0.3, runCycle) });
-
-    dropStep(tl, 0.36, p.steps[0], p.unit, 0.2);
-    dropStep(tl, 0.68, p.steps[1], p.unit, 0.7);
-    dropStep(tl, 1.0,  p.steps[2], p.unit, 0.7);
+    // 3 drops — y:38 lands the drop inside the bowl
+    p.steps.forEach((target, i) => {
+      tl.set(drop, { y: 0, opacity: 0 })
+        .to(drop, { opacity: 1, duration: 0.06, delay: i === 0 ? 0.3 : 0.65 })
+        .to(drop, { y: 38, duration: 0.48, ease: 'power2.in' })
+        .to(drop, { opacity: 0, duration: 0.06 })
+        .to(liquid, { scaleY: scaleTargets[i], duration: 0.28, ease: 'power2.out' }, '-=0.06')
+        .to(weight, {
+          val: target, duration: 0.32, ease: 'power1.out',
+          onUpdate: () => { valueEl.textContent = weight.val.toFixed(1) + ' ' + p.unit; }
+        }, '-=0.2');
+    });
 
     tl.call(() => {
         statusEl.textContent       = 'SAVED';
         statusEl.style.color       = '#a8dadc';
         statusEl.style.borderColor = '#a8dadc';
       })
-      .to({}, { duration: 2.2 })
-      .to(readout, { opacity: 0, duration: 0.4 })
-      .to(liquid,  { scaleY: 0.1, duration: 0.55, ease: 'power2.in' }, '-=0.25')
+      .to({}, { duration: 1.4 });
+  }
+
+  function runCycle() {
+    gsap.set(drop,   { y: 0, opacity: 0 });
+    gsap.set(liquid, { scaleY: 0.1, transformOrigin: 'bottom center' });
+    labelEl.textContent        = products[0].name;
+    valueEl.textContent        = '0.0 g';
+    statusEl.textContent       = 'MEASURING';
+    statusEl.style.color       = 'rgba(255,255,255,0.5)';
+    statusEl.style.borderColor = 'rgba(255,255,255,0.3)';
+
+    const tl = gsap.timeline({ onComplete: () => gsap.delayedCall(0.6, runCycle) });
+
+    products.forEach((p, i) => addProduct(tl, p, i === 0));
+
+    // Final drain before full restart
+    tl.to(readout, { opacity: 0, duration: 0.4 })
+      .to(liquid,  { scaleY: 0.1, duration: 0.5, ease: 'power2.in' }, '-=0.25')
       .to(readout, { opacity: 1, duration: 0.3 });
   }
 
