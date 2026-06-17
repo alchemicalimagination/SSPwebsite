@@ -454,12 +454,10 @@ section {
   top: 24px;
   left: 24px;
   z-index: 200;
-  border: 1px solid rgba(255,255,255,0.35);
+  border: 1px solid var(--fg);
   padding: 10px 14px;
   text-align: center;
-  background: rgba(255,255,255,0.18);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+  background: var(--bg);
   opacity: 0;
   pointer-events: none;
   line-height: 1.3;
@@ -469,13 +467,11 @@ section {
   font-size: 20px;
   font-weight: 300;
   letter-spacing: -0.02em;
-  color: #fff;
 }
 .fixed-badge small {
   font-size: 8px;
   font-weight: 400;
   letter-spacing: 0.1em;
-  color: rgba(255,255,255,0.75);
 }
 
 /* ── Large section background text (left edge, per section) ── */
@@ -1541,7 +1537,6 @@ section {
   #ascii-overlay { opacity: 0.4; }
 
   /* ── Fixed UI ── */
-  .fixed-badge { display: none; }
   .ui-works {
     position: fixed;
     top: 16px;

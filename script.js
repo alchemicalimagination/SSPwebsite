@@ -118,55 +118,6 @@ resizeFlower();
 // ── VERTICAL MARQUEES ──────────────────────────────────
 gsap.fromTo('.left-marquee-track', { y: '-50%' }, { y: '0%', duration: 22, ease: 'none', repeat: -1 });
 
-// ── FIXED BADGE ────────────────────────────────────────
-const fixedBadge = document.querySelector('.fixed-badge');
-const badgeNum   = fixedBadge?.querySelector('b');
-const badgeLabel = fixedBadge?.querySelector('small');
-
-const badgeData = [
-  { num: '#01', label: 'INVENTORY<br>PRECISION',  section: '#s-scan' },
-  { num: '#02', label: 'CLIENT<br>ARCHIVE',        section: '#s-scan-02' },
-  { num: '#03', label: 'ADMIN<br>INTELLIGENCE',    section: '#s-scan-03' },
-  { num: '#04', label: 'SALON<br>MANAGEMENT',      section: '#s-scan-04' }
-];
-
-function setBadge(num, label) {
-  if (!badgeNum || !badgeLabel) return;
-  badgeNum.textContent = num;
-  badgeLabel.innerHTML = label;
-}
-
-if (fixedBadge) {
-  // Show when card #01 starts its collapse phase, hide if scrolling back up
-  ScrollTrigger.create({
-    trigger: '#s-scan',
-    start: 'top top',
-    onEnter:     () => gsap.to(fixedBadge, { opacity: 1, duration: 0.4 }),
-    onLeaveBack: () => gsap.to(fixedBadge, { opacity: 0, duration: 0.3 })
-  });
-
-  // Update badge label as each product card section enters
-  badgeData.forEach(({ num, label, section }, i) => {
-    ScrollTrigger.create({
-      trigger: section,
-      start: 'top 60%',
-      onEnter:     () => setBadge(num, label),
-      onLeaveBack: () => {
-        const prev = badgeData[i - 1];
-        if (prev) setBadge(prev.num, prev.label);
-      }
-    });
-  });
-
-  // Hide badge when footer slides into view
-  ScrollTrigger.create({
-    trigger: '#s-scan-04',
-    start: `top+=${window.innerHeight} top`,
-    onEnter:     () => gsap.to(fixedBadge, { opacity: 0, duration: 0.3 }),
-    onLeaveBack: () => gsap.to(fixedBadge, { opacity: 1, duration: 0.3 })
-  });
-}
-
 // ── THREE.JS SCENE ─────────────────────────────────────
 try {
   const scene    = new THREE.Scene();
@@ -259,6 +210,8 @@ try {
 
 // ── CARD ANIMATION: desktop only ──────────────────────
 if (window.innerWidth > 768) {
+const card01 = document.getElementById('pcard-01');
+
 gsap.set('#pcard-01', { overflow: 'hidden' });
 // Start fully empty — all content and dividers hidden
 gsap.set('#pcard-01 .num-next',    { x: 120, opacity: 0 });
@@ -631,19 +584,17 @@ function initBookingAnimation() {
     .to({}, { duration: 3.5 });
 }
 
-// Start visual loops + recalculate ScrollTrigger after everything loads
-window.addEventListener('load', () => {
-  // Refresh ScrollTrigger so all pinned sections are correctly measured
-  // (critical for Vercel / hosted deployments where layout may shift during load)
-  ScrollTrigger.refresh();
-
-  // Reset fixed badge to hidden — refresh() may have accidentally triggered onEnter
-  const badge = document.querySelector('.fixed-badge');
-  if (badge) gsap.set(badge, { opacity: 0 });
-
-  // Start card visual animations
+// Start visual loops once DOM loaded
+document.addEventListener('DOMContentLoaded', () => {
   initScaleAnimation();
   initArchiveAnimation();
   initAdminAnimation();
   initBookingAnimation();
 });
+// Also fallback if DOM already loaded
+if (document.readyState === "complete" || document.readyState === "interactive") {
+  initScaleAnimation();
+  initArchiveAnimation();
+  initAdminAnimation();
+  initBookingAnimation();
+}
