@@ -610,38 +610,50 @@ function initAdminAnimation() {
   runCycle();
 }
 
-function initBookingAnimation() {
-  const container  = document.querySelector('.booking-calendar');
-  if (!container) return;
+function initLoyaltyAnimation() {
+  const lc = document.querySelector('.loyalty-card');
+  if (!lc) return;
 
-  const emptySlot  = container.querySelector('.bc-slot.empty');
-  const bookedSlot = container.querySelector('.bc-slot.booked');
-  const statusDot  = bookedSlot?.querySelector('.bc-status-dot');
+  const tierEl    = lc.querySelector('.lc-tier');
+  const ptsEl     = lc.querySelector('.lc-pts-value');
+  const fillEl    = lc.querySelector('.lc-progress-fill');
+  const visitsEl  = lc.querySelector('.lc-visits');
+  const rewardEl  = lc.querySelector('.lc-reward');
 
-  if (!emptySlot || !bookedSlot) return;
+  const pts = { val: 2600 };
 
   function runCycle() {
-    // Reset to empty
-    gsap.set(bookedSlot, { opacity: 0, height: 0, paddingTop: 0, paddingBottom: 0, overflow: 'hidden' });
-    gsap.set(emptySlot,  { opacity: 1, height: 'auto', padding: '5px 6px', display: 'flex' });
-    if (statusDot) gsap.set(statusDot, { scale: 0, opacity: 0 });
+    gsap.set(lc, { opacity: 1 });
+    pts.val              = 2600;
+    ptsEl.textContent    = '2,600';
+    tierEl.textContent   = 'SILVER';
+    tierEl.style.color   = 'rgba(255,255,255,0.5)';
+    tierEl.style.borderColor = 'rgba(255,255,255,0.2)';
+    visitsEl.textContent = '11';
+    gsap.set(fillEl,   { width: '87%' });
+    gsap.set(rewardEl, { opacity: 0 });
 
-    const tl = gsap.timeline({ onComplete: () => gsap.delayedCall(2, runCycle) });
+    const tl = gsap.timeline({ onComplete: () => gsap.delayedCall(0.8, runCycle) });
 
-    // Slot pulses — someone is booking
-    tl.to(emptySlot, { opacity: 0.4, duration: 0.4, delay: 1.2, yoyo: true, repeat: 1 })
-      .to(emptySlot, { opacity: 0, height: 0, padding: 0, duration: 0.3, ease: 'power2.in' })
-      // Appointment locks in
-      .to(bookedSlot, { opacity: 1, height: 'auto', paddingTop: 5, paddingBottom: 5, duration: 0.45, ease: 'power2.out' })
-      .to(statusDot,  { scale: 1, opacity: 1, duration: 0.35, ease: 'back.out(2)' })
-      .to({}, { duration: 3.2 })
-      // Smooth fade out before next cycle
-      .to(bookedSlot, { opacity: 0, duration: 0.4, ease: 'power2.in' })
-      .call(() => {
-        gsap.set(bookedSlot, { height: 0, paddingTop: 0, paddingBottom: 0 });
-        gsap.set(emptySlot,  { opacity: 0, height: 'auto', padding: '5px 6px', display: 'flex' });
+    tl.to({}, { duration: 1.2 })
+      // Visit triggers — counter ticks, points accumulate, bar fills
+      .call(() => { visitsEl.textContent = '12'; })
+      .to(pts, {
+        val: 3000, duration: 1.4, ease: 'power2.out',
+        onUpdate: () => { ptsEl.textContent = Math.floor(pts.val).toLocaleString(); }
       })
-      .to(emptySlot, { opacity: 1, duration: 0.35 });
+      .to(fillEl, { width: '100%', duration: 1.4, ease: 'power2.out' }, '<')
+      // Tier upgrade
+      .call(() => {
+        tierEl.textContent       = 'GOLD';
+        tierEl.style.color       = '#D4AF37';
+        tierEl.style.borderColor = '#D4AF37';
+      })
+      // Reward unlocks
+      .to(rewardEl, { opacity: 1, duration: 0.4, ease: 'power2.out' })
+      .to({}, { duration: 2.8 })
+      // Fade out before reset
+      .to(lc, { opacity: 0, duration: 0.45 });
   }
 
   runCycle();
@@ -652,12 +664,12 @@ document.addEventListener('DOMContentLoaded', () => {
   initScaleAnimation();
   initArchiveAnimation();
   initAdminAnimation();
-  initBookingAnimation();
+  initLoyaltyAnimation();
 });
 // Also fallback if DOM already loaded
 if (document.readyState === "complete" || document.readyState === "interactive") {
   initScaleAnimation();
   initArchiveAnimation();
   initAdminAnimation();
-  initBookingAnimation();
+  initLoyaltyAnimation();
 }

@@ -821,6 +821,112 @@ section {
 .visual-booking {
   padding: 10px;
 }
+.visual-loyalty {
+  padding: 10px;
+}
+.loyalty-card {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  justify-content: center;
+}
+.lc-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.lc-name {
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+}
+.lc-tier {
+  font-size: 6.5px;
+  letter-spacing: 0.08em;
+  border: 0.5px solid rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.5);
+  padding: 1px 5px;
+  border-radius: 2px;
+}
+.lc-divider {
+  height: 1px;
+  background: rgba(255,255,255,0.08);
+}
+.lc-pts-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.lc-pts-label {
+  font-size: 6px;
+  color: rgba(255,255,255,0.35);
+  letter-spacing: 0.08em;
+}
+.lc-pts-value {
+  font-size: 18px;
+  font-weight: 300;
+  letter-spacing: -0.02em;
+}
+.lc-progress-section {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.lc-progress-track {
+  height: 2px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 1px;
+  overflow: hidden;
+}
+.lc-progress-fill {
+  height: 100%;
+  width: 87%;
+  background: rgba(255,255,255,0.5);
+  border-radius: 1px;
+}
+.lc-tier-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 5.5px;
+  color: rgba(255,255,255,0.3);
+  letter-spacing: 0.05em;
+}
+.lc-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.lc-meta-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 6.5px;
+  color: rgba(255,255,255,0.5);
+}
+.lc-meta-row span:last-child {
+  color: #fff;
+  font-weight: 500;
+}
+.lc-reward {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(168,218,220,0.07);
+  border: 0.5px solid rgba(168,218,220,0.3);
+  border-radius: 3px;
+  padding: 4px 6px;
+}
+.lc-reward-label {
+  font-size: 6px;
+  color: #a8dadc;
+  letter-spacing: 0.08em;
+}
+.lc-reward-value {
+  font-size: 9px;
+  font-weight: 500;
+  color: #a8dadc;
+}
 .booking-calendar {
   width: 100%;
   height: 100%;
