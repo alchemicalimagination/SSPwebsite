@@ -423,52 +423,65 @@ function initScaleAnimation() {
 
   if (!valueEl || !drop || !liquid || !labelEl) return;
 
-  const products = [
-    { name: 'COLOUR',    unit: 'g',  target: 36.0 },
-    { name: 'TONER',     unit: 'g',  target: 12.0 },
-    { name: 'OX 20 VOL', unit: 'ml', target: 60.0 },
+  // Formula: 3 ingredients added to the same bowl, liquid accumulates
+  const steps = [
+    { name: 'COLOUR',    unit: 'g',  target: 36.0, fill: 0.33 },
+    { name: 'TONER',     unit: 'g',  target: 12.0, fill: 0.66 },
+    { name: 'OX 20 VOL', unit: 'ml', target: 60.0, fill: 1.0  },
   ];
-  let idx = 0;
 
-  gsap.set(liquid, { scaleY: 0.1, transformOrigin: 'bottom center' });
   gsap.set(readout, { opacity: 0 });
 
-  function runNext() {
-    const p = products[idx];
-    idx = (idx + 1) % products.length;
-
-    const weight = { val: 0.0 };
-
-    labelEl.textContent        = p.name;
-    valueEl.textContent        = '0.0 ' + p.unit;
+  function runFormula() {
+    gsap.set(drop, { y: 0, opacity: 0 });
+    gsap.set(liquid, { scaleY: 0.05, transformOrigin: 'bottom center' });
+    labelEl.textContent        = steps[0].name;
+    valueEl.textContent        = '0.0 g';
     statusEl.textContent       = 'MEASURING';
     statusEl.style.color       = 'rgba(255,255,255,0.5)';
     statusEl.style.borderColor = 'rgba(255,255,255,0.3)';
-    gsap.set(drop, { y: 0, opacity: 0 });
-    gsap.set(liquid, { scaleY: 0.1 });
 
-    const tl = gsap.timeline({ onComplete: () => gsap.delayedCall(0.5, runNext) });
+    const tl = gsap.timeline({ onComplete: () => gsap.delayedCall(0.8, runFormula) });
 
-    tl.to(readout, { opacity: 1, duration: 0.3 })
-      .to(drop, { opacity: 1, duration: 0.06, delay: 0.5 })
-      .to(drop, { y: 38, duration: 0.5, ease: 'power2.in' })
-      .to(drop, { opacity: 0, duration: 0.06 })
-      .to(liquid, { scaleY: 1.0, duration: 0.4, ease: 'power2.out' }, '-=0.06')
-      .to(weight, {
-        val: p.target, duration: 0.55, ease: 'power1.out',
-        onUpdate: () => { valueEl.textContent = weight.val.toFixed(1) + ' ' + p.unit; }
-      }, '-=0.3')
-      .call(() => {
+    tl.to(readout, { opacity: 1, duration: 0.3 });
+
+    steps.forEach((step, i) => {
+      const weight = { val: 0.0 };
+
+      if (i > 0) {
+        // Pause then switch label to next ingredient
+        tl.to({}, { duration: 0.65 })
+          .call(() => {
+            labelEl.textContent = step.name;
+            valueEl.textContent = '0.0 ' + step.unit;
+          });
+      }
+
+      // Drop falls into accumulating bowl
+      tl.set(drop, { y: 0, opacity: 0 })
+        .to(drop, { opacity: 1, duration: 0.06, delay: 0.25 })
+        .to(drop, { y: 38, duration: 0.5, ease: 'power2.in' })
+        .to(drop, { opacity: 0, duration: 0.06 })
+        .to(liquid, { scaleY: step.fill, duration: 0.4, ease: 'power2.out' }, '-=0.06')
+        .to(weight, {
+          val: step.target, duration: 0.52, ease: 'power1.out',
+          onUpdate: () => { valueEl.textContent = weight.val.toFixed(1) + ' ' + step.unit; }
+        }, '-=0.3');
+    });
+
+    // All 3 added — formula complete
+    tl.call(() => {
         statusEl.textContent       = 'SAVED';
         statusEl.style.color       = '#a8dadc';
         statusEl.style.borderColor = '#a8dadc';
       })
-      .to({}, { duration: 1.8 })
-      .to(readout, { opacity: 0, duration: 0.35 })
-      .to(liquid,  { scaleY: 0.1, duration: 0.45, ease: 'power2.in' }, '-=0.2');
+      .to({}, { duration: 2.5 })
+      // Drain, restart
+      .to(readout, { opacity: 0, duration: 0.4 })
+      .to(liquid,  { scaleY: 0.05, duration: 0.6, ease: 'power2.in' }, '-=0.2');
   }
 
-  runNext();
+  runFormula();
 }
 
 function initArchiveAnimation() {
