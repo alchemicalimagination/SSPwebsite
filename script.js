@@ -259,14 +259,8 @@ cardCollapseTl
     { opacity: 0, duration: 0.6 }, 0)
   .to('#pcard-01 .pc-top', { borderBottomColor: 'transparent', duration: 0.3 }, 0)
   .to('#pcard-01 .pc-bot', { borderTopColor:    'transparent', duration: 0.3 }, 0)
-  .to('#pcard-01', { 
-    width: 110, 
-    height: 110, 
-    minHeight: 110, 
-    y: window.innerWidth <= 768 ? '42vh' : 0,
-    ease: 'power2.inOut', 
-    duration: 1 
-  }, 0.5)
+  .to('#pcard-01', { width: 110, height: 110, minHeight: 110, ease: 'power2.inOut', duration: 1 }, 0.5)
+  .to('#pcard-01', { y: window.innerWidth <= 768 ? '42vh' : 0, ease: 'power2.inOut', duration: 0.5 }, 1.5)
   // PHASE 3: #01+INTELLIGENT INVENTORY slide out left, #02+CLIENT ARCHIVE slide in right
   .to('#pcard-01 .num-current',   { x: -60, opacity: 0, duration: 0.5 }, 1.8)
   .to('#pcard-01 .label-current', { x: -40, opacity: 0, duration: 0.5 }, 1.8)
@@ -317,14 +311,8 @@ function setupCardAnimation(cardId, sectionId, hasNext, pinExtra = 0) {
          `${c} .pc-bc-wrap`, `${c} .pc-purchased`, `${c} .pm`, `${c} .pc-ing`], { opacity: 0, duration: 0.6 }, 0)
     .to(`${c} .pc-top`, { borderBottomColor: 'transparent', duration: 0.3 }, 0)
     .to(`${c} .pc-bot`, { borderTopColor:    'transparent', duration: 0.3 }, 0)
-    .to(c, { 
-      width: 110, 
-      height: 110, 
-      minHeight: 110, 
-      y: window.innerWidth <= 768 ? '42vh' : 0,
-      ease: 'power2.inOut', 
-      duration: 1 
-    }, 0.5);
+    .to(c, { width: 110, height: 110, minHeight: 110, ease: 'power2.inOut', duration: 1 }, 0.5)
+    .to(c, { y: window.innerWidth <= 768 ? '42vh' : 0, ease: 'power2.inOut', duration: 0.5 }, 1.5);
 
   if (hasNext) {
     collapseTl
