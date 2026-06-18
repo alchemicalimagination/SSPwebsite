@@ -724,7 +724,7 @@ function getAudioCtx() {
 
 let typewriterAudioBuffer = null;
 let typewriterClicks = [];
-let _isSoundMuted = true;
+let _isSoundMuted = false;
 
 function loadTypewriterWav() {
   const ctx = getAudioCtx();
@@ -836,7 +836,7 @@ function initUnmuteButton() {
 
   const btn = document.createElement('div');
   btn.id = 'audio-unmute-btn';
-  btn.classList.add('sound-off');
+  btn.classList.add('sound-on');
   btn.classList.add(SOUND_TOGGLE_THEME === 'metal' ? 'metal-theme' : 'glass-theme');
   btn.innerHTML = `
     <div id="liquid-metal-audio"></div>
@@ -846,7 +846,7 @@ function initUnmuteButton() {
         <path class="wave-path flat" d="M 0 12 L 100 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" fill="none" />
       </svg>
     </div>
-    <span class="unmute-txt">OFF</span>
+    <span class="unmute-txt">ON</span>
   `;
 
   document.body.appendChild(btn);

@@ -1909,17 +1909,17 @@ section {
 /* ── Theme 1: Glass Effect ── */
 #audio-unmute-btn.glass-theme {
   background: rgba(255, 255, 255, 0.12);
-  border: 1.5px solid #3a3448;
+  border: 1.5px solid #bc3aff;
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  color: #3a3448;
+  color: #bc3aff;
 }
 #audio-unmute-btn.glass-theme:hover {
   background: rgba(255, 255, 255, 0.20);
 }
 #audio-unmute-btn.glass-theme.sound-off {
-  color: rgba(58, 52, 72, 0.5);
-  border-color: rgba(58, 52, 72, 0.5);
+  color: rgba(188, 58, 255, 0.4);
+  border-color: rgba(188, 58, 255, 0.3);
 }
 
 /* ── Theme 2: Liquid Metal Effect ── */
@@ -1940,15 +1940,15 @@ section {
 
 #audio-unmute-btn.metal-theme {
   background: #0c0c0c;
-  border: 2px solid #3a3448;
-  color: #3a3448;
+  border: 2px solid #bc3aff;
+  color: #bc3aff;
 }
 #audio-unmute-btn.metal-theme #liquid-metal-audio {
   display: block;
 }
 #audio-unmute-btn.metal-theme.sound-off {
-  color: rgba(58, 52, 72, 0.5);
-  border-color: rgba(58, 52, 72, 0.5);
+  color: rgba(188, 58, 255, 0.4);
+  border-color: rgba(188, 58, 255, 0.3);
 }
 /* Place wave and text above WebGL canvas */
 #audio-unmute-btn.metal-theme .audio-wave-wrap,
