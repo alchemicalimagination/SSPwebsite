@@ -1653,8 +1653,8 @@ section {
 .lang-switch a.active { color: #fff; }
 .lang-switch span { color: rgba(255,255,255,0.2); }
 .globe-btn {
-  width: 36px;
-  height: 36px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
   border: 1px solid rgba(255, 255, 255, 0.35);
   background: rgba(255, 255, 255, 0.12);
@@ -1673,8 +1673,8 @@ section {
   transform: scale(1.05);
 }
 .globe-btn .globe-icon {
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   color: inherit;
   display: block;
 }
