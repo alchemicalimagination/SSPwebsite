@@ -454,9 +454,7 @@ function initScaleAnimation() {
     statusEl.style.color       = 'rgba(255,255,255,0.5)';
     statusEl.style.borderColor = 'rgba(255,255,255,0.3)';
 
-    scaleTl = gsap.timeline({
-      onComplete: () => { if (scaleRunning) scaleDelay = gsap.delayedCall(0.8, runFormula); }
-    });
+    scaleTl = gsap.timeline();
 
     scaleTl.to(readout, { opacity: 1, duration: 0.3 });
 
@@ -484,10 +482,8 @@ function initScaleAnimation() {
         statusEl.textContent       = 'SAVED';
         statusEl.style.color       = '#a8dadc';
         statusEl.style.borderColor = '#a8dadc';
-      })
-      .to({}, { duration: 2.5 })
-      .to(readout, { opacity: 0, duration: 0.4 })
-      .to(liquid,  { scaleY: 0.05, duration: 0.6, ease: 'power2.in' }, '-=0.2');
+      });
+    // hold final state — no drain, no restart
   }
 
   ScrollTrigger.create({
@@ -573,11 +569,14 @@ function initArchiveAnimation() {
     gsap.set(slideEls, { x: 0, opacity: 1 });
   }
 
-  function cycle() {
+  function runArchiveSequence() {
     if (!archiveRunning) return;
+    // Cycle through all remaining views once, then hold
+    const remaining = views.length - 1 - idx;
+    if (remaining <= 0) return;
     idx = (idx + 1) % views.length;
     archiveTl = gsap.timeline({
-      onComplete: () => { if (archiveRunning) archiveDelay = gsap.delayedCall(3, cycle); }
+      onComplete: () => { if (archiveRunning) archiveDelay = gsap.delayedCall(2.5, runArchiveSequence); }
     });
     archiveTl
       .to(slideEls, { x: -18, opacity: 0, duration: 0.3, ease: 'power2.in', stagger: 0.03 })
@@ -588,8 +587,8 @@ function initArchiveAnimation() {
   ScrollTrigger.create({
     trigger: '#pcard-02 .pc-visual',
     start: 'top 85%', end: 'bottom 15%',
-    onEnter:     () => { if (!archiveRunning) { archiveRunning = true; archiveDelay = gsap.delayedCall(3, cycle); } },
-    onEnterBack: () => { if (!archiveRunning) { archiveRunning = true; archiveDelay = gsap.delayedCall(3, cycle); } },
+    onEnter:     () => { if (!archiveRunning) { archiveRunning = true; archiveDelay = gsap.delayedCall(2.5, runArchiveSequence); } },
+    onEnterBack: () => { if (!archiveRunning) { archiveRunning = true; archiveDelay = gsap.delayedCall(2.5, runArchiveSequence); } },
     onLeave:     archiveStop,
     onLeaveBack: archiveStop,
   });
@@ -630,9 +629,7 @@ function initAdminAnimation() {
     valueEl.textContent  = '$12,400';
     changeEl.textContent = '+0.0%';
 
-    adminTl = gsap.timeline({
-      onComplete: () => { if (adminRunning) adminDelay = gsap.delayedCall(1.5, runAdminCycle); }
-    });
+    adminTl = gsap.timeline();
     adminTl
       .to(line, { strokeDashoffset: 0, duration: 1.8, ease: 'power2.out' })
       .to(salesVal, {
@@ -641,19 +638,8 @@ function initAdminAnimation() {
       }, 0)
       .call(() => { changeEl.textContent = '+19.5%'; }, [], 1.1)
       .to(dot, { opacity: 1, scale: 1.5, duration: 0.25, ease: 'back.out(2)' })
-      .to(dot, { scale: 1.0, duration: 0.25 })
-      .to({}, { duration: 2.2 })
-      .to(dot,       { opacity: 0, duration: 0.25 })
-      .to(line,      { strokeDashoffset: len, duration: 0.9, ease: 'power2.in' }, '-=0.15')
-      .to(graphWrap, { opacity: 0, duration: 0.25 })
-      .call(() => {
-        gsap.set(line, { strokeDashoffset: len });
-        gsap.set(dot,  { opacity: 0, scale: 1 });
-        salesVal.val = 12400;
-        valueEl.textContent  = '$12,400';
-        changeEl.textContent = '+0.0%';
-      })
-      .to(graphWrap, { opacity: 1, duration: 0.3 });
+      .to(dot, { scale: 1.0, duration: 0.25 });
+    // hold final state — no erase, no restart
   }
 
   ScrollTrigger.create({
@@ -707,9 +693,7 @@ function initLoyaltyAnimation() {
     gsap.set(fillEl,   { width: '87%' });
     gsap.set(rewardEl, { opacity: 0 });
 
-    loyaltyTl = gsap.timeline({
-      onComplete: () => { if (loyaltyRunning) loyaltyDelay = gsap.delayedCall(0.8, runLoyaltyCycle); }
-    });
+    loyaltyTl = gsap.timeline();
     loyaltyTl
       .to({}, { duration: 1.2 })
       .call(() => { visitsEl.textContent = '12'; })
@@ -723,9 +707,8 @@ function initLoyaltyAnimation() {
         tierEl.style.color       = '#D4AF37';
         tierEl.style.borderColor = '#D4AF37';
       })
-      .to(rewardEl, { opacity: 1, duration: 0.4, ease: 'power2.out' })
-      .to({}, { duration: 2.8 })
-      .to(lc, { opacity: 0, duration: 0.45 });
+      .to(rewardEl, { opacity: 1, duration: 0.4, ease: 'power2.out' });
+    // hold final GOLD state — no fade out, no restart
   }
 
   ScrollTrigger.create({
@@ -762,7 +745,10 @@ function playTypeClick() {
   } catch(e) {}
 }
 
+let _typewriterDone = false;
 function initTypewriterTitles() {
+  if (_typewriterDone) return;
+  _typewriterDone = true;
   document.querySelectorAll('.d-title').forEach(title => {
     // Split innerHTML preserving <br> tags
     const parts = title.innerHTML.split(/(<br\s*\/?>)/gi);
