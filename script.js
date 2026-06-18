@@ -842,7 +842,9 @@ function initUnmuteButton() {
     <div id="liquid-metal-audio"></div>
     <div class="audio-wave-wrap">
       <svg class="wave-svg" viewBox="0 0 100 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path class="wave-path wavy wavy3" d="M -30 12 Q -22.5 4 -15 12 T 0 12 T 15 12 T 30 12 T 45 12 T 60 12 T 75 12 T 90 12 T 105 12 T 120 12 T 135 12" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" fill="none" opacity="0.25" />
         <path class="wave-path wavy" d="M -30 12 Q -22.5 2 -15 12 T 0 12 T 15 12 T 30 12 T 45 12 T 60 12 T 75 12 T 90 12 T 105 12 T 120 12 T 135 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" fill="none" />
+        <path class="wave-path wavy wavy2" d="M -30 12 Q -22.5 5 -15 12 T 0 12 T 15 12 T 30 12 T 45 12 T 60 12 T 75 12 T 90 12 T 105 12 T 120 12 T 135 12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" fill="none" opacity="0.45" />
         <path class="wave-path flat" d="M 0 12 L 100 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" fill="none" />
       </svg>
     </div>

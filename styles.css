@@ -1987,6 +1987,12 @@ section {
   display: block;
   animation: waveMove 1.2s linear infinite;
 }
+#audio-unmute-btn.sound-on .wavy2 {
+  animation-duration: 1.8s;
+}
+#audio-unmute-btn.sound-on .wavy3 {
+  animation-duration: 2.6s;
+}
 #audio-unmute-btn.sound-on .flat {
   display: none;
 }
