@@ -1888,8 +1888,8 @@ section {
 /* ── Unmute Toggle Button with Purple Wave ── */
 #audio-unmute-btn {
   position: fixed;
-  bottom: 24px;
-  right: 24px;
+  top: 1cm;
+  right: calc(1cm + 374px + 20px);
   z-index: 9999;
   display: flex;
   align-items: center;
@@ -1903,7 +1903,7 @@ section {
   box-shadow: 0 4px 20px rgba(0,0,0,0.20);
   transition: opacity 0.4s ease, transform 0.3s ease, background-color 0.3s, border-color 0.3s, color 0.3s;
   opacity: 0;
-  transform: translateY(10px);
+  transform: translateY(-10px);
   font-family: "DM Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   overflow: hidden; /* clips the liquid metal canvas if active */
 }
