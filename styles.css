@@ -1737,7 +1737,7 @@ section {
   /* ── Mobile: absolute globe + pill near card ── */
   .lang-switch {
     position: absolute !important;
-    top: 0.5cm;
+    top: 0cm;
     right: 0.5cm;
   }
   #audio-unmute-btn {
