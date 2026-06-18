@@ -724,32 +724,117 @@ function initLoyaltyAnimation() {
 // ── TYPEWRITER TITLES ──────────────────────────────────
 let _audioCtx = null;
 function getAudioCtx() {
-  if (!_audioCtx) _audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  if (!_audioCtx) {
+    _audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  }
   return _audioCtx;
 }
+
 function _unlockAudio() {
-  try { const ctx = getAudioCtx(); if (ctx.state === 'suspended') ctx.resume(); } catch(e) {}
-  ['click','touchstart','touchend','scroll','keydown'].forEach(e =>
-    document.removeEventListener(e, _unlockAudio));
+  try {
+    const ctx = getAudioCtx();
+    
+    // Play a short silent buffer to initialize/unlock the audio destination
+    const buffer = ctx.createBuffer(1, 1, 22050);
+    const source = ctx.createBufferSource();
+    source.buffer = buffer;
+    source.connect(ctx.destination);
+    source.start(0);
+
+    if (ctx.state === 'suspended') {
+      ctx.resume().then(() => {
+        if (ctx.state === 'running') {
+          _removeUnlockListeners();
+        }
+      });
+    } else if (ctx.state === 'running') {
+      _removeUnlockListeners();
+    }
+  } catch (e) {
+    console.warn("Failed to resume AudioContext:", e);
+  }
 }
-['click','touchstart','touchend','scroll','keydown'].forEach(e =>
-  document.addEventListener(e, _unlockAudio, { passive: true }));
+
+function _removeUnlockListeners() {
+  ['click', 'touchend', 'keydown', 'mousedown', 'pointerdown'].forEach(evt => {
+    document.removeEventListener(evt, _unlockAudio, { capture: true });
+  });
+}
+
+// Bind only to actual user interaction events (no scroll/touchstart)
+['click', 'touchend', 'keydown', 'mousedown', 'pointerdown'].forEach(evt => {
+  document.addEventListener(evt, _unlockAudio, { capture: true, passive: true });
+});
+
 function playTypeClick() {
   try {
     const ctx = getAudioCtx();
-    if (ctx.state === 'suspended') ctx.resume();
-    const len = Math.floor(ctx.sampleRate * 0.022);
-    const buf = ctx.createBuffer(1, len, ctx.sampleRate);
-    const d   = buf.getChannelData(0);
-    for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 3);
-    const src  = ctx.createBufferSource();
-    const gain = ctx.createGain();
-    gain.gain.value = 0.07;
-    src.buffer = buf;
-    src.connect(gain);
-    gain.connect(ctx.destination);
-    src.start();
-  } catch(e) {}
+    if (ctx.state === 'suspended') {
+      // Try a quick resume if we are inside a user-gesture stack (just in case)
+      ctx.resume();
+    }
+    if (ctx.state === 'suspended') return;
+
+    const now = ctx.currentTime;
+
+    // 1. Mechanical Impact Transient (high-frequency paper/metal strike)
+    const impactLen = Math.floor(ctx.sampleRate * 0.012); // ~12ms
+    const impactBuf = ctx.createBuffer(1, impactLen, ctx.sampleRate);
+    const impactData = impactBuf.getChannelData(0);
+    for (let i = 0; i < impactLen; i++) {
+      impactData[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / impactLen, 2);
+    }
+    const impactSrc = ctx.createBufferSource();
+    impactSrc.buffer = impactBuf;
+    
+    const impactGain = ctx.createGain();
+    impactGain.gain.setValueAtTime(0.24, now); // audible gain
+    impactGain.gain.exponentialRampToValueAtTime(0.001, now + 0.012);
+
+    impactSrc.connect(impactGain);
+    impactGain.connect(ctx.destination);
+    impactSrc.start(now);
+
+    // 2. Metallic Ring Resonance (metal key lever vibration)
+    const ringFreqs = [880, 1320, 2100];
+    ringFreqs.forEach((freq, idx) => {
+      const osc = ctx.createOscillator();
+      const oscGain = ctx.createGain();
+      
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, now);
+      
+      const decay = 0.03 + Math.random() * 0.015; // 30-45ms
+      const initialVol = idx === 0 ? 0.06 : 0.03;
+      oscGain.gain.setValueAtTime(initialVol, now);
+      oscGain.gain.exponentialRampToValueAtTime(0.0001, now + decay);
+      
+      osc.connect(oscGain);
+      oscGain.connect(ctx.destination);
+      
+      osc.start(now);
+      osc.stop(now + decay);
+    });
+
+    // 3. Hollow Case Body Resonance (low-frequency frame thump)
+    const bodyOsc = ctx.createOscillator();
+    const bodyGain = ctx.createGain();
+    
+    bodyOsc.type = 'triangle';
+    bodyOsc.frequency.setValueAtTime(160, now); // ~160Hz
+    
+    bodyGain.gain.setValueAtTime(0.08, now);
+    bodyGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.05);
+    
+    bodyOsc.connect(bodyGain);
+    bodyGain.connect(ctx.destination);
+    
+    bodyOsc.start(now);
+    bodyOsc.stop(now + 0.05);
+
+  } catch(e) {
+    console.warn("Error synthesizing typewriter sound:", e);
+  }
 }
 
 let _typewriterDone = false;
