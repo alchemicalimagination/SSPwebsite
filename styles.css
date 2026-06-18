@@ -79,7 +79,7 @@ body {
 
 /* ─── Flower scroll canvas ─── */
 #flower-canvas {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100vw;
@@ -87,7 +87,7 @@ body {
   z-index: 1;
 }
 #ascii-overlay {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100vw;
@@ -98,7 +98,7 @@ body {
   opacity: 1;
 }
 #flower-overlay {
-  position: fixed;
+  position: absolute;
   inset: 0;
   background: rgba(0,0,0,0.30);
   z-index: 2;
@@ -172,7 +172,7 @@ section { background: transparent !important; z-index: 4 !important; }
 
 /* ─── Left vertical scrolling marquee ─── */
 .left-marquee {
-  position: fixed;
+  position: absolute;
   left: 0;
   top: 50%;
   transform: translateY(-50%);
@@ -450,7 +450,7 @@ section {
 
 /* ── Fixed persistent product badge ── */
 .fixed-badge {
-  position: fixed;
+  position: absolute;
   top: 24px;
   left: 24px;
   z-index: 200;
@@ -1374,7 +1374,7 @@ section {
    FOOTER
 ══════════════════════════════════════ */
 #footer {
-  position: fixed;
+  position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
@@ -1663,15 +1663,15 @@ section {
 
   /* ── iPad: fix card, globe, pill in place ── */
   .hero-brand {
-    position: fixed !important;
+    position: absolute !important;
   }
   .lang-switch {
-    position: fixed;
+    position: absolute;
     top: 1.5cm;
     right: 1.5cm;
   }
   #audio-unmute-btn {
-    position: fixed;
+    position: absolute;
     top: 1.7cm;
     right: calc(2cm + 266px);
   }
@@ -1692,7 +1692,7 @@ section {
 
   /* ── Fixed UI ── */
   .ui-works {
-    position: fixed;
+    position: absolute;
     top: 16px;
     left: 16px;
     bottom: auto;
@@ -1710,7 +1710,7 @@ section {
     min-height: 100vh;
   }
   .hero-brand {
-    position: fixed !important;
+    position: absolute !important;
     top: 3mm !important;
     left: auto !important;
     right: 3mm !important;
@@ -1722,12 +1722,12 @@ section {
   }
   /* ── Mobile: fix globe + pill near card ── */
   .lang-switch {
-    position: fixed;
+    position: absolute;
     top: 1.5cm;
     right: 1.5cm;
   }
   #audio-unmute-btn {
-    position: fixed;
+    position: absolute;
     top: 1.7cm;
     right: calc(8mm + 191px);
   }
@@ -1835,7 +1835,7 @@ section {
 
   /* ── Footer ── */
   #footer {
-    position: fixed;
+    position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
