@@ -432,7 +432,20 @@ function initScaleAnimation() {
 
   gsap.set(readout, { opacity: 0 });
 
+  let scaleRunning = false, scaleTl = null, scaleDelay = null;
+
+  function scaleStop() {
+    scaleRunning = false;
+    if (scaleDelay) { scaleDelay.kill(); scaleDelay = null; }
+    if (scaleTl)    { scaleTl.kill();    scaleTl    = null; }
+    gsap.killTweensOf([drop, liquid, readout]);
+    gsap.set(drop,    { y: 0, opacity: 0 });
+    gsap.set(liquid,  { scaleY: 0.05, transformOrigin: 'bottom center' });
+    gsap.set(readout, { opacity: 0 });
+  }
+
   function runFormula() {
+    if (!scaleRunning) return;
     gsap.set(drop, { y: 0, opacity: 0 });
     gsap.set(liquid, { scaleY: 0.05, transformOrigin: 'bottom center' });
     labelEl.textContent        = steps[0].name;
@@ -441,24 +454,22 @@ function initScaleAnimation() {
     statusEl.style.color       = 'rgba(255,255,255,0.5)';
     statusEl.style.borderColor = 'rgba(255,255,255,0.3)';
 
-    const tl = gsap.timeline({ onComplete: () => gsap.delayedCall(0.8, runFormula) });
+    scaleTl = gsap.timeline({
+      onComplete: () => { if (scaleRunning) scaleDelay = gsap.delayedCall(0.8, runFormula); }
+    });
 
-    tl.to(readout, { opacity: 1, duration: 0.3 });
+    scaleTl.to(readout, { opacity: 1, duration: 0.3 });
 
     steps.forEach((step, i) => {
       const weight = { val: 0.0 };
-
       if (i > 0) {
-        // Pause then switch label to next ingredient
-        tl.to({}, { duration: 0.65 })
+        scaleTl.to({}, { duration: 0.65 })
           .call(() => {
             labelEl.textContent = step.name;
             valueEl.textContent = '0.0 ' + step.unit;
           });
       }
-
-      // Drop falls into accumulating bowl
-      tl.set(drop, { y: 0, opacity: 0 })
+      scaleTl.set(drop, { y: 0, opacity: 0 })
         .to(drop, { opacity: 1, duration: 0.06, delay: 0.25 })
         .to(drop, { y: 38, duration: 0.5, ease: 'power2.in' })
         .to(drop, { opacity: 0, duration: 0.06 })
@@ -469,19 +480,24 @@ function initScaleAnimation() {
         }, '-=0.3');
     });
 
-    // All 3 added — formula complete
-    tl.call(() => {
+    scaleTl.call(() => {
         statusEl.textContent       = 'SAVED';
         statusEl.style.color       = '#a8dadc';
         statusEl.style.borderColor = '#a8dadc';
       })
       .to({}, { duration: 2.5 })
-      // Drain, restart
       .to(readout, { opacity: 0, duration: 0.4 })
       .to(liquid,  { scaleY: 0.05, duration: 0.6, ease: 'power2.in' }, '-=0.2');
   }
 
-  runFormula();
+  ScrollTrigger.create({
+    trigger: '#pcard-01 .pc-visual',
+    start: 'top 85%', end: 'bottom 15%',
+    onEnter:      () => { if (!scaleRunning) { scaleRunning = true; runFormula(); } },
+    onEnterBack:  () => { if (!scaleRunning) { scaleRunning = true; runFormula(); } },
+    onLeave:      scaleStop,
+    onLeaveBack:  scaleStop,
+  });
 }
 
 function initArchiveAnimation() {
@@ -545,20 +561,38 @@ function initArchiveAnimation() {
 
   setView(views[0]);
 
+  let archiveRunning = false, archiveTl = null, archiveDelay = null;
+
+  function archiveStop() {
+    archiveRunning = false;
+    if (archiveDelay) { archiveDelay.kill(); archiveDelay = null; }
+    if (archiveTl)    { archiveTl.kill();    archiveTl    = null; }
+    gsap.killTweensOf(slideEls);
+    idx = 0;
+    setView(views[0]);
+    gsap.set(slideEls, { x: 0, opacity: 1 });
+  }
+
   function cycle() {
+    if (!archiveRunning) return;
     idx = (idx + 1) % views.length;
-    gsap.timeline({ onComplete: () => gsap.delayedCall(3, cycle) })
-      // Slide body out to the left
+    archiveTl = gsap.timeline({
+      onComplete: () => { if (archiveRunning) archiveDelay = gsap.delayedCall(3, cycle); }
+    });
+    archiveTl
       .to(slideEls, { x: -18, opacity: 0, duration: 0.3, ease: 'power2.in', stagger: 0.03 })
-      .call(() => {
-        setView(views[idx]);
-        gsap.set(slideEls, { x: 18 }); // reset to right side, ready to slide in
-      })
-      // Slide new content in from the right
+      .call(() => { setView(views[idx]); gsap.set(slideEls, { x: 18 }); })
       .to(slideEls, { x: 0, opacity: 1, duration: 0.38, ease: 'power2.out', stagger: 0.03 });
   }
 
-  gsap.delayedCall(3, cycle);
+  ScrollTrigger.create({
+    trigger: '#pcard-02 .pc-visual',
+    start: 'top 85%', end: 'bottom 15%',
+    onEnter:     () => { if (!archiveRunning) { archiveRunning = true; archiveDelay = gsap.delayedCall(3, cycle); } },
+    onEnterBack: () => { if (!archiveRunning) { archiveRunning = true; archiveDelay = gsap.delayedCall(3, cycle); } },
+    onLeave:     archiveStop,
+    onLeaveBack: archiveStop,
+  });
 }
 
 function initAdminAnimation() {
@@ -575,16 +609,32 @@ function initAdminAnimation() {
   gsap.set(dot,  { opacity: 0, scale: 1 });
 
   const salesVal = { val: 12400 };
+  let adminRunning = false, adminTl = null, adminDelay = null;
 
-  function runCycle() {
+  function adminStop() {
+    adminRunning = false;
+    if (adminDelay) { adminDelay.kill(); adminDelay = null; }
+    if (adminTl)    { adminTl.kill();    adminTl    = null; }
+    gsap.killTweensOf([line, dot, graphWrap, salesVal]);
+    salesVal.val = 12400;
+    valueEl.textContent  = '$12,400';
+    changeEl.textContent = '+0.0%';
+    gsap.set(line,      { strokeDashoffset: len });
+    gsap.set(dot,       { opacity: 0, scale: 1 });
+    gsap.set(graphWrap, { opacity: 1 });
+  }
+
+  function runAdminCycle() {
+    if (!adminRunning) return;
     salesVal.val         = 12400;
     valueEl.textContent  = '$12,400';
     changeEl.textContent = '+0.0%';
 
-    const tl = gsap.timeline({ onComplete: () => gsap.delayedCall(1.5, runCycle) });
-
-    // Draw graph + count up revenue
-    tl.to(line, { strokeDashoffset: 0, duration: 1.8, ease: 'power2.out' })
+    adminTl = gsap.timeline({
+      onComplete: () => { if (adminRunning) adminDelay = gsap.delayedCall(1.5, runAdminCycle); }
+    });
+    adminTl
+      .to(line, { strokeDashoffset: 0, duration: 1.8, ease: 'power2.out' })
       .to(salesVal, {
         val: 14820, duration: 1.8, ease: 'power2.out',
         onUpdate: () => { valueEl.textContent = '$' + Math.floor(salesVal.val).toLocaleString(); }
@@ -593,21 +643,27 @@ function initAdminAnimation() {
       .to(dot, { opacity: 1, scale: 1.5, duration: 0.25, ease: 'back.out(2)' })
       .to(dot, { scale: 1.0, duration: 0.25 })
       .to({}, { duration: 2.2 })
-      // Smooth erase: line draws back from right to left, then fade
-      .to(dot,      { opacity: 0, duration: 0.25 })
-      .to(line,     { strokeDashoffset: len, duration: 0.9, ease: 'power2.in' }, '-=0.15')
+      .to(dot,       { opacity: 0, duration: 0.25 })
+      .to(line,      { strokeDashoffset: len, duration: 0.9, ease: 'power2.in' }, '-=0.15')
       .to(graphWrap, { opacity: 0, duration: 0.25 })
       .call(() => {
-        salesVal.val         = 12400;
-        valueEl.textContent  = '$12,400';
-        changeEl.textContent = '+0.0%';
         gsap.set(line, { strokeDashoffset: len });
         gsap.set(dot,  { opacity: 0, scale: 1 });
+        salesVal.val = 12400;
+        valueEl.textContent  = '$12,400';
+        changeEl.textContent = '+0.0%';
       })
       .to(graphWrap, { opacity: 1, duration: 0.3 });
   }
 
-  runCycle();
+  ScrollTrigger.create({
+    trigger: '#pcard-03 .pc-visual',
+    start: 'top 85%', end: 'bottom 15%',
+    onEnter:     () => { if (!adminRunning) { adminRunning = true; runAdminCycle(); } },
+    onEnterBack: () => { if (!adminRunning) { adminRunning = true; runAdminCycle(); } },
+    onLeave:     adminStop,
+    onLeaveBack: adminStop,
+  });
 }
 
 function initLoyaltyAnimation() {
@@ -621,8 +677,26 @@ function initLoyaltyAnimation() {
   const rewardEl  = lc.querySelector('.lc-reward');
 
   const pts = { val: 2600 };
+  let loyaltyRunning = false, loyaltyTl = null, loyaltyDelay = null;
 
-  function runCycle() {
+  function loyaltyStop() {
+    loyaltyRunning = false;
+    if (loyaltyDelay) { loyaltyDelay.kill(); loyaltyDelay = null; }
+    if (loyaltyTl)    { loyaltyTl.kill();    loyaltyTl    = null; }
+    gsap.killTweensOf([lc, fillEl, rewardEl, pts]);
+    gsap.set(lc, { opacity: 1 });
+    pts.val = 2600;
+    ptsEl.textContent        = '2,600';
+    tierEl.textContent       = 'SILVER';
+    tierEl.style.color       = 'rgba(255,255,255,0.5)';
+    tierEl.style.borderColor = 'rgba(255,255,255,0.2)';
+    visitsEl.textContent     = '11';
+    gsap.set(fillEl,   { width: '87%' });
+    gsap.set(rewardEl, { opacity: 0 });
+  }
+
+  function runLoyaltyCycle() {
+    if (!loyaltyRunning) return;
     gsap.set(lc, { opacity: 1 });
     pts.val              = 2600;
     ptsEl.textContent    = '2,600';
@@ -633,30 +707,35 @@ function initLoyaltyAnimation() {
     gsap.set(fillEl,   { width: '87%' });
     gsap.set(rewardEl, { opacity: 0 });
 
-    const tl = gsap.timeline({ onComplete: () => gsap.delayedCall(0.8, runCycle) });
-
-    tl.to({}, { duration: 1.2 })
-      // Visit triggers — counter ticks, points accumulate, bar fills
+    loyaltyTl = gsap.timeline({
+      onComplete: () => { if (loyaltyRunning) loyaltyDelay = gsap.delayedCall(0.8, runLoyaltyCycle); }
+    });
+    loyaltyTl
+      .to({}, { duration: 1.2 })
       .call(() => { visitsEl.textContent = '12'; })
       .to(pts, {
         val: 3000, duration: 1.4, ease: 'power2.out',
         onUpdate: () => { ptsEl.textContent = Math.floor(pts.val).toLocaleString(); }
       })
       .to(fillEl, { width: '100%', duration: 1.4, ease: 'power2.out' }, '<')
-      // Tier upgrade
       .call(() => {
         tierEl.textContent       = 'GOLD';
         tierEl.style.color       = '#D4AF37';
         tierEl.style.borderColor = '#D4AF37';
       })
-      // Reward unlocks
       .to(rewardEl, { opacity: 1, duration: 0.4, ease: 'power2.out' })
       .to({}, { duration: 2.8 })
-      // Fade out before reset
       .to(lc, { opacity: 0, duration: 0.45 });
   }
 
-  runCycle();
+  ScrollTrigger.create({
+    trigger: '#pcard-04 .pc-visual',
+    start: 'top 85%', end: 'bottom 15%',
+    onEnter:     () => { if (!loyaltyRunning) { loyaltyRunning = true; runLoyaltyCycle(); } },
+    onEnterBack: () => { if (!loyaltyRunning) { loyaltyRunning = true; runLoyaltyCycle(); } },
+    onLeave:     loyaltyStop,
+    onLeaveBack: loyaltyStop,
+  });
 }
 
 // ── TYPEWRITER TITLES ──────────────────────────────────
@@ -710,7 +789,7 @@ function initTypewriterTitles() {
   });
 }
 
-// Start visual loops once DOM loaded
+// Register animations — ScrollTrigger handles when each one starts/stops
 document.addEventListener('DOMContentLoaded', () => {
   initTypewriterTitles();
   initScaleAnimation();
@@ -718,8 +797,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initAdminAnimation();
   initLoyaltyAnimation();
 });
-// Also fallback if DOM already loaded
-if (document.readyState === "complete" || document.readyState === "interactive") {
+if (document.readyState === 'complete' || document.readyState === 'interactive') {
   initTypewriterTitles();
   initScaleAnimation();
   initArchiveAnimation();
