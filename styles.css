@@ -2053,6 +2053,6 @@ section {
 
 /* ── Desktop only: smaller card headers ── */
 @media (min-width: 1367px) {
-  .pc-num b { font-size: 18px; }
+  .pc-num b { font-size: 15px; }
   .num-track { height: 22px; }
 }
