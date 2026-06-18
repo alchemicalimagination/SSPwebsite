@@ -1633,11 +1633,6 @@ section {
 /* ══════════════════════════════════════
    MOBILE — max 768px
 ══════════════════════════════════════ */
-/* ── iPad landscape only: fix d04 long title overflow ── */
-@media (max-width: 1366px) and (min-width: 769px) {
-  .d04-title { font-size: clamp(28px, 4vw, 54px); }
-}
-
 @media (max-width: 768px) {
 
   html, body { overflow-x: hidden; max-width: 100vw; }
