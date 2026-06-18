@@ -1743,7 +1743,7 @@ section {
   #audio-unmute-btn {
     position: absolute !important;
     top: 0.7cm !important;
-    right: calc(191px - 2mm) !important;
+    right: calc(191px + 6mm) !important;
   }
 
   .ui-works {
