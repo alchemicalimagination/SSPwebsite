@@ -99,7 +99,7 @@ function renderASCII() {
 
 for (let i = 1; i <= FRAME_COUNT; i++) {
   const img = new Image();
-  img.src = `./flower%20sequence/ezgif-8a7cfed939556aa3-jpg/ezgif-frame-${padNum(i)}.jpg`;
+  img.src = `${window._BASE||'./'}flower%20sequence/ezgif-8a7cfed939556aa3-jpg/ezgif-frame-${padNum(i)}.jpg`;
   img.onload = () => { loadedCount++; if (loadedCount === 1) renderFlower(0); };
   frames.push(img);
 }

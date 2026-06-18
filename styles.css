@@ -1631,6 +1631,28 @@ section {
   transform: translateY(28px);
 }
 
+/* ── Language switcher ── */
+.lang-switch {
+  position: fixed;
+  top: 1.2cm;
+  left: var(--margin);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+}
+.lang-switch a {
+  color: rgba(255,255,255,0.4);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.lang-switch a:hover,
+.lang-switch a.active { color: #fff; }
+.lang-switch span { color: rgba(255,255,255,0.2); }
+
 /* ── iPad: give section 04 wider content area so title stays 2 lines ── */
 @media (max-width: 1366px) and (min-width: 769px) {
   #s-detail-04 { padding-left: calc(40px + 1cm); padding-right: 40px; }
@@ -1871,18 +1893,21 @@ section {
   height: 36px;
   padding: 0 10px;
   box-sizing: border-box;
-  background: #ffffff;
-  border: 2px solid #3a3448;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-radius: 99px;
   cursor: pointer;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-  transition: opacity 0.4s ease, transform 0.3s ease, background-color 0.3s;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.20);
+  transition: opacity 0.4s ease, transform 0.3s ease, background-color 0.3s, border-color 0.3s;
   opacity: 0;
   transform: translateY(10px);
   font-family: "DM Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 #audio-unmute-btn:hover {
-  background: #f8f6fb;
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(216, 180, 254, 0.4);
   transform: scale(1.03) translateY(-1px);
 }
 .audio-wave-wrap {
@@ -1899,10 +1924,11 @@ section {
   overflow: hidden;
 }
 .wave-path {
-  stroke: #3a3448;
+  stroke: #d8b4fe;
   stroke-width: 2.5px;
   stroke-linecap: round;
   fill: none;
+  transition: stroke 0.3s;
 }
 #audio-unmute-btn.sound-on .wavy {
   display: block;
@@ -1925,10 +1951,14 @@ section {
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.05em;
-  color: #3a3448;
+  color: #d8b4fe;
   text-align: right;
   width: 20px;
+  transition: color 0.3s;
 }
 #audio-unmute-btn.sound-off .unmute-txt {
-  color: rgba(58, 52, 72, 0.5);
+  color: rgba(216, 180, 254, 0.4);
+}
+#audio-unmute-btn.sound-off .wave-path {
+  stroke: rgba(216, 180, 254, 0.4);
 }
