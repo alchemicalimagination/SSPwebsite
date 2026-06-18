@@ -941,7 +941,7 @@ function playTypeClick() {
       const duration = 0.18; // Play 180ms of sound per click
 
       const gain = ctx.createGain();
-      gain.gain.setValueAtTime(0.55, now);
+      gain.gain.setValueAtTime(0.18, now);
       gain.gain.linearRampToValueAtTime(0.001, now + duration);
 
       src.connect(gain);
@@ -967,7 +967,7 @@ function playTypeClick() {
     filter.Q.setValueAtTime(1.8, now);
     
     const impactGain = ctx.createGain();
-    impactGain.gain.setValueAtTime(0.28, now); // clear volume
+    impactGain.gain.setValueAtTime(0.10, now); // clear volume
     impactGain.gain.linearRampToValueAtTime(0.001, now + 0.015);
 
     impactSrc.connect(filter);
@@ -985,7 +985,7 @@ function playTypeClick() {
       osc.frequency.setValueAtTime(freq + Math.random() * 20, now);
       
       const decay = 0.035 + Math.random() * 0.015; // 35-50ms
-      const initialVol = (idx === 0 ? 0.06 : 0.03) * (0.8 + Math.random() * 0.4);
+      const initialVol = (idx === 0 ? 0.02 : 0.01) * (0.8 + Math.random() * 0.4);
       oscGain.gain.setValueAtTime(initialVol, now);
       oscGain.gain.linearRampToValueAtTime(0.0001, now + decay);
       
