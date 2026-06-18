@@ -724,15 +724,15 @@ function initLoyaltyAnimation() {
 // ── TYPEWRITER TITLES ──────────────────────────────────
 let _audioCtx = null;
 function getAudioCtx() {
-  if (!_audioCtx) {
-    _audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  }
   return _audioCtx;
 }
 
 function _unlockAudio() {
   try {
-    const ctx = getAudioCtx();
+    if (!_audioCtx) {
+      _audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    const ctx = _audioCtx;
     
     // Play a short silent buffer to initialize/unlock the audio destination
     const buffer = ctx.createBuffer(1, 1, 22050);
@@ -766,46 +766,112 @@ function _removeUnlockListeners() {
   document.addEventListener(evt, _unlockAudio, { capture: true, passive: true });
 });
 
+// Dynamic Unmute Overlay / Button
+let _unmuteBtnDone = false;
+function initUnmuteButton() {
+  if (_unmuteBtnDone) return;
+  _unmuteBtnDone = true;
+
+  const btn = document.createElement('div');
+  btn.id = 'audio-unmute-btn';
+  btn.innerHTML = '<span>🔊</span> ENABLE SOUND';
+  btn.style.cssText = `
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 99px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: #fff;
+    font-family: "DM Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    opacity: 0;
+    transform: translateY(10px);
+    text-transform: uppercase;
+  `;
+  document.body.appendChild(btn);
+  
+  // Fade in after 1 second
+  setTimeout(() => {
+    btn.style.opacity = '1';
+    btn.style.transform = 'translateY(0)';
+  }, 1000);
+
+  const handleUnmute = () => {
+    _unlockAudio();
+    // Fade out and remove
+    btn.style.opacity = '0';
+    btn.style.transform = 'translateY(10px)';
+    setTimeout(() => btn.remove(), 400);
+    // Remove document level listeners
+    document.removeEventListener('click', handleUnmute);
+    document.removeEventListener('keydown', handleUnmute);
+  };
+
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    handleUnmute();
+  });
+  
+  // Also unmute on any click anywhere on the page
+  document.addEventListener('click', handleUnmute);
+  document.addEventListener('keydown', handleUnmute);
+}
+
 function playTypeClick() {
   try {
     const ctx = getAudioCtx();
-    if (ctx.state === 'suspended') {
-      // Try a quick resume if we are inside a user-gesture stack (just in case)
-      ctx.resume();
-    }
-    if (ctx.state === 'suspended') return;
+    if (!ctx || ctx.state === 'suspended') return;
 
     const now = ctx.currentTime;
 
-    // 1. Mechanical Impact Transient (high-frequency paper/metal strike)
-    const impactLen = Math.floor(ctx.sampleRate * 0.012); // ~12ms
+    // 1. Mechanical Strike Impact (noise bandpass-filtered around 1.1kHz)
+    const impactLen = Math.floor(ctx.sampleRate * 0.015); // ~15ms
     const impactBuf = ctx.createBuffer(1, impactLen, ctx.sampleRate);
     const impactData = impactBuf.getChannelData(0);
     for (let i = 0; i < impactLen; i++) {
-      impactData[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / impactLen, 2);
+      impactData[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / impactLen, 3);
     }
     const impactSrc = ctx.createBufferSource();
     impactSrc.buffer = impactBuf;
+
+    const filter = ctx.createBiquadFilter();
+    filter.type = 'bandpass';
+    filter.frequency.setValueAtTime(1100 + Math.random() * 300, now); // randomized mechanical focus
+    filter.Q.setValueAtTime(1.8, now);
     
     const impactGain = ctx.createGain();
-    impactGain.gain.setValueAtTime(0.24, now); // audible gain
-    impactGain.gain.exponentialRampToValueAtTime(0.001, now + 0.012);
+    impactGain.gain.setValueAtTime(0.28, now); // clear volume
+    impactGain.gain.exponentialRampToValueAtTime(0.001, now + 0.015);
 
-    impactSrc.connect(impactGain);
+    impactSrc.connect(filter);
+    filter.connect(impactGain);
     impactGain.connect(ctx.destination);
     impactSrc.start(now);
 
-    // 2. Metallic Ring Resonance (metal key lever vibration)
-    const ringFreqs = [880, 1320, 2100];
+    // 2. Metallic Resonance (oscillators representing mechanical typebars)
+    const ringFreqs = [740, 1150, 1850];
     ringFreqs.forEach((freq, idx) => {
       const osc = ctx.createOscillator();
       const oscGain = ctx.createGain();
       
       osc.type = 'sine';
-      osc.frequency.setValueAtTime(freq, now);
+      osc.frequency.setValueAtTime(freq + Math.random() * 20, now);
       
-      const decay = 0.03 + Math.random() * 0.015; // 30-45ms
-      const initialVol = idx === 0 ? 0.06 : 0.03;
+      const decay = 0.035 + Math.random() * 0.015; // 35-50ms
+      const initialVol = (idx === 0 ? 0.06 : 0.03) * (0.8 + Math.random() * 0.4);
       oscGain.gain.setValueAtTime(initialVol, now);
       oscGain.gain.exponentialRampToValueAtTime(0.0001, now + decay);
       
@@ -816,21 +882,21 @@ function playTypeClick() {
       osc.stop(now + decay);
     });
 
-    // 3. Hollow Case Body Resonance (low-frequency frame thump)
+    // 3. Hollow Platen/Desk Resonance (triangle wave low end thump)
     const bodyOsc = ctx.createOscillator();
     const bodyGain = ctx.createGain();
     
     bodyOsc.type = 'triangle';
-    bodyOsc.frequency.setValueAtTime(160, now); // ~160Hz
+    bodyOsc.frequency.setValueAtTime(130, now); // ~130Hz
     
-    bodyGain.gain.setValueAtTime(0.08, now);
-    bodyGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.05);
+    bodyGain.gain.setValueAtTime(0.14, now);
+    bodyGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.045);
     
     bodyOsc.connect(bodyGain);
     bodyGain.connect(ctx.destination);
     
     bodyOsc.start(now);
-    bodyOsc.stop(now + 0.05);
+    bodyOsc.stop(now + 0.045);
 
   } catch(e) {
     console.warn("Error synthesizing typewriter sound:", e);
@@ -860,7 +926,7 @@ function initTypewriterTitles() {
         gsap.to(chars, {
           opacity: 1,
           duration: 0.01,
-          stagger: { each: 0.042, onStart: playTypeClick }
+          stagger: { each: 0.075, onStart: playTypeClick }
         });
       }
     });
@@ -874,6 +940,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initArchiveAnimation();
   initAdminAnimation();
   initLoyaltyAnimation();
+  initUnmuteButton();
 });
 if (document.readyState === 'complete' || document.readyState === 'interactive') {
   initTypewriterTitles();
@@ -881,4 +948,5 @@ if (document.readyState === 'complete' || document.readyState === 'interactive')
   initArchiveAnimation();
   initAdminAnimation();
   initLoyaltyAnimation();
+  initUnmuteButton();
 }
