@@ -11,7 +11,7 @@
   --margin: clamp(40px, 4cm, 140px);
 }
 
-html { background: #3a3448; }
+html { background: #3a3448; overflow-x: hidden; }
 
 body {
   font-family: var(--f);
@@ -1634,8 +1634,8 @@ section {
 /* ── Language switcher ── */
 .lang-switch {
   position: fixed;
-  top: 1cm;
-  right: 1cm;
+  top: calc(1cm + 202px + 16px);
+  right: calc(1cm + 20px);
   z-index: 1000;
   display: flex;
   align-items: center;
