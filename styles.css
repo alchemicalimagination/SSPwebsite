@@ -1633,11 +1633,12 @@ section {
 /* ══════════════════════════════════════
    MOBILE — max 768px
 ══════════════════════════════════════ */
-/* ── iPad / small laptop ── */
-@media (max-width: 1024px) and (min-width: 769px) {
-  .d-title     { font-size: clamp(36px, 6.5vw, 72px); }
-  .d-title--01 { font-size: clamp(44px, 8vw, 90px); }
-  .large-claim { font-size: clamp(22px, 4vw, 40px); }
+/* ── iPad landscape + small laptop (up to iPad Pro 12.9" = 1366px) ── */
+@media (max-width: 1366px) and (min-width: 769px) {
+  .d-title     { font-size: clamp(32px, 4.5vw, 60px); }
+  .d-title--01 { font-size: clamp(40px, 6vw, 80px); }
+  .d04-title   { font-size: clamp(28px, 4vw, 54px); }
+  .large-claim { font-size: clamp(18px, 3vw, 36px); }
 }
 
 @media (max-width: 768px) {
