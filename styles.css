@@ -1855,4 +1855,60 @@ section {
   .footer-plans { grid-template-columns: repeat(2, 1fr); }
   .footer-headline { font-size: clamp(30px, 12vw, 48px); }
   #footer { padding: 28px 20px 20px; }
+
+}
+
+/* ── Unmute Button with Purple Wave ── */
+#audio-unmute-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 99px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: #c084fc;
+  font-family: "DM Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  cursor: pointer;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+  transition: opacity 0.4s ease, transform 0.4s ease, border-color 0.3s, background 0.3s;
+  opacity: 0;
+  transform: translateY(10px);
+}
+#audio-unmute-btn:hover {
+  background: rgba(255,255,255,0.1);
+  border-color: rgba(192, 132, 252, 0.4);
+}
+.audio-wave-wrap {
+  width: 48px;
+  height: 18px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.wave-svg {
+  width: 48px;
+  height: 18px;
+  overflow: hidden;
+}
+.wave-path {
+  animation: waveMove 1.2s linear infinite;
+}
+@keyframes waveMove {
+  0% { transform: translateX(0px); }
+  100% { transform: translateX(-24px); }
+}
+.unmute-txt {
+  text-transform: uppercase;
+  color: #c084fc;
 }

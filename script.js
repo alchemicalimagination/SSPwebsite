@@ -834,33 +834,15 @@ function initUnmuteButton() {
 
   const btn = document.createElement('div');
   btn.id = 'audio-unmute-btn';
-  btn.innerHTML = '<span>🔊</span> ENABLE SOUND';
-  btn.style.cssText = `
-    position: fixed;
-    bottom: 24px;
-    right: 24px;
-    z-index: 9999;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 10px 18px;
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.2);
-    border-radius: 99px;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    color: #fff;
-    font-family: "DM Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 9px;
-    font-weight: 500;
-    letter-spacing: 0.15em;
-    cursor: pointer;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-    transition: opacity 0.4s ease, transform 0.4s ease;
-    opacity: 0;
-    transform: translateY(10px);
-    text-transform: uppercase;
+  btn.innerHTML = `
+    <div class="audio-wave-wrap">
+      <svg class="wave-svg" viewBox="0 0 48 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M -24 9 Q -18 3 -12 9 T 0 9 T 12 9 T 24 9 T 36 9 T 48 9 T 60 9 T 72 9" stroke="#c084fc" stroke-width="2.5" stroke-linecap="round" fill="none" class="wave-path" />
+      </svg>
+    </div>
+    <span class="unmute-txt">ON</span>
   `;
+
   document.body.appendChild(btn);
   
   // Fade in after 1 second
