@@ -1026,8 +1026,13 @@ function initTypewriterTitles() {
   if (_typewriterDone) return;
   _typewriterDone = true;
   document.querySelectorAll('.d-title').forEach(title => {
+    const cleanedHTML = title.innerHTML
+      .replace(/[\r\n\t]/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+
     // Split innerHTML preserving <br> tags (including classes)
-    const parts = title.innerHTML.split(/(<br\b[^>]*>)/gi);
+    const parts = cleanedHTML.split(/(<br\b[^>]*>)/gi);
     title.innerHTML = parts.map(p =>
       p.match(/^<br/i) ? p :
       [...p].map(ch => ch === ' ' ? '\u00A0' : `<span class="tw-ch">${ch}</span>`).join('')
