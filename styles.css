@@ -1909,18 +1909,17 @@ section {
 /* ── Theme 1: Glass Effect ── */
 #audio-unmute-btn.glass-theme {
   background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.35);
+  border: 1.5px solid #3a3448;
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
-  color: #ffffff;
+  color: #3a3448;
 }
 #audio-unmute-btn.glass-theme:hover {
   background: rgba(255, 255, 255, 0.20);
-  border-color: rgba(255, 255, 255, 0.6);
 }
 #audio-unmute-btn.glass-theme.sound-off {
-  color: rgba(255, 255, 255, 0.4);
-  border-color: rgba(255, 255, 255, 0.25);
+  color: rgba(58, 52, 72, 0.5);
+  border-color: rgba(58, 52, 72, 0.5);
 }
 
 /* ── Theme 2: Liquid Metal Effect ── */
