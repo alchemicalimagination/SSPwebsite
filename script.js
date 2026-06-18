@@ -724,6 +724,7 @@ function getAudioCtx() {
 
 let typewriterAudioBuffer = null;
 let typewriterClicks = [];
+let _isSoundMuted = true;
 
 function loadTypewriterWav() {
   const ctx = getAudioCtx();
@@ -834,13 +835,15 @@ function initUnmuteButton() {
 
   const btn = document.createElement('div');
   btn.id = 'audio-unmute-btn';
+  btn.className = 'sound-off';
   btn.innerHTML = `
     <div class="audio-wave-wrap">
-      <svg class="wave-svg" viewBox="0 0 48 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M -24 9 Q -18 3 -12 9 T 0 9 T 12 9 T 24 9 T 36 9 T 48 9 T 60 9 T 72 9" stroke="#c084fc" stroke-width="2.5" stroke-linecap="round" fill="none" class="wave-path" />
+      <svg class="wave-svg" viewBox="0 0 100 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path class="wave-path wavy" d="M -30 12 Q -22.5 2 -15 12 T 0 12 T 15 12 T 30 12 T 45 12 T 60 12 T 75 12 T 90 12 T 105 12 T 120 12 T 135 12" stroke="#3a3448" stroke-width="2.5" stroke-linecap="round" fill="none" />
+        <path class="wave-path flat" d="M 0 12 L 100 12" stroke="#3a3448" stroke-width="2.5" stroke-linecap="round" fill="none" />
       </svg>
     </div>
-    <span class="unmute-txt">ON</span>
+    <span class="unmute-txt">OFF</span>
   `;
 
   document.body.appendChild(btn);
@@ -851,31 +854,37 @@ function initUnmuteButton() {
     btn.style.transform = 'translateY(0)';
   }, 1000);
 
-  const handleUnmute = () => {
+  const toggleSound = () => {
     _unlockAudio();
-    // Fade out and remove
-    btn.style.opacity = '0';
-    btn.style.transform = 'translateY(10px)';
-    setTimeout(() => btn.remove(), 400);
-    // Remove document level listeners
-    document.removeEventListener('click', handleUnmute);
-    document.removeEventListener('keydown', handleUnmute);
-    
-    // Play feedback immediately
-    setTimeout(() => playTypeClick(), 80);
+
+    if (_isSoundMuted) {
+      _isSoundMuted = false;
+      btn.className = 'sound-on';
+      btn.querySelector('.unmute-txt').textContent = 'ON';
+      setTimeout(() => playTypeClick(), 50);
+    } else {
+      _isSoundMuted = true;
+      btn.className = 'sound-off';
+      btn.querySelector('.unmute-txt').textContent = 'OFF';
+    }
   };
 
   btn.addEventListener('click', (e) => {
     e.stopPropagation();
-    handleUnmute();
+    toggleSound();
   });
   
-  // Also unmute on any click anywhere on the page
-  document.addEventListener('click', handleUnmute);
-  document.addEventListener('keydown', handleUnmute);
+  const silentUnlock = () => {
+    _unlockAudio();
+    document.removeEventListener('click', silentUnlock);
+    document.removeEventListener('keydown', silentUnlock);
+  };
+  document.addEventListener('click', silentUnlock);
+  document.addEventListener('keydown', silentUnlock);
 }
 
 function playTypeClick() {
+  if (_isSoundMuted) return;
   try {
     const ctx = getAudioCtx();
     if (ctx.state === 'suspended') {

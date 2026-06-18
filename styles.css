@@ -1858,7 +1858,7 @@ section {
 
 }
 
-/* ── Unmute Button with Purple Wave ── */
+/* ── Unmute Toggle Button with Purple Wave ── */
 #audio-unmute-btn {
   position: fixed;
   bottom: 24px;
@@ -1866,49 +1866,69 @@ section {
   z-index: 9999;
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 8px 16px;
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.15);
+  justify-content: space-between;
+  width: 130px;
+  height: 36px;
+  padding: 0 10px;
+  box-sizing: border-box;
+  background: #ffffff;
+  border: 2px solid #3a3448;
   border-radius: 99px;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  color: #c084fc;
-  font-family: "DM Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.12em;
   cursor: pointer;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.3);
-  transition: opacity 0.4s ease, transform 0.4s ease, border-color 0.3s, background 0.3s;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  transition: opacity 0.4s ease, transform 0.3s ease, background-color 0.3s;
   opacity: 0;
   transform: translateY(10px);
+  font-family: "DM Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 #audio-unmute-btn:hover {
-  background: rgba(255,255,255,0.1);
-  border-color: rgba(192, 132, 252, 0.4);
+  background: #f8f6fb;
+  transform: scale(1.03) translateY(-1px);
 }
 .audio-wave-wrap {
-  width: 48px;
-  height: 18px;
+  width: 95px;
+  height: 24px;
   overflow: hidden;
   position: relative;
   display: flex;
   align-items: center;
 }
 .wave-svg {
-  width: 48px;
-  height: 18px;
+  width: 100px;
+  height: 24px;
   overflow: hidden;
 }
 .wave-path {
+  stroke: #3a3448;
+  stroke-width: 2.5px;
+  stroke-linecap: round;
+  fill: none;
+}
+#audio-unmute-btn.sound-on .wavy {
+  display: block;
   animation: waveMove 1.2s linear infinite;
+}
+#audio-unmute-btn.sound-on .flat {
+  display: none;
+}
+#audio-unmute-btn.sound-off .wavy {
+  display: none;
+}
+#audio-unmute-btn.sound-off .flat {
+  display: block;
 }
 @keyframes waveMove {
   0% { transform: translateX(0px); }
-  100% { transform: translateX(-24px); }
+  100% { transform: translateX(-30px); }
 }
 .unmute-txt {
-  text-transform: uppercase;
-  color: #c084fc;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #3a3448;
+  text-align: right;
+  width: 20px;
+}
+#audio-unmute-btn.sound-off .unmute-txt {
+  color: rgba(58, 52, 72, 0.5);
 }
