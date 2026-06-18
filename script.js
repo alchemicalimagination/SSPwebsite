@@ -857,7 +857,7 @@ function initUnmuteButton() {
     <span class="unmute-txt">ON</span>
   `;
 
-  document.body.appendChild(btn);
+  document.documentElement.appendChild(btn);
   
   // Fade in after 1 second
   setTimeout(() => {
