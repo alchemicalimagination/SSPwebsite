@@ -2051,8 +2051,8 @@ section {
   transition: color 0.3s;
 }
 
-/* ── Desktop only: smaller card headers ── */
+/* ── Desktop only: smaller section title headers ── */
 @media (min-width: 1367px) {
-  .pc-num b { font-size: 15px; }
-  .num-track { height: 22px; }
+  .d-title,
+  .d-title--01 { font-size: clamp(60px, 10vw, 140px); }
 }
