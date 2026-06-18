@@ -1914,7 +1914,7 @@ section {
 /* ── Theme 1: Glass Effect ── */
 #audio-unmute-btn.glass-theme {
   background: rgba(255, 255, 255, 0.12);
-  border: 1.5px solid #7c3aff;
+  border: 0.8px solid #7c3aff;
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   color: #7c3aff;
