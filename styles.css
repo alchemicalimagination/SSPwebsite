@@ -13,6 +13,8 @@
 
 html { background: #3a3448; overflow-x: hidden; }
 
+.mob-only { display: none !important; }
+
 body {
   font-family: var(--f);
   background: var(--bg);
@@ -1822,6 +1824,12 @@ section {
 
   /* ── Detail 04 ── */
   .d04-split { grid-template-columns: 1fr; gap: 24px; }
+  .d04-title {
+    text-align: center !important;
+    width: 100% !important;
+  }
+  .mob-only { display: inline !important; }
+  .desk-only { display: none !important; }
 
   /* ── Nav ── */
   nav.studio-nav { display: block; }
