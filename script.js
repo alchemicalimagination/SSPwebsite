@@ -2,11 +2,6 @@
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Move lang-switch to <html> so position:fixed is never broken by body scroll context
-(function() {
-  const ls = document.querySelector('.lang-switch');
-  if (ls) document.documentElement.appendChild(ls);
-})();
 
 // ── FREE TRIAL BUTTON BOUNCE ────────────────────────────
 ['.footer-talk', '.footer-back'].forEach(sel => {
