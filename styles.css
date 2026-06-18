@@ -79,7 +79,7 @@ body {
 
 /* ─── Flower scroll canvas ─── */
 #flower-canvas {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
@@ -87,7 +87,7 @@ body {
   z-index: 1;
 }
 #ascii-overlay {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
@@ -98,7 +98,7 @@ body {
   opacity: 1;
 }
 #flower-overlay {
-  position: absolute;
+  position: fixed;
   inset: 0;
   background: rgba(0,0,0,0.30);
   z-index: 2;
@@ -172,7 +172,7 @@ section { background: transparent !important; z-index: 4 !important; }
 
 /* ─── Left vertical scrolling marquee ─── */
 .left-marquee {
-  position: absolute;
+  position: fixed;
   left: 0;
   top: 50%;
   transform: translateY(-50%);
@@ -450,7 +450,7 @@ section {
 
 /* ── Fixed persistent product badge ── */
 .fixed-badge {
-  position: absolute;
+  position: fixed;
   top: 24px;
   left: 24px;
   z-index: 200;
@@ -1374,7 +1374,7 @@ section {
    FOOTER
 ══════════════════════════════════════ */
 #footer {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
@@ -1660,21 +1660,6 @@ section {
 /* ── iPad: give section 04 wider content area so title stays 2 lines ── */
 @media (max-width: 1366px) and (min-width: 769px) {
   #s-detail-04 { padding-left: calc(40px + 1cm); padding-right: 40px; }
-
-  /* ── iPad: fix card, globe, pill in place ── */
-  .hero-brand {
-    position: absolute !important;
-  }
-  .lang-switch {
-    position: absolute;
-    top: 1.5cm;
-    right: 1.5cm;
-  }
-  #audio-unmute-btn {
-    position: absolute;
-    top: 1.7cm;
-    right: calc(2cm + 266px);
-  }
 }
 
 /* ══════════════════════════════════════
@@ -1719,17 +1704,6 @@ section {
     width: 269px;
     height: 145px;
     clip-path: path('M 78 3 Q 84 0 90 0 L 258 0 Q 269 0 269 14 L 269 73 Q 269 80 263 81 L 215 101 Q 210 103 210 110 L 210 131 Q 210 145 196 145 L 66 145 Q 58 145 58 138 L 58 94 Q 58 86 53 86 L 6 86 Q 0 86 0 80 L 0 41 Q 0 34 6 30 L 78 3 Z') !important;
-  }
-  /* ── Mobile: fix globe + pill near card ── */
-  .lang-switch {
-    position: absolute;
-    top: 1.5cm;
-    right: 1.5cm;
-  }
-  #audio-unmute-btn {
-    position: absolute;
-    top: 1.7cm;
-    right: calc(8mm + 191px);
   }
   .hero-brand::after {
     clip-path: path('M 78 3 Q 84 0 90 0 L 258 0 Q 269 0 269 14 L 269 73 Q 269 80 263 81 L 215 101 Q 210 103 210 110 L 210 131 Q 210 145 196 145 L 66 145 Q 58 145 58 138 L 58 94 Q 58 86 53 86 L 6 86 Q 0 86 0 80 L 0 41 Q 0 34 6 30 L 78 3 Z') !important;
@@ -1835,7 +1809,7 @@ section {
 
   /* ── Footer ── */
   #footer {
-    position: absolute;
+    position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
