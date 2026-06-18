@@ -1692,7 +1692,7 @@ section {
 
   /* ── Fixed UI ── */
   .ui-works {
-    position: absolute;
+    position: fixed;
     top: 16px;
     left: 16px;
     bottom: auto;
