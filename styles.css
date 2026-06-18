@@ -1647,7 +1647,7 @@ section {
   border: none;
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  box-shadow: 0 4px 20px rgba(0,0,0,0.20);
+  box-shadow: none;
   color: rgba(255,255,255,0.85);
   text-decoration: none;
   transition: all 0.2s;
