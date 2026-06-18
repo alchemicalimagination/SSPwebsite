@@ -1656,11 +1656,11 @@ section {
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  border: 1.5px solid #bc3aff;
+  border: 1px solid rgba(255, 255, 255, 0.35);
   background: rgba(255, 255, 255, 0.12);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  color: #bc3aff;
+  color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1669,6 +1669,7 @@ section {
 }
 .globe-btn:hover {
   background: rgba(255, 255, 255, 0.20);
+  border-color: rgba(255, 255, 255, 0.6);
   transform: scale(1.05);
 }
 .globe-btn .globe-icon {
