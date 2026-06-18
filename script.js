@@ -733,7 +733,8 @@ function startBgMusic() {
   try {
     bgMusic = new Audio((window._BASE || './') + 'assets/background-music.mp3');
     bgMusic.loop = true;
-    bgMusic.volume = 0.08; // Set subtle volume (8%)
+    const isMobile = window.innerWidth <= 768;
+    bgMusic.volume = isMobile ? 0.025 : 0.08; // Set subtle volume (8% desktop, 2.5% mobile)
     if (!_isSoundMuted) {
       bgMusic.play().catch(e => {
         console.warn("Background music play failed:", e);
@@ -940,8 +941,9 @@ function playTypeClick() {
       const startTime = typewriterClicks[randIdx];
       const duration = 0.18; // Play 180ms of sound per click
 
+      const isMobile = window.innerWidth <= 768;
       const gain = ctx.createGain();
-      gain.gain.setValueAtTime(0.18, now);
+      gain.gain.setValueAtTime(isMobile ? 0.40 : 0.18, now);
       gain.gain.linearRampToValueAtTime(0.001, now + duration);
 
       src.connect(gain);
@@ -966,8 +968,9 @@ function playTypeClick() {
     filter.frequency.setValueAtTime(1100 + Math.random() * 300, now); // randomized mechanical focus
     filter.Q.setValueAtTime(1.8, now);
     
+    const isMobile = window.innerWidth <= 768;
     const impactGain = ctx.createGain();
-    impactGain.gain.setValueAtTime(0.10, now); // clear volume
+    impactGain.gain.setValueAtTime(isMobile ? 0.22 : 0.10, now); // clear volume
     impactGain.gain.linearRampToValueAtTime(0.001, now + 0.015);
 
     impactSrc.connect(filter);
@@ -985,7 +988,8 @@ function playTypeClick() {
       osc.frequency.setValueAtTime(freq + Math.random() * 20, now);
       
       const decay = 0.035 + Math.random() * 0.015; // 35-50ms
-      const initialVol = (idx === 0 ? 0.02 : 0.01) * (0.8 + Math.random() * 0.4);
+      const isMobile = window.innerWidth <= 768;
+      const initialVol = (idx === 0 ? (isMobile ? 0.05 : 0.02) : (isMobile ? 0.025 : 0.01)) * (0.8 + Math.random() * 0.4);
       oscGain.gain.setValueAtTime(initialVol, now);
       oscGain.gain.linearRampToValueAtTime(0.0001, now + decay);
       
