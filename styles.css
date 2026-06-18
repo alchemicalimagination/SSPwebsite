@@ -1633,9 +1633,9 @@ section {
 
 /* ── Language switcher ── */
 .lang-switch {
-  position: fixed;
-  top: 1cm;
-  right: 1cm;
+  position: absolute;
+  top: 1.5cm;
+  right: 1.5cm;
   z-index: 1000;
   display: flex;
   align-items: center;
