@@ -1167,7 +1167,7 @@ section {
 }
 
 .d-title {
-  font-size: clamp(56px, 10.5vw, 150px);
+  font-size: clamp(80px, 14vw, 210px);
   font-weight: 200;
   line-height: 0.93;
   letter-spacing: -0.03em;
@@ -1772,7 +1772,7 @@ section {
 
   /* ── Detail sections ── */
   .detail-sec { padding: 20px 24px 10px 24px; min-height: auto; }
-  .d-title { font-size: clamp(40px, 12vw, 72px); }
+  .d-title { font-size: clamp(48px, 14vw, 90px); }
   .d-title--01 { font-size: clamp(48px, 14vw, 90px); }
 
   /* ── Desc sections ── */
