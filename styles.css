@@ -1643,20 +1643,19 @@ section {
   width: 46px;
   height: 46px;
   border-radius: 50%;
-  background: rgba(10, 10, 10, 0.82);
-  border: 1px solid rgba(255,255,255,0.12);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 4px 16px rgba(0,0,0,0.5);
-  color: rgba(255,255,255,0.75);
+  background: rgba(255, 255, 255, 0.12);
+  border: 1.5px solid #7c3aff;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.20);
+  color: #7c3aff;
   text-decoration: none;
   transition: all 0.2s;
   cursor: pointer;
 }
 .lang-switch:hover {
-  color: #fff;
-  border-color: rgba(255,255,255,0.25);
-  background: rgba(20,20,20,0.9);
+  background: rgba(255, 255, 255, 0.20);
+  color: #7c3aff;
 }
 .globe-icon {
   width: 22px;
