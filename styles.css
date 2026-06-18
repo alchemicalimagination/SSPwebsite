@@ -1634,8 +1634,8 @@ section {
 /* ── Language switcher ── */
 .lang-switch {
   position: fixed;
-  top: calc(1cm + 202px + 16px);
-  right: calc(1cm + 20px);
+  top: 1cm;
+  right: 1cm;
   z-index: 1000;
   display: flex;
   align-items: center;
