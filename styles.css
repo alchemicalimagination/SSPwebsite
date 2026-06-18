@@ -1887,7 +1887,7 @@ section {
 
 /* ── Unmute Toggle Button with Purple Wave ── */
 #audio-unmute-btn {
-  position: fixed;
+  position: absolute;
   top: 1.7cm;
   right: calc(2cm + 266px);
   z-index: 9999;
@@ -1913,18 +1913,18 @@ section {
 
 /* ── Theme 1: Glass Effect ── */
 #audio-unmute-btn.glass-theme {
-  background: rgba(255, 255, 255, 0.12);
-  border: 0.8px solid #7c3aff;
+  background: rgba(255, 255, 255, 0.10);
+  border: 0.8px solid rgba(255, 255, 255, 0.55);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  color: #7c3aff;
+  color: rgba(255, 255, 255, 0.90);
 }
 #audio-unmute-btn.glass-theme:hover {
   background: rgba(255, 255, 255, 0.20);
 }
 #audio-unmute-btn.glass-theme.sound-off {
-  color: rgba(124, 58, 255, 0.4);
-  border-color: rgba(124, 58, 255, 0.3);
+  color: rgba(255, 255, 255, 0.35);
+  border-color: rgba(255, 255, 255, 0.20);
 }
 
 /* ── Theme 2: Liquid Metal Effect ── */
