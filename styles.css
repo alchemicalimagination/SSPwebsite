@@ -1834,6 +1834,19 @@ section {
     margin-bottom: 20px;
   }
   .detail-01 { justify-content: flex-start !important; }
+  .footer-copy {
+    position: relative !important;
+    left: auto !important;
+    bottom: auto !important;
+    writing-mode: horizontal-tb !important;
+    transform: none !important;
+    text-align: center !important;
+    margin-top: 30px !important;
+    white-space: normal !important;
+    display: block !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
 }
 
 @media (max-width: 480px) {
