@@ -724,15 +724,15 @@ function initLoyaltyAnimation() {
 // ── TYPEWRITER TITLES ──────────────────────────────────
 let _audioCtx = null;
 function getAudioCtx() {
+  if (!_audioCtx) {
+    _audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  }
   return _audioCtx;
 }
 
 function _unlockAudio() {
   try {
-    if (!_audioCtx) {
-      _audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    }
-    const ctx = _audioCtx;
+    const ctx = getAudioCtx();
     
     // Play a short silent buffer to initialize/unlock the audio destination
     const buffer = ctx.createBuffer(1, 1, 22050);
@@ -755,14 +755,16 @@ function _unlockAudio() {
   }
 }
 
+const unlockEvents = ['click', 'touchstart', 'touchend', 'keydown', 'mousedown', 'pointerdown'];
+
 function _removeUnlockListeners() {
-  ['click', 'touchend', 'keydown', 'mousedown', 'pointerdown'].forEach(evt => {
+  unlockEvents.forEach(evt => {
     document.removeEventListener(evt, _unlockAudio, { capture: true });
   });
 }
 
-// Bind only to actual user interaction events (no scroll/touchstart)
-['click', 'touchend', 'keydown', 'mousedown', 'pointerdown'].forEach(evt => {
+// Bind only to actual user interaction events (including touchstart/touchend)
+unlockEvents.forEach(evt => {
   document.addEventListener(evt, _unlockAudio, { capture: true, passive: true });
 });
 
@@ -818,6 +820,9 @@ function initUnmuteButton() {
     // Remove document level listeners
     document.removeEventListener('click', handleUnmute);
     document.removeEventListener('keydown', handleUnmute);
+    
+    // Play a single typewriter clack immediately as physical confirmation of audio unlock
+    setTimeout(() => playTypeClick(), 80);
   };
 
   btn.addEventListener('click', (e) => {
@@ -833,7 +838,10 @@ function initUnmuteButton() {
 function playTypeClick() {
   try {
     const ctx = getAudioCtx();
-    if (!ctx || ctx.state === 'suspended') return;
+    if (ctx.state === 'suspended') {
+      ctx.resume();
+    }
+    if (ctx.state === 'suspended') return;
 
     const now = ctx.currentTime;
 
@@ -854,7 +862,7 @@ function playTypeClick() {
     
     const impactGain = ctx.createGain();
     impactGain.gain.setValueAtTime(0.28, now); // clear volume
-    impactGain.gain.exponentialRampToValueAtTime(0.001, now + 0.015);
+    impactGain.gain.linearRampToValueAtTime(0.001, now + 0.015);
 
     impactSrc.connect(filter);
     filter.connect(impactGain);
@@ -873,7 +881,7 @@ function playTypeClick() {
       const decay = 0.035 + Math.random() * 0.015; // 35-50ms
       const initialVol = (idx === 0 ? 0.06 : 0.03) * (0.8 + Math.random() * 0.4);
       oscGain.gain.setValueAtTime(initialVol, now);
-      oscGain.gain.exponentialRampToValueAtTime(0.0001, now + decay);
+      oscGain.gain.linearRampToValueAtTime(0.0001, now + decay);
       
       osc.connect(oscGain);
       oscGain.connect(ctx.destination);
@@ -890,7 +898,7 @@ function playTypeClick() {
     bodyOsc.frequency.setValueAtTime(130, now); // ~130Hz
     
     bodyGain.gain.setValueAtTime(0.14, now);
-    bodyGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.045);
+    bodyGain.gain.linearRampToValueAtTime(0.0001, now + 0.045);
     
     bodyOsc.connect(bodyGain);
     bodyGain.connect(ctx.destination);
