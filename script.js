@@ -1030,7 +1030,7 @@ function initTypewriterTitles() {
     const parts = title.innerHTML.split(/(<br\b[^>]*>)/gi);
     title.innerHTML = parts.map(p =>
       p.match(/^<br/i) ? p :
-      [...p].map(ch => ch === ' ' ? ' ' : `<span class="tw-ch">${ch}</span>`).join('')
+      [...p].map(ch => ch === ' ' ? '\u00A0' : `<span class="tw-ch">${ch}</span>`).join('')
     ).join('');
 
     const chars = title.querySelectorAll('.tw-ch');
