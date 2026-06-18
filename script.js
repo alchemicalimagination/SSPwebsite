@@ -659,8 +659,60 @@ function initLoyaltyAnimation() {
   runCycle();
 }
 
+// ── TYPEWRITER TITLES ──────────────────────────────────
+let _audioCtx = null;
+function getAudioCtx() {
+  if (!_audioCtx) _audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  return _audioCtx;
+}
+function playTypeClick() {
+  try {
+    const ctx = getAudioCtx();
+    if (ctx.state === 'suspended') ctx.resume();
+    const len = Math.floor(ctx.sampleRate * 0.022);
+    const buf = ctx.createBuffer(1, len, ctx.sampleRate);
+    const d   = buf.getChannelData(0);
+    for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 3);
+    const src  = ctx.createBufferSource();
+    const gain = ctx.createGain();
+    gain.gain.value = 0.07;
+    src.buffer = buf;
+    src.connect(gain);
+    gain.connect(ctx.destination);
+    src.start();
+  } catch(e) {}
+}
+
+function initTypewriterTitles() {
+  document.querySelectorAll('.d-title').forEach(title => {
+    // Split innerHTML preserving <br> tags
+    const parts = title.innerHTML.split(/(<br\s*\/?>)/gi);
+    title.innerHTML = parts.map(p =>
+      p.match(/^<br/i) ? p :
+      [...p].map(ch => ch === ' ' ? ' ' : `<span class="tw-ch">${ch}</span>`).join('')
+    ).join('');
+
+    const chars = title.querySelectorAll('.tw-ch');
+    gsap.set(chars, { opacity: 0 });
+
+    ScrollTrigger.create({
+      trigger: title,
+      start: 'top 85%',
+      once: true,
+      onEnter: () => {
+        gsap.to(chars, {
+          opacity: 1,
+          duration: 0.01,
+          stagger: { each: 0.042, onStart: playTypeClick }
+        });
+      }
+    });
+  });
+}
+
 // Start visual loops once DOM loaded
 document.addEventListener('DOMContentLoaded', () => {
+  initTypewriterTitles();
   initScaleAnimation();
   initArchiveAnimation();
   initAdminAnimation();
@@ -668,6 +720,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 // Also fallback if DOM already loaded
 if (document.readyState === "complete" || document.readyState === "interactive") {
+  initTypewriterTitles();
   initScaleAnimation();
   initArchiveAnimation();
   initAdminAnimation();

@@ -1262,10 +1262,9 @@ section {
 .two-col p {
   font-size: 12px;
   font-weight: 400;
-  letter-spacing: 0.05em;
-  word-spacing: -0.05em;
+  letter-spacing: 0;
   line-height: 1.7;
-  text-align: justify;
+  text-align: left;
 }
 
 .two-col {
