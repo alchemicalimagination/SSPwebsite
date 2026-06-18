@@ -1634,25 +1634,20 @@ section {
 /* ── Language switcher ── */
 .lang-switch {
   position: fixed;
-  top: calc(1cm + 202px + 16px);
+  top: 1cm;
   right: 1cm;
-  left: auto;
   z-index: 1000;
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.18em;
-}
-.lang-switch a {
-  color: rgba(255,255,255,0.4);
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  color: rgba(255,255,255,0.6);
   text-decoration: none;
   transition: color 0.2s;
+  cursor: pointer;
 }
-.lang-switch a:hover,
-.lang-switch a.active { color: #fff; }
-.lang-switch span { color: rgba(255,255,255,0.2); }
+.lang-switch:hover { color: #fff; }
 .globe-btn {
   width: 42px;
   height: 42px;
