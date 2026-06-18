@@ -734,7 +734,7 @@ function startBgMusic() {
     bgMusic = new Audio((window._BASE || './') + 'assets/background-music.mp3');
     bgMusic.loop = true;
     const isMobile = window.innerWidth <= 768;
-    bgMusic.volume = isMobile ? 0.025 : 0.08; // Set subtle volume (8% desktop, 2.5% mobile)
+    bgMusic.volume = isMobile ? 0.015 : 0.05; // Set subtle volume (5% desktop, 1.5% mobile)
     if (!_isSoundMuted) {
       bgMusic.play().catch(e => {
         console.warn("Background music play failed:", e);
