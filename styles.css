@@ -574,7 +574,7 @@ section {
   line-height: 1.5;
 }
 .pc-tag {
-  font-size: 10px;
+  font-size: 7.5px;
   font-weight: 400;
   letter-spacing: 0.08em;
   writing-mode: vertical-rl;
@@ -595,7 +595,7 @@ section {
   gap: 10px;
 }
 .pc-slogan {
-  font-size: 10px;
+  font-size: 8px;
   font-weight: 400;
   letter-spacing: 0.12em;
   writing-mode: vertical-rl;
@@ -1013,7 +1013,7 @@ section {
   border: 1px solid var(--red);
   color: var(--red);
   border-radius: 99px;
-  font-size: 10px;
+  font-size: 8px;
   font-weight: 500;
   letter-spacing: 0.15em;
   padding: 3px 10px;
@@ -1025,7 +1025,7 @@ section {
   grid-template-columns: 1fr 1fr;
   gap: 8px;
 }
-.pc-metrics { font-size: 10px; color: #fff; }
+.pc-metrics { font-size: 7.5px; color: #fff; }
 .pm {
   display: flex;
   justify-content: space-between;
