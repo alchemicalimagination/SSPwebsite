@@ -727,6 +727,14 @@ function getAudioCtx() {
   if (!_audioCtx) _audioCtx = new (window.AudioContext || window.webkitAudioContext)();
   return _audioCtx;
 }
+// iOS Safari requires a user gesture before AudioContext can play — unlock on first touch
+document.addEventListener('touchstart', function unlockAudio() {
+  try {
+    const ctx = getAudioCtx();
+    if (ctx.state === 'suspended') ctx.resume();
+  } catch(e) {}
+  document.removeEventListener('touchstart', unlockAudio);
+}, { once: true });
 function playTypeClick() {
   try {
     const ctx = getAudioCtx();

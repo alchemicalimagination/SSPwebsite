@@ -1632,7 +1632,7 @@ section {
 
 /* ── iPad: give section 04 wider content area so title stays 2 lines ── */
 @media (max-width: 1366px) and (min-width: 769px) {
-  #s-detail-04 { padding-left: 40px; padding-right: 40px; }
+  #s-detail-04 { padding-left: calc(40px + 1cm); padding-right: 40px; }
 }
 
 /* ══════════════════════════════════════
