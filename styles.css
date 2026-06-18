@@ -1713,7 +1713,7 @@ section {
   .two-col, .three-col { grid-template-columns: 1fr; gap: 16px; }
 
   /* ── Detail sections ── */
-  .detail-sec { padding: 60px 24px; min-height: auto; }
+  .detail-sec { padding: 60px 24px 10px 24px; min-height: auto; }
   .d-title { font-size: clamp(40px, 12vw, 72px); }
   .d-title--01 { font-size: clamp(48px, 14vw, 90px); }
 
@@ -1721,16 +1721,20 @@ section {
   .desc-side-by-side {
     display: flex !important;
     flex-direction: column !important;
-    align-items: flex-start !important;
+    align-items: center !important;
     gap: 24px !important;
-    padding: 32px 24px !important;
+    padding: 10px 24px 32px 24px !important;
   }
   .desc-left {
     width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
   }
   .desc-left .large-claim {
     font-size: clamp(24px, 6vw, 32px) !important;
-    text-align: left !important;
+    text-align: center !important;
     padding: 0 !important;
   }
   .desc-right {
