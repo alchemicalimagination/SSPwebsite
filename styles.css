@@ -1640,26 +1640,20 @@ section {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 46px;
-  height: 46px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.12);
+  background: none;
   border: none;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
   box-shadow: none;
   color: rgba(255,255,255,0.85);
   text-decoration: none;
-  transition: all 0.2s;
+  transition: color 0.2s;
   cursor: pointer;
 }
 .lang-switch:hover {
-  background: rgba(255, 255, 255, 0.20);
   color: #fff;
 }
 .globe-icon {
-  width: 30px;
-  height: 30px;
+  width: 38px;
+  height: 38px;
   display: block;
 }
 
