@@ -726,6 +726,23 @@ function getAudioCtx() {
 let typewriterAudioBuffer = null;
 let typewriterClicks = [];
 let _isSoundMuted = false;
+let bgMusic = null;
+
+function startBgMusic() {
+  if (bgMusic) return;
+  try {
+    bgMusic = new Audio((window._BASE || './') + 'assets/background-music.mp3');
+    bgMusic.loop = true;
+    bgMusic.volume = 0.08; // Set subtle volume (8%)
+    if (!_isSoundMuted) {
+      bgMusic.play().catch(e => {
+        console.warn("Background music play failed:", e);
+      });
+    }
+  } catch (e) {
+    console.warn("Failed to initialize background music:", e);
+  }
+}
 
 function loadTypewriterWav() {
   const ctx = getAudioCtx();
@@ -804,11 +821,13 @@ function _unlockAudio() {
         if (ctx.state === 'running') {
           _removeUnlockListeners();
           loadTypewriterWav();
+          startBgMusic();
         }
       });
     } else if (ctx.state === 'running') {
       _removeUnlockListeners();
       loadTypewriterWav();
+      startBgMusic();
     }
   } catch (e) {
     console.warn("Failed to resume AudioContext:", e);
@@ -868,12 +887,20 @@ function initUnmuteButton() {
       btn.classList.remove('sound-off');
       btn.classList.add('sound-on');
       btn.querySelector('.unmute-txt').textContent = 'ON';
+      if (bgMusic) {
+        bgMusic.play().catch(e => {});
+      } else {
+        startBgMusic();
+      }
       setTimeout(() => playTypeClick(), 50);
     } else {
       _isSoundMuted = true;
       btn.classList.remove('sound-on');
       btn.classList.add('sound-off');
       btn.querySelector('.unmute-txt').textContent = 'OFF';
+      if (bgMusic) {
+        bgMusic.pause();
+      }
     }
   };
 
