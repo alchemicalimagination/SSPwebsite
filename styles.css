@@ -1888,7 +1888,7 @@ section {
 /* ── Unmute Toggle Button with Purple Wave ── */
 #audio-unmute-btn {
   position: fixed;
-  top: 2cm;
+  top: 1.7cm;
   right: calc(2cm + 266px);
   z-index: 9999;
   display: flex;
