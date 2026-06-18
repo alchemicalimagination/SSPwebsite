@@ -730,6 +730,67 @@ function getAudioCtx() {
   return _audioCtx;
 }
 
+let typewriterAudioBuffer = null;
+let typewriterClicks = [];
+
+function loadTypewriterWav() {
+  const ctx = getAudioCtx();
+  if (!ctx || typewriterAudioBuffer) return;
+
+  fetch('assets/mixkit-typing-on-an-electric-typewriter-1377.wav')
+    .then(response => response.arrayBuffer())
+    .then(arrayBuffer => ctx.decodeAudioData(arrayBuffer))
+    .then(audioBuffer => {
+      typewriterAudioBuffer = audioBuffer;
+      detectWavClicks(audioBuffer);
+    })
+    .catch(err => {
+      console.warn("Failed to load typewriter WAV:", err);
+    });
+}
+
+// Auto-calibrating transient peak detector to slice individual keystroke clicks from the WAV file
+function detectWavClicks(buffer) {
+  try {
+    const data = buffer.getChannelData(0);
+    const sampleRate = buffer.sampleRate;
+    
+    // Find the maximum absolute amplitude to auto-scale the threshold
+    let maxAmp = 0;
+    for (let i = 0; i < data.length; i++) {
+      const val = Math.abs(data[i]);
+      if (val > maxAmp) maxAmp = val;
+    }
+    
+    const threshold = maxAmp * 0.35; // 35% of max volume is a click peak
+    const minInterval = 0.12 * sampleRate; // minimum 120ms between clicks
+    
+    typewriterClicks = [];
+    
+    let i = 0;
+    while (i < data.length) {
+      const val = Math.abs(data[i]);
+      if (val > threshold) {
+        // Record timestamp starting 10ms before the peak to capture the strike transient
+        const time = Math.max(0, i - 0.01 * sampleRate) / sampleRate;
+        typewriterClicks.push(time);
+        i += minInterval;
+      } else {
+        i++;
+      }
+    }
+    
+    console.log(`Detected ${typewriterClicks.length} typewriter click peaks (max amp: ${maxAmp.toFixed(3)}, threshold: ${threshold.toFixed(3)})`);
+    
+    if (typewriterClicks.length === 0) {
+      typewriterClicks = [0];
+    }
+  } catch (e) {
+    console.warn("Error detecting click peaks in WAV:", e);
+    typewriterClicks = [0];
+  }
+}
+
 function _unlockAudio() {
   try {
     const ctx = getAudioCtx();
@@ -745,10 +806,12 @@ function _unlockAudio() {
       ctx.resume().then(() => {
         if (ctx.state === 'running') {
           _removeUnlockListeners();
+          loadTypewriterWav();
         }
       });
     } else if (ctx.state === 'running') {
       _removeUnlockListeners();
+      loadTypewriterWav();
     }
   } catch (e) {
     console.warn("Failed to resume AudioContext:", e);
@@ -821,7 +884,7 @@ function initUnmuteButton() {
     document.removeEventListener('click', handleUnmute);
     document.removeEventListener('keydown', handleUnmute);
     
-    // Play a single typewriter clack immediately as physical confirmation of audio unlock
+    // Play feedback immediately
     setTimeout(() => playTypeClick(), 80);
   };
 
@@ -845,6 +908,27 @@ function playTypeClick() {
 
     const now = ctx.currentTime;
 
+    // A. WAV file playback (if loaded and peaks detected)
+    if (typewriterAudioBuffer && typewriterClicks.length > 0) {
+      const src = ctx.createBufferSource();
+      src.buffer = typewriterAudioBuffer;
+
+      // Select a random detected keystroke start time
+      const randIdx = Math.floor(Math.random() * typewriterClicks.length);
+      const startTime = typewriterClicks[randIdx];
+      const duration = 0.18; // Play 180ms of sound per click
+
+      const gain = ctx.createGain();
+      gain.gain.setValueAtTime(0.55, now);
+      gain.gain.linearRampToValueAtTime(0.001, now + duration);
+
+      src.connect(gain);
+      gain.connect(ctx.destination);
+      src.start(now, startTime, duration);
+      return;
+    }
+
+    // B. Physical synthesis fallback (while buffer is loading)
     // 1. Mechanical Strike Impact (noise bandpass-filtered around 1.1kHz)
     const impactLen = Math.floor(ctx.sampleRate * 0.015); // ~15ms
     const impactBuf = ctx.createBuffer(1, impactLen, ctx.sampleRate);
@@ -907,7 +991,7 @@ function playTypeClick() {
     bodyOsc.stop(now + 0.045);
 
   } catch(e) {
-    console.warn("Error synthesizing typewriter sound:", e);
+    console.warn("Error synthesizing/playing typewriter sound:", e);
   }
 }
 
