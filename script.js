@@ -748,7 +748,7 @@ function loadTypewriterWav() {
   const ctx = getAudioCtx();
   if (!ctx || typewriterAudioBuffer) return;
 
-  fetch('assets/mixkit-typing-on-an-electric-typewriter-1377.wav')
+  fetch((window._BASE || './') + 'assets/mixkit-old-typewriter-typing-1372.wav')
     .then(response => response.arrayBuffer())
     .then(arrayBuffer => ctx.decodeAudioData(arrayBuffer))
     .then(audioBuffer => {
