@@ -1743,9 +1743,21 @@ section {
   #s-detail-02, #s-detail-03, #s-detail-04 { margin-top: 0; }
 
   /* ── Consistent section spacing ── */
-  .s-scan-card { padding: 32px 24px; }
+  .s-scan-card {
+    padding: 32px 24px;
+    min-height: 100vh !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
   #s-studio   { padding: 40px 24px; }
-  #s-scan     { padding: 0; }
+  #s-scan {
+    padding: 0;
+    min-height: 100vh !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
   .pcard      { width: 240px; }
 
   /* ── Detail 04 ── */
@@ -1765,11 +1777,14 @@ section {
 
   /* ── Footer ── */
   #footer {
-    position: relative;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
     padding: 32px 24px 120px;
     border-radius: 24px 24px 0 0;
-    min-height: auto;
-    height: auto;
+    min-height: 90vh;
+    z-index: 50;
   }
   .footer-back {
     width: 56px; height: 56px;

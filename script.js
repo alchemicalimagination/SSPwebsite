@@ -208,8 +208,7 @@ try {
   console.warn('Three.js init failed:', e);
 }
 
-// ── CARD ANIMATION: desktop only ──────────────────────
-if (window.innerWidth > 768) {
+// ── CARD ANIMATION ────────────────────────────────────
 const card01 = document.getElementById('pcard-01');
 
 gsap.set('#pcard-01', { overflow: 'hidden' });
@@ -331,7 +330,7 @@ function setupCardAnimation(cardId, sectionId, hasNext, pinExtra = 0) {
 setupCardAnimation('pcard-02', '#s-scan-02', true);
 setupCardAnimation('pcard-03', '#s-scan-03', true);
 setupCardAnimation('pcard-04', '#s-scan-04', false, window.innerHeight);
-} // end desktop-only card animations
+// end card animations
 
 // ── START YOUR FREE TRIAL — hero only ──────────────────
 ScrollTrigger.create({
@@ -352,19 +351,15 @@ document.querySelectorAll('.two-col p, .three-col p, .studio-cols p').forEach(el
 
 
 // ── FOOTER — slides up over pinned #04 square ──────────
-if (window.innerWidth > 768) {
-  gsap.set('#footer', { yPercent: 100 });
-  gsap.timeline({
-    scrollTrigger: {
-      trigger: '#s-scan-04',
-      start: `top+=${window.innerHeight} top`,
-      end:   `top+=${window.innerHeight * 2} top`,
-      scrub: 1
-    }
-  }).to('#footer', { yPercent: 0, ease: 'none' });
-} else {
-  gsap.set('#footer', { yPercent: 0 });
-}
+gsap.set('#footer', { yPercent: 100 });
+gsap.timeline({
+  scrollTrigger: {
+    trigger: '#s-scan-04',
+    start: `top+=${window.innerHeight} top`,
+    end:   `top+=${window.innerHeight * 2} top`,
+    scrub: 1
+  }
+}).to('#footer', { yPercent: 0, ease: 'none' });
 
 // ── SCROLL REVEAL ANIMATIONS ───────────────────────────
 // Simple opacity reveals — no clipPath hiding content
