@@ -1630,6 +1630,11 @@ section {
   transform: translateY(28px);
 }
 
+/* ── iPad: give section 04 wider content area so title stays 2 lines ── */
+@media (max-width: 1366px) and (min-width: 769px) {
+  #s-detail-04 { padding-left: 40px; padding-right: 40px; }
+}
+
 /* ══════════════════════════════════════
    MOBILE — max 768px
 ══════════════════════════════════════ */
