@@ -1827,6 +1827,7 @@ section {
   .d04-title {
     text-align: center !important;
     width: 100% !important;
+    font-size: clamp(28px, 9.5vw, 44px) !important;
   }
   .mob-only { display: inline !important; }
   .desk-only { display: none !important; }
