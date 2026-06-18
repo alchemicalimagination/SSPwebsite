@@ -724,9 +724,6 @@ function initLoyaltyAnimation() {
 // ── TYPEWRITER TITLES ──────────────────────────────────
 let _audioCtx = null;
 function getAudioCtx() {
-  if (!_audioCtx) {
-    _audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  }
   return _audioCtx;
 }
 
@@ -793,7 +790,10 @@ function detectWavClicks(buffer) {
 
 function _unlockAudio() {
   try {
-    const ctx = getAudioCtx();
+    if (!_audioCtx) {
+      _audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    const ctx = _audioCtx;
     
     // Play a short silent buffer to initialize/unlock the audio destination
     const buffer = ctx.createBuffer(1, 1, 22050);
