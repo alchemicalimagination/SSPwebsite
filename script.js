@@ -1035,13 +1035,18 @@ function initTypewriterTitles() {
     ScrollTrigger.create({
       trigger: title,
       start: 'top 85%',
-      once: true,
       onEnter: () => {
+        gsap.killTweensOf(chars);
+        gsap.set(chars, { opacity: 0 });
         gsap.to(chars, {
           opacity: 1,
           duration: 0.01,
           stagger: { each: 0.075, onStart: playTypeClick }
         });
+      },
+      onLeaveBack: () => {
+        gsap.killTweensOf(chars);
+        gsap.set(chars, { opacity: 0 });
       }
     });
   });
