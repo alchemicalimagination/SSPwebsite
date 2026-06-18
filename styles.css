@@ -1893,23 +1893,70 @@ section {
   height: 36px;
   padding: 0 10px;
   box-sizing: border-box;
+  border-radius: 99px;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.20);
+  transition: opacity 0.4s ease, transform 0.3s ease, background-color 0.3s, border-color 0.3s, color 0.3s;
+  opacity: 0;
+  transform: translateY(10px);
+  font-family: "DM Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  overflow: hidden; /* clips the liquid metal canvas if active */
+}
+#audio-unmute-btn:hover {
+  transform: scale(1.03) translateY(-1px);
+}
+
+/* ── Theme 1: Glass Effect ── */
+#audio-unmute-btn.glass-theme {
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border-radius: 99px;
-  cursor: pointer;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.20);
-  transition: opacity 0.4s ease, transform 0.3s ease, background-color 0.3s, border-color 0.3s;
-  opacity: 0;
-  transform: translateY(10px);
-  font-family: "DM Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #d8b4fe;
 }
-#audio-unmute-btn:hover {
+#audio-unmute-btn.glass-theme:hover {
   background: rgba(255, 255, 255, 0.12);
   border-color: rgba(216, 180, 254, 0.4);
-  transform: scale(1.03) translateY(-1px);
 }
+#audio-unmute-btn.glass-theme.sound-off {
+  color: rgba(216, 180, 254, 0.4);
+}
+
+/* ── Theme 2: Liquid Metal Effect ── */
+#liquid-metal-audio {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  display: none;
+  border-radius: 99px;
+  overflow: hidden;
+}
+#liquid-metal-audio canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+#audio-unmute-btn.metal-theme {
+  background: #0c0c0c;
+  border: 2px solid #3a3448;
+  color: #3a3448;
+}
+#audio-unmute-btn.metal-theme #liquid-metal-audio {
+  display: block;
+}
+#audio-unmute-btn.metal-theme.sound-off {
+  color: rgba(58, 52, 72, 0.5);
+}
+/* Place wave and text above WebGL canvas */
+#audio-unmute-btn.metal-theme .audio-wave-wrap,
+#audio-unmute-btn.metal-theme .unmute-txt {
+  position: relative;
+  z-index: 1;
+}
+
+/* Shared wave and text elements */
 .audio-wave-wrap {
   width: 95px;
   height: 24px;
@@ -1924,7 +1971,7 @@ section {
   overflow: hidden;
 }
 .wave-path {
-  stroke: #d8b4fe;
+  stroke: currentColor;
   stroke-width: 2.5px;
   stroke-linecap: round;
   fill: none;
@@ -1951,14 +1998,7 @@ section {
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.05em;
-  color: #d8b4fe;
   text-align: right;
   width: 20px;
   transition: color 0.3s;
-}
-#audio-unmute-btn.sound-off .unmute-txt {
-  color: rgba(216, 180, 254, 0.4);
-}
-#audio-unmute-btn.sound-off .wave-path {
-  stroke: rgba(216, 180, 254, 0.4);
 }

@@ -828,6 +828,7 @@ unlockEvents.forEach(evt => {
 });
 
 // Dynamic Unmute Overlay / Button
+const SOUND_TOGGLE_THEME = 'glass'; // 'glass' or 'metal'
 let _unmuteBtnDone = false;
 function initUnmuteButton() {
   if (_unmuteBtnDone) return;
@@ -835,12 +836,14 @@ function initUnmuteButton() {
 
   const btn = document.createElement('div');
   btn.id = 'audio-unmute-btn';
-  btn.className = 'sound-off';
+  btn.classList.add('sound-off');
+  btn.classList.add(SOUND_TOGGLE_THEME === 'metal' ? 'metal-theme' : 'glass-theme');
   btn.innerHTML = `
+    <div id="liquid-metal-audio"></div>
     <div class="audio-wave-wrap">
       <svg class="wave-svg" viewBox="0 0 100 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path class="wave-path wavy" d="M -30 12 Q -22.5 2 -15 12 T 0 12 T 15 12 T 30 12 T 45 12 T 60 12 T 75 12 T 90 12 T 105 12 T 120 12 T 135 12" stroke="#3a3448" stroke-width="2.5" stroke-linecap="round" fill="none" />
-        <path class="wave-path flat" d="M 0 12 L 100 12" stroke="#3a3448" stroke-width="2.5" stroke-linecap="round" fill="none" />
+        <path class="wave-path wavy" d="M -30 12 Q -22.5 2 -15 12 T 0 12 T 15 12 T 30 12 T 45 12 T 60 12 T 75 12 T 90 12 T 105 12 T 120 12 T 135 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" fill="none" />
+        <path class="wave-path flat" d="M 0 12 L 100 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" fill="none" />
       </svg>
     </div>
     <span class="unmute-txt">OFF</span>
@@ -859,12 +862,14 @@ function initUnmuteButton() {
 
     if (_isSoundMuted) {
       _isSoundMuted = false;
-      btn.className = 'sound-on';
+      btn.classList.remove('sound-off');
+      btn.classList.add('sound-on');
       btn.querySelector('.unmute-txt').textContent = 'ON';
       setTimeout(() => playTypeClick(), 50);
     } else {
       _isSoundMuted = true;
-      btn.className = 'sound-off';
+      btn.classList.remove('sound-on');
+      btn.classList.add('sound-off');
       btn.querySelector('.unmute-txt').textContent = 'OFF';
     }
   };
