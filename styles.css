@@ -1660,6 +1660,21 @@ section {
 /* ── iPad: give section 04 wider content area so title stays 2 lines ── */
 @media (max-width: 1366px) and (min-width: 769px) {
   #s-detail-04 { padding-left: calc(40px + 1cm); padding-right: 40px; }
+
+  /* ── iPad: absolute card, globe, pill ── */
+  .hero-brand {
+    position: absolute !important;
+  }
+  .lang-switch {
+    position: absolute !important;
+    top: 1.5cm;
+    right: 1.5cm;
+  }
+  #audio-unmute-btn {
+    position: absolute !important;
+    top: 1.7cm;
+    right: calc(2cm + 266px);
+  }
 }
 
 /* ══════════════════════════════════════
@@ -1718,6 +1733,19 @@ section {
     word-break: break-word;
   }
   .hero-for { display: none; }
+
+  /* ── Mobile: absolute globe + pill near card ── */
+  .lang-switch {
+    position: absolute !important;
+    top: 1.5cm;
+    right: 1.5cm;
+  }
+  #audio-unmute-btn {
+    position: absolute !important;
+    top: 1.7cm;
+    right: calc(8mm + 191px);
+  }
+
   .ui-works {
     position: relative !important;
     top: auto !important;

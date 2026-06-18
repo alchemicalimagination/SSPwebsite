@@ -895,6 +895,7 @@ function playTypeClick() {
   if (_isSoundMuted) return;
   try {
     const ctx = getAudioCtx();
+    if (!ctx) return;
     if (ctx.state === 'suspended') {
       ctx.resume();
     }
