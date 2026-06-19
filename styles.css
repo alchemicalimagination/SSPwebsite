@@ -2532,16 +2532,16 @@ section {
   border: none;
   font-size: 16px;
   cursor: pointer;
-  color: rgba(0,0,0,0.5);
+  color: rgba(0,0,0,0.7);
   font-family: var(--f);
   transition: color 0.2s;
 }
 #waitlist-close:hover { color: #000; }
 .wl-eyebrow {
   font-size: 9px;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 0.28em;
-  color: rgba(0,0,0,0.45);
+  color: #000;
   margin-bottom: 12px;
 }
 .wl-title {
@@ -2554,9 +2554,9 @@ section {
 }
 .wl-sub {
   font-size: 10px;
-  font-weight: 400;
+  font-weight: 500;
   letter-spacing: 0.12em;
-  color: rgba(0,0,0,0.5);
+  color: #000;
   margin-bottom: 32px;
 }
 .wl-field {
@@ -2578,7 +2578,7 @@ section {
   box-sizing: border-box;
   text-transform: uppercase;
 }
-.wl-field input::placeholder { color: rgba(0,0,0,0.3); }
+.wl-field input::placeholder { color: rgba(0,0,0,0.55); }
 .wl-field input:focus {
   border-color: rgba(0,0,0,0.3);
   background: rgba(0,0,0,0.08);
