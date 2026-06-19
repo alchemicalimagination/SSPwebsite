@@ -2624,7 +2624,10 @@ section {
   position: relative;
   z-index: 1;
   mix-blend-mode: multiply;
-  color: #0c0c0c;
+  color: #000;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
 }
 .wl-thanks-msg {
   font-size: 13px;
