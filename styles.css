@@ -2406,6 +2406,12 @@ section {
     right: auto !important;
   }
 
+  /* ── Mobile: transparent overlay with blur only ── */
+  #waitlist-overlay {
+    background: transparent !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+  }
   /* ── Mobile: heavier text weights so black reads clearly on glass ── */
   .wl-title { font-weight: 300 !important; color: #000 !important; }
   .wl-sub   { font-weight: 600 !important; color: #000 !important; }
