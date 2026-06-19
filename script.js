@@ -394,6 +394,84 @@ cardCollapseTl
   .to('#pcard-01 .num-next',      { x: 0,   opacity: 1, duration: 0.4, ease: 'power2.out' }, 6.8)
   .to('#pcard-01 .label-next',    { x: 0,   opacity: 1, duration: 0.4, ease: 'power2.out' }, 6.8);
 
+// ── CARD #02 CUSTOM 3D FLIP TIMELINES ──────────────────
+const card02 = document.getElementById('pcard-02');
+
+gsap.set('#pcard-02', { overflow: 'hidden' });
+gsap.set('#pcard-02 .num-next',    { x: 120, opacity: 0 });
+gsap.set('#pcard-02 .label-next',  { x: 40,  opacity: 0 });
+gsap.set(['#pcard-02 .num-current', '#pcard-02 .label-current', '#pcard-02 .pc-bc-wrap', '#pcard-02 .pc-purchased', '#pcard-02 .pm'], { opacity: 0, x: -30 });
+gsap.set(['#pcard-02 .pc-tag', '#pcard-02 .pc-ing'], { opacity: 0, x: 30 });
+gsap.set('#pcard-02 .pc-mid', { opacity: 0 });
+gsap.set('#pcard-02 .pc-top', { borderBottomColor: 'transparent' });
+gsap.set('#pcard-02 .pc-bot', { borderTopColor: 'transparent' });
+
+const card02RevealTl = gsap.timeline({
+  scrollTrigger: {
+    trigger: '#s-scan-02',
+    start: 'top 80%',
+    end: 'top top',
+    scrub: 1.2
+  }
+});
+card02RevealTl
+  .to('#pcard-02 .pc-top', { borderBottomColor: 'rgba(0,0,0,0.1)', duration: 0.3 }, 0)
+  .to('#pcard-02 .pc-bot', { borderTopColor: 'rgba(0,0,0,0.12)',   duration: 0.3 }, 0)
+  .to('#pcard-02 .num-current',   { opacity: 1, x: 0, duration: 0.5 }, 0.1)
+  .to('#pcard-02 .label-current', { opacity: 1, x: 0, duration: 0.5 }, 0.2)
+  .to('#pcard-02 .pc-tag',        { opacity: 1, x: 0, duration: 0.5 }, 0.25)
+  .to('#pcard-02 .pc-mid',       { opacity: 1,        duration: 0.5 }, 0.4)
+  .to('#pcard-02 .pc-bc-wrap',   { opacity: 1, x: 0, duration: 0.5 }, 0.5)
+  .to('#pcard-02 .pc-purchased', { opacity: 1, x: 0, duration: 0.5 }, 0.6)
+  .to('#pcard-02 .pm',           { opacity: 1, x: 0, stagger: 0.05, duration: 0.4 }, 0.7)
+  .to('#pcard-02 .pc-ing',       { opacity: 1, x: 0, duration: 0.5 }, 1.0);
+
+const card02CollapseTl = gsap.timeline({
+  scrollTrigger: {
+    trigger: '#s-scan-02',
+    start: 'top top',
+    end: `+=${window.innerHeight * 4.0}`,
+    scrub: 1.5,
+    pin: true
+  }
+});
+
+card02CollapseTl
+  .set('#pcard-02 .pc-3d-card', { rotateY: 0 })
+  .call(() => {
+    document.querySelectorAll('#pcard-02 .pc-3d-front').forEach(el => el.classList.remove('is-deducting'));
+  }, null, 0.0)
+
+  // ── Flip 1: Front to Back (2.5 to 3.3) ──
+  .to('#pcard-02 .pc-3d-card', { rotateY: 180, ease: 'power1.inOut', duration: 0.8 }, 2.5)
+  .call(() => {
+    document.querySelectorAll('#pcard-02 .pc-3d-front').forEach(el => el.classList.remove('is-deducting'));
+  }, null, 2.5)
+
+  // ── Flip 2: Back to Front (4.2 to 5.0) ──
+  .to('#pcard-02 .pc-3d-card', { rotateY: 360, ease: 'power1.inOut', duration: 0.8 }, 4.2)
+  .call(() => {
+    document.querySelectorAll('#pcard-02 .pc-3d-front').forEach(el => el.classList.add('is-deducting'));
+  }, null, 4.6)
+  .call(() => { playScannerBeep(); triggerCardBump('pcard-02'); }, null, 4.7)
+  .fromTo('#pcard-02 .pc-purchased', 
+    { boxShadow: '0 0 0 rgba(214, 48, 48, 0)', scale: 1 }, 
+    { boxShadow: '0 0 15px rgba(214, 48, 48, 0.9)', scale: 1.1, duration: 0.25, yoyo: true, repeat: 1, ease: 'power2.out' }, 
+    4.7
+  )
+
+  // Collapse and shrink at the end of the scroll
+  .to(['#pcard-02 .pc-tag', '#pcard-02 .pc-mid', '#pcard-02 .pc-bc-wrap', '#pcard-02 .pc-purchased', '#pcard-02 .pm', '#pcard-02 .pc-ing'], { opacity: 0, duration: 0.5 }, 6.0)
+  .to('#pcard-02 .pc-top', { borderBottomColor: 'transparent', duration: 0.3 }, 6.0)
+  .to('#pcard-02 .pc-bot', { borderTopColor:    'transparent', duration: 0.3 }, 6.0)
+  .to('#pcard-02', { width: 110, height: 110, minHeight: 110, ease: 'power2.inOut', duration: 0.8 }, 6.2)
+
+  // Slide out #02 label and slide in #03 label
+  .to('#pcard-02 .num-current',   { x: -60, opacity: 0, duration: 0.4 }, 6.6)
+  .to('#pcard-02 .label-current', { x: -40, opacity: 0, duration: 0.4 }, 6.6)
+  .to('#pcard-02 .num-next',      { x: 0,   opacity: 1, duration: 0.4, ease: 'power2.out' }, 6.8)
+  .to('#pcard-02 .label-next',    { x: 0,   opacity: 1, duration: 0.4, ease: 'power2.out' }, 6.8);
+
 // ── CARDS #02 #03 #04 — same 3-phase animation ──────────
 function setupCardAnimation(cardId, sectionId, hasNext, pinExtra = 0) {
   const c = `#${cardId}`;
@@ -455,7 +533,6 @@ function setupCardAnimation(cardId, sectionId, hasNext, pinExtra = 0) {
   }
 }
 
-setupCardAnimation('pcard-02', '#s-scan-02', true);
 setupCardAnimation('pcard-03', '#s-scan-03', true);
 setupCardAnimation('pcard-04', '#s-scan-04', false, window.innerHeight);
 // end card animations
@@ -540,103 +617,7 @@ function initScaleAnimation() {
   // Logic moved into scrubbed scrollTrigger collapse timeline to animate on scroll
 }
 
-function initArchiveAnimation() {
-  const card = document.querySelector('.client-card');
-  if (!card) return;
-
-  const secTitle  = card.querySelector('.cc-sec-title');
-  const swatches  = card.querySelectorAll('.cc-swatch');
-  const rows      = card.querySelectorAll('.cc-detail-row');
-  const tagline   = card.querySelector('.cc-tagline');
-  const ccSection = card.querySelector('.cc-section');
-  const ccDetails = card.querySelector('.cc-details');
-  const slideEls  = [ccSection, ccDetails, tagline];
-
-  // Same client, 3 different profile sections — header stays fixed
-  const views = [
-    {
-      title: 'FORMULA HISTORY',
-      sw:   ['#EED6A5', '#D4A373', '#B5838D'],
-      rows: [
-        { label: 'BASE',       value: '7N (36g)',        badge: false },
-        { label: 'TONER',      value: '8GG (12g)',       badge: false },
-        { label: 'DEV',        value: '20 VOL (60g)',    badge: false },
-      ],
-      tag: 'SAVED 2 MINS AGO'
-    },
-    {
-      title: 'PURCHASE HISTORY',
-      sw:   ['#B0C4D8', '#8AAFC4', '#6492AE'],
-      rows: [
-        { label: 'LAST VISIT',  value: '14 DAYS AGO', badge: false },
-        { label: 'TOTAL SPEND', value: '£2,840',       badge: false },
-        { label: 'VISITS / YR', value: '12',           badge: false },
-      ],
-      tag: 'CLIENT SINCE JAN 2022'
-    },
-    {
-      title: 'LOYALTY STATUS',
-      sw:   ['#D4AF37', '#C49A22', '#A67C10'],
-      rows: [
-        { label: 'TIER',        value: 'GOLD MEMBER', badge: false },
-        { label: 'POINTS',      value: '2,840 PTS',   badge: false },
-        { label: 'NEXT REWARD', value: '£20 OFF',      badge: false },
-      ],
-      tag: 'REWARD UNLOCKED'
-    }
-  ];
-  let idx = 0;
-
-  function setView(v) {
-    secTitle.textContent = v.title;
-    swatches.forEach((s, i) => { s.style.background = v.sw[i]; });
-    rows.forEach((row, i) => {
-      row.querySelector('span:first-child').textContent = v.rows[i].label;
-      const val = row.querySelector('span:last-child');
-      val.textContent = v.rows[i].value;
-      val.className   = v.rows[i].badge ? 'cc-badge-ppd' : '';
-    });
-    tagline.textContent = v.tag;
-  }
-
-  setView(views[0]);
-
-  let archiveRunning = false, archiveTl = null, archiveDelay = null;
-
-  function archiveStop() {
-    archiveRunning = false;
-    if (archiveDelay) { archiveDelay.kill(); archiveDelay = null; }
-    if (archiveTl)    { archiveTl.kill();    archiveTl    = null; }
-    gsap.killTweensOf(slideEls);
-    idx = 0;
-    setView(views[0]);
-    gsap.set(slideEls, { x: 0, opacity: 1 });
-  }
-
-  function runArchiveSequence() {
-    if (!archiveRunning) return;
-    // Cycle through all remaining views once, then hold
-    const remaining = views.length - 1 - idx;
-    if (remaining <= 0) return;
-    idx = (idx + 1) % views.length;
-    archiveTl = gsap.timeline({
-      onComplete: () => { if (archiveRunning) archiveDelay = gsap.delayedCall(2.5, runArchiveSequence); }
-    });
-    archiveTl
-      .to(slideEls, { x: -18, opacity: 0, duration: 0.3, ease: 'power2.in', stagger: 0.03 })
-      .call(() => { setView(views[idx]); gsap.set(slideEls, { x: 18 }); })
-      .to(slideEls, { x: 0, opacity: 1, duration: 0.38, ease: 'power2.out', stagger: 0.03 });
-  }
-
-  ScrollTrigger.create({
-    trigger: '#pcard-02 .pc-visual',
-    start: 'top 85%', end: 'bottom 15%',
-    onEnter:     () => { if (!archiveRunning) { archiveRunning = true; archiveDelay = gsap.delayedCall(2.5, runArchiveSequence); } },
-    onEnterBack: () => { if (!archiveRunning) { archiveRunning = true; archiveDelay = gsap.delayedCall(2.5, runArchiveSequence); } },
-    onLeave:     archiveStop,
-    onLeaveBack: archiveStop,
-  });
-}
+// initArchiveAnimation deleted
 
 function initAdminAnimation() {
   const line     = document.querySelector('.graph-line');
@@ -996,7 +977,7 @@ function playScannerBeep() {
 }
 
 let lastBumpTime = 0;
-function triggerCardBump() {
+function triggerCardBump(cardId = 'pcard-01') {
   const now = Date.now();
   if (now - lastBumpTime < 800) return;
   lastBumpTime = now;
@@ -1007,7 +988,7 @@ function triggerCardBump() {
   } catch (e) {}
   
   // Real-time visual bump on desktop & mobile (non-scrubbed)
-  gsap.fromTo('#pcard-01 .pc-visual', 
+  gsap.fromTo(`#${cardId}`, 
     { y: 0, scale: 1 }, 
     { y: -10, scale: 1.04, duration: 0.12, yoyo: true, repeat: 1, ease: 'power2.out', clearProps: 'y,scale' }
   );
@@ -1159,7 +1140,6 @@ function initTypewriterTitles() {
 document.addEventListener('DOMContentLoaded', () => {
   initTypewriterTitles();
   initScaleAnimation();
-  initArchiveAnimation();
   initAdminAnimation();
   initLoyaltyAnimation();
   initUnmuteButton();
@@ -1167,7 +1147,6 @@ document.addEventListener('DOMContentLoaded', () => {
 if (document.readyState === 'complete' || document.readyState === 'interactive') {
   initTypewriterTitles();
   initScaleAnimation();
-  initArchiveAnimation();
   initAdminAnimation();
   initLoyaltyAnimation();
   initUnmuteButton();
