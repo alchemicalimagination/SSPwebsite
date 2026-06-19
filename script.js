@@ -533,7 +533,138 @@ function setupCardAnimation(cardId, sectionId, hasNext, pinExtra = 0) {
   }
 }
 
-setupCardAnimation('pcard-03', '#s-scan-03', true);
+// ── CARD #03 CUSTOM 3D FLIP TIMELINE ──────────────────
+gsap.set('#pcard-03', { overflow: 'hidden' });
+gsap.set('#pcard-03 .num-next',    { x: 120, opacity: 0 });
+gsap.set('#pcard-03 .label-next',  { x: 40,  opacity: 0 });
+gsap.set(['#pcard-03 .num-current', '#pcard-03 .label-current', '#pcard-03 .pc-bc-wrap', '#pcard-03 .pc-purchased', '#pcard-03 .pm'], { opacity: 0, x: -30 });
+gsap.set(['#pcard-03 .pc-tag', '#pcard-03 .pc-ing'], { opacity: 0, x: 30 });
+gsap.set('#pcard-03 .pc-mid', { opacity: 0 });
+gsap.set('#pcard-03 .pc-top', { borderBottomColor: 'transparent' });
+gsap.set('#pcard-03 .pc-bot', { borderTopColor: 'transparent' });
+gsap.set('#pcard-03 .pc-3d-card', { rotateY: 0 });
+gsap.set('#pcard-03 .st-data', { opacity: 0, y: 6 });
+gsap.set('#pcard-03 .pl-row, #pcard-03 .pl-divider, #pcard-03 .pl-synced', { opacity: 0 });
+
+const card03RevealTl = gsap.timeline({
+  scrollTrigger: { trigger: '#s-scan-03', start: 'top 80%', end: 'top top', scrub: 1.2 }
+});
+card03RevealTl
+  .to('#pcard-03 .pc-top', { borderBottomColor: 'rgba(0,0,0,0.1)', duration: 0.3 }, 0)
+  .to('#pcard-03 .pc-bot', { borderTopColor: 'rgba(0,0,0,0.12)',   duration: 0.3 }, 0)
+  .to('#pcard-03 .num-current',   { opacity: 1, x: 0, duration: 0.5 }, 0.1)
+  .to('#pcard-03 .label-current', { opacity: 1, x: 0, duration: 0.5 }, 0.2)
+  .to('#pcard-03 .pc-tag',        { opacity: 1, x: 0, duration: 0.5 }, 0.25)
+  .to('#pcard-03 .pc-mid',        { opacity: 1,        duration: 0.5 }, 0.4)
+  .to('#pcard-03 .pc-bc-wrap',    { opacity: 1, x: 0, duration: 0.5 }, 0.5)
+  .to('#pcard-03 .pc-purchased',  { opacity: 1, x: 0, duration: 0.5 }, 0.6)
+  .to('#pcard-03 .pm',            { opacity: 1, x: 0, stagger: 0.05, duration: 0.4 }, 0.7)
+  .to('#pcard-03 .pc-ing',        { opacity: 1, x: 0, duration: 0.5 }, 1.0);
+
+const adVal03    = { val: 0 };
+const adChange03 = { val: 0.0 };
+const adRet03    = { val: 0 };
+const adBooked03 = { val: 0 };
+const plProfit03 = { val: 0 };
+
+const card03CollapseTl = gsap.timeline({
+  scrollTrigger: {
+    trigger: '#s-scan-03',
+    start: 'top top',
+    end: `+=${window.innerHeight * 4.0}`,
+    scrub: 1.5,
+    pin: true
+  }
+});
+
+card03CollapseTl
+  .set('#pcard-03 .pc-3d-card', { rotateY: 0 })
+  .call(() => {
+    document.querySelectorAll('#pcard-03 .pc-3d-front').forEach(el => el.classList.remove('is-deducting'));
+  }, null, 0.0)
+
+  // ── View 1: graph draws, numbers count up (0.0 → 2.5) ──
+  .to(adVal03, {
+    val: 12400, duration: 1.2, ease: 'power1.out',
+    onUpdate: () => {
+      document.querySelectorAll('#pcard-03 .ad-value-03').forEach(el => {
+        el.textContent = '$' + Math.round(adVal03.val).toLocaleString();
+      });
+    }
+  }, 0.2)
+  .to(adChange03, {
+    val: 12.5, duration: 1.2, ease: 'power1.out',
+    onUpdate: () => {
+      document.querySelectorAll('#pcard-03 .ad-change-03').forEach(el => {
+        el.textContent = '+' + adChange03.val.toFixed(1) + '%';
+      });
+    }
+  }, 0.2)
+  .to('#pcard-03 .graph-line-03', { strokeDashoffset: 0, duration: 1.4, ease: 'power2.out' }, 0.3)
+  .to('#pcard-03 .graph-dot-03',  { opacity: 1, duration: 0.3, ease: 'power2.out' }, 1.6)
+  .to(adRet03, {
+    val: 94, duration: 0.9, ease: 'power1.out',
+    onUpdate: () => {
+      document.querySelectorAll('#pcard-03 .ad-ret-03').forEach(el => {
+        el.textContent = Math.round(adRet03.val) + '%';
+      });
+    }
+  }, 0.6)
+  .to(adBooked03, {
+    val: 88, duration: 0.9, ease: 'power1.out',
+    onUpdate: () => {
+      document.querySelectorAll('#pcard-03 .ad-booked-03').forEach(el => {
+        el.textContent = Math.round(adBooked03.val) + '%';
+      });
+    }
+  }, 0.8)
+
+  // ── Flip 1: Front → Back (2.5 → 3.3) ──
+  .to('#pcard-03 .pc-3d-card', { rotateY: 180, ease: 'power1.inOut', duration: 0.8 }, 2.5)
+
+  // ── View 2: stylist rows stagger in (3.3 → 4.2) ──
+  .to('#pcard-03 .st-data', { opacity: 1, y: 0, duration: 0.3, stagger: 0.15, ease: 'power2.out' }, 3.3)
+
+  // ── Flip 2: Back → Front (4.2 → 5.0) ──
+  .to('#pcard-03 .pc-3d-card', { rotateY: 360, ease: 'power1.inOut', duration: 0.8 }, 4.2)
+  .call(() => {
+    document.querySelectorAll('#pcard-03 .pc-3d-front').forEach(el => el.classList.add('is-deducting'));
+  }, null, 4.6)
+  .call(() => { playScannerBeep(); triggerCardBump('pcard-03'); }, null, 4.7)
+  .fromTo('#pcard-03 .pc-purchased',
+    { boxShadow: '0 0 0 rgba(214,48,48,0)', scale: 1 },
+    { boxShadow: '0 0 15px rgba(214,48,48,0.9)', scale: 1.1, duration: 0.25, yoyo: true, repeat: 1, ease: 'power2.out' },
+    4.7
+  )
+
+  // ── View 3: ledger animates in, profit counts up (4.75 → 5.5) ──
+  .to('#pcard-03 .pl-row-gross',  { opacity: 1, duration: 0.3, ease: 'power2.out' }, 4.75)
+  .to('#pcard-03 .pl-row-exp',    { opacity: 1, duration: 0.3, ease: 'power2.out' }, 4.95)
+  .to('#pcard-03 .pl-divider',    { opacity: 1, duration: 0.2 }, 5.1)
+  .to('#pcard-03 .pl-profit-row', { opacity: 1, duration: 0.3, ease: 'power2.out' }, 5.15)
+  .to(plProfit03, {
+    val: 8600, duration: 0.6, ease: 'power1.out',
+    onUpdate: () => {
+      document.querySelectorAll('#pcard-03 .pl-profit-val').forEach(el => {
+        el.textContent = '$' + Math.round(plProfit03.val).toLocaleString();
+      });
+    }
+  }, 5.15)
+  .to('#pcard-03 .pl-synced', {
+    opacity: 1, boxShadow: '0 0 12px rgba(0,245,212,0.4)', duration: 0.4, ease: 'power2.out'
+  }, 5.45)
+
+  // ── Collapse (6.0 → 7.0) ──
+  .to(['#pcard-03 .pc-tag', '#pcard-03 .pc-mid', '#pcard-03 .pc-bc-wrap', '#pcard-03 .pc-purchased', '#pcard-03 .pm', '#pcard-03 .pc-ing'],
+    { opacity: 0, duration: 0.5 }, 6.0)
+  .to('#pcard-03 .pc-top', { borderBottomColor: 'transparent', duration: 0.3 }, 6.0)
+  .to('#pcard-03 .pc-bot', { borderTopColor:    'transparent', duration: 0.3 }, 6.0)
+  .to('#pcard-03', { width: 110, height: 110, minHeight: 110, ease: 'power2.inOut', duration: 0.8 }, 6.2)
+  .to('#pcard-03 .num-current',   { x: -60, opacity: 0, duration: 0.4 }, 6.6)
+  .to('#pcard-03 .label-current', { x: -40, opacity: 0, duration: 0.4 }, 6.6)
+  .to('#pcard-03 .num-next',      { x: 0,   opacity: 1, duration: 0.4, ease: 'power2.out' }, 6.8)
+  .to('#pcard-03 .label-next',    { x: 0,   opacity: 1, duration: 0.4, ease: 'power2.out' }, 6.8);
+
 setupCardAnimation('pcard-04', '#s-scan-04', false, window.innerHeight);
 // end card animations
 

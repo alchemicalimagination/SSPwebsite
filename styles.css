@@ -831,6 +831,98 @@ section {
   display: none !important;
 }
 
+/* Swap classes for front face — Card #03 */
+.pc-3d-front.is-deducting .step-overview,
+.pc-3d-front.is-deducting .inner-overview,
+.pc-3d-front.is-deducting .desc-overview {
+  display: none !important;
+}
+.pc-3d-front:not(.is-deducting) .step-ledger,
+.pc-3d-front:not(.is-deducting) .inner-ledger,
+.pc-3d-front:not(.is-deducting) .desc-ledger {
+  display: none !important;
+}
+
+/* --- Card #03: Stylist Leaderboard (View 2) --- */
+.inner-stylists {
+  width: 100%;
+  gap: 0;
+  justify-content: flex-start;
+  padding-top: 4px;
+}
+.stylist-table {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.st-row {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 10px;
+  font-size: 9px;
+  letter-spacing: 0.04em;
+  color: rgba(255,255,255,0.88);
+  align-items: center;
+}
+.st-header {
+  color: rgba(255,255,255,0.38);
+  font-size: 7.5px;
+  letter-spacing: 0.06em;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  padding-bottom: 5px;
+  margin-bottom: 2px;
+}
+.st-ret { color: rgba(168,218,220,0.85); font-weight: 600; min-width: 28px; text-align: right; }
+.st-top { color: #a8dadc; }
+
+/* --- Card #03: P&L Ledger (View 3) --- */
+.inner-ledger {
+  width: 100%;
+  gap: 0;
+  justify-content: center;
+}
+.pl-ledger {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.pl-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 9.5px;
+  letter-spacing: 0.05em;
+}
+.pl-label { color: rgba(255,255,255,0.48); }
+.pl-val   { font-weight: 600; color: rgba(255,255,255,0.9); font-family: monospace; }
+.pl-pos   { color: rgba(168,218,220,0.9); }
+.pl-neg   { color: rgba(255,107,107,0.9); }
+.pl-divider {
+  height: 1px;
+  background: rgba(255,255,255,0.14);
+  margin: 1px 0;
+}
+.pl-profit-row { margin-top: 1px; }
+.pl-profit {
+  color: #a8dadc;
+  font-size: 14px;
+  font-weight: 700;
+}
+.pl-synced {
+  font-size: 7.5px;
+  color: #00f5d4;
+  border: 1px solid rgba(0,245,212,0.3);
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: rgba(0,245,212,0.05);
+  letter-spacing: 0.06em;
+  text-align: center;
+  align-self: center;
+  font-weight: 500;
+}
+
 /* --- Visual 1: Scale --- */
 .visual-scale {
   padding: 8px;
@@ -1179,7 +1271,7 @@ section {
 
 /* --- Visual 3: Admin Graph --- */
 .visual-admin {
-  padding: 8px 10px;
+  padding: 0;
 }
 .admin-dashboard {
   width: 100%;

@@ -506,41 +506,99 @@
         </div>
         <div class="pc-mid">
           <p class="pc-slogan">SALON ANALYTICS & ROI</p>
-          <div class="pc-visual visual-admin">
-            <div class="admin-dashboard">
-              <div class="ad-metric">
-                <span class="ad-title">NET SALES</span>
-                <span class="ad-value">$12,400</span>
-                <span class="ad-change">+0.0%</span>
-              </div>
-              <div class="ad-graph">
-                <svg viewBox="0 0 100 45" class="svg-graph">
-                  <line x1="0" y1="10" x2="100" y2="10" stroke="rgba(255,255,255,0.05)" stroke-width="0.5" />
-                  <line x1="0" y1="25" x2="100" y2="25" stroke="rgba(255,255,255,0.05)" stroke-width="0.5" />
-                  <line x1="0" y1="40" x2="100" y2="40" stroke="rgba(255,255,255,0.05)" stroke-width="0.5" />
-                  <path d="M 0 45 L 0 35 Q 20 20 40 28 T 80 12 L 100 5 L 100 45 Z" fill="url(#graph-grad)"
-                    opacity="0.15" />
-                  <path class="graph-line" d="M 0 35 Q 20 20 40 28 T 80 12 L 100 5" fill="none"
-                    stroke="rgba(255,255,255,0.7)" stroke-width="1.5" />
-                  <circle class="graph-dot" cx="100" cy="5" r="2.5" fill="#fff" />
-                  <defs>
-                    <linearGradient id="graph-grad" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stop-color="#ffffff" />
-                      <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
-                    </linearGradient>
-                  </defs>
-                </svg>
-              </div>
-              <div class="ad-row">
-                <div class="ad-submetric">
-                  <span>RETENTION</span>
-                  <b>94%</b>
+          <div class="pc-visual visual-admin pc-3d-container">
+            <div class="pc-3d-card">
+
+              <!-- FRONT: View 1 (Overview) + View 3 (P&L) -->
+              <div class="pc-3d-face pc-3d-front">
+
+                <div class="pc-3d-step step-overview">01 / OVERVIEW</div>
+                <div class="pc-3d-inner inner-overview">
+                  <div class="admin-dashboard">
+                    <div class="ad-metric">
+                      <span class="ad-title">NET SALES</span>
+                      <span class="ad-value ad-value-03">$0</span>
+                      <span class="ad-change ad-change-03">+0.0%</span>
+                    </div>
+                    <div class="ad-graph">
+                      <svg viewBox="0 0 100 45" class="svg-graph">
+                        <line x1="0" y1="10" x2="100" y2="10" stroke="rgba(255,255,255,0.05)" stroke-width="0.5" />
+                        <line x1="0" y1="25" x2="100" y2="25" stroke="rgba(255,255,255,0.05)" stroke-width="0.5" />
+                        <line x1="0" y1="40" x2="100" y2="40" stroke="rgba(255,255,255,0.05)" stroke-width="0.5" />
+                        <path d="M 0 45 L 0 35 Q 20 20 40 28 T 80 12 L 100 5 L 100 45 Z" fill="url(#graph-grad-03)" opacity="0.15" />
+                        <path class="graph-line-03" d="M 0 35 Q 20 20 40 28 T 80 12 L 100 5" fill="none"
+                          stroke="rgba(255,255,255,0.7)" stroke-width="1.5" stroke-dasharray="200" stroke-dashoffset="200"/>
+                        <circle class="graph-dot-03" cx="100" cy="5" r="2.5" fill="#fff" opacity="0"/>
+                        <defs>
+                          <linearGradient id="graph-grad-03" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="#ffffff" />
+                            <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+                          </linearGradient>
+                        </defs>
+                      </svg>
+                    </div>
+                    <div class="ad-row">
+                      <div class="ad-submetric">
+                        <span>RETENTION</span>
+                        <b class="ad-ret-03">0%</b>
+                      </div>
+                      <div class="ad-submetric">
+                        <span>BOOKED</span>
+                        <b class="ad-booked-03">0%</b>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div class="ad-submetric">
-                  <span>BOOKED</span>
-                  <b>88%</b>
+                <div class="pc-3d-desc desc-overview">YOUR SALON'S PULSE — REAL-TIME & RAW.</div>
+
+                <div class="pc-3d-step step-ledger">03 / PROFIT &amp; LOSS</div>
+                <div class="pc-3d-inner inner-ledger">
+                  <div class="pl-ledger">
+                    <div class="pl-row pl-row-gross">
+                      <span class="pl-label">GROSS SALES</span>
+                      <span class="pl-val pl-pos">+$12,400</span>
+                    </div>
+                    <div class="pl-row pl-row-exp">
+                      <span class="pl-label">EXPENSES</span>
+                      <span class="pl-val pl-neg">−$3,800</span>
+                    </div>
+                    <div class="pl-divider"></div>
+                    <div class="pl-row pl-profit-row">
+                      <span class="pl-label">NET PROFIT</span>
+                      <span class="pl-val pl-profit pl-profit-val">$0</span>
+                    </div>
+                    <div class="pl-synced">SYNCED ✓</div>
+                  </div>
                 </div>
+                <div class="pc-3d-desc desc-ledger">EXPENSES LOGGED. PROFIT MARGINS SECURED.</div>
+
               </div>
+
+              <!-- BACK: View 2 (Stylist Leaderboard) -->
+              <div class="pc-3d-face pc-3d-back">
+                <div class="pc-3d-step">02 / STYLISTS</div>
+                <div class="pc-3d-inner inner-stylists">
+                  <div class="stylist-table">
+                    <div class="st-row st-header">
+                      <span>NAME</span><span>REVENUE</span><span>RET.</span>
+                    </div>
+                    <div class="st-row st-data">
+                      <span>ALESSANDRO</span><span>$3,250</span><span class="st-ret">92%</span>
+                    </div>
+                    <div class="st-row st-data">
+                      <span>MATTEO</span><span>$2,890</span><span class="st-ret">89%</span>
+                    </div>
+                    <div class="st-row st-data">
+                      <span>MARINA</span><span>$2,450</span><span class="st-ret st-top">95%</span>
+                    </div>
+                    <div class="st-row st-data">
+                      <span>DOMENICO</span><span>$1,810</span><span class="st-ret">84%</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="pc-3d-desc">TOP TALENT — RANKED BY REVENUE.</div>
+              </div>
+
             </div>
           </div>
         </div>
