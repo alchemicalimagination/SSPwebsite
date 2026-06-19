@@ -628,19 +628,16 @@ card03CollapseTl
   // ── Flip 2: Back → Front (4.5 → 5.3) ──
   .to('#pcard-03 .pc-3d-card', { rotateY: 360, ease: 'power1.inOut', duration: 0.8 }, 4.5)
 
-  // ── Flip complete: swap content, then beep (5.3 → 5.5) ──
+  // ── Flip complete: swap content (5.3) ──
   .call(() => {
     document.querySelectorAll('#pcard-03 .pc-3d-front').forEach(el => el.classList.add('is-deducting'));
   }, null, 5.3)
-  .call(() => { playScannerBeep(); triggerCardBump('pcard-03'); }, null, 5.5)
-  .to('#pcard-03 .pc-purchased', { boxShadow: '0 0 15px rgba(214,48,48,0.9)', scale: 1.06, duration: 0.2, ease: 'power2.out' }, 5.5)
-  .to('#pcard-03 .pc-purchased', { boxShadow: '0 0 0 rgba(214,48,48,0)', scale: 1, duration: 0.25, ease: 'power2.in' }, 5.72)
 
-  // ── View 3: ledger animates in, profit counts up (5.6 → 6.6) ──
-  .to('#pcard-03 .pl-row-gross',  { opacity: 1, duration: 0.3, ease: 'power2.out' }, 5.65)
-  .to('#pcard-03 .pl-row-exp',    { opacity: 1, duration: 0.3, ease: 'power2.out' }, 5.9)
-  .to('#pcard-03 .pl-divider',    { opacity: 1, duration: 0.2 }, 6.1)
-  .to('#pcard-03 .pl-profit-row', { opacity: 1, duration: 0.3, ease: 'power2.out' }, 6.2)
+  // ── View 3: ledger builds in, profit counts up (5.4 → 6.7) ──
+  .to('#pcard-03 .pl-row-gross',  { opacity: 1, duration: 0.3, ease: 'power2.out' }, 5.4)
+  .to('#pcard-03 .pl-row-exp',    { opacity: 1, duration: 0.3, ease: 'power2.out' }, 5.7)
+  .to('#pcard-03 .pl-divider',    { opacity: 1, duration: 0.2 }, 5.95)
+  .to('#pcard-03 .pl-profit-row', { opacity: 1, duration: 0.3, ease: 'power2.out' }, 6.1)
   .to(plProfit03, {
     val: 8600, duration: 0.7, ease: 'power1.out',
     onUpdate: () => {
@@ -648,22 +645,27 @@ card03CollapseTl
         el.textContent = '$' + Math.round(plProfit03.val).toLocaleString();
       });
     }
-  }, 6.2)
+  }, 6.1)
   .to('#pcard-03 .pl-synced', {
     opacity: 1, boxShadow: '0 0 12px rgba(0,245,212,0.4)', duration: 0.4, ease: 'power2.out'
-  }, 6.7)
+  }, 6.6)
 
-  // ── Collapse (7.5 → 8.8) ──
-  .to('#pcard-03 .pc-3d-card', { rotateY: 0, duration: 0.1 }, 7.4)
+  // ── Red pill glow + beep — ledger complete (7.0) ──
+  .call(() => { playScannerBeep(); triggerCardBump('pcard-03'); }, null, 7.0)
+  .to('#pcard-03 .pc-purchased', { boxShadow: '0 0 15px rgba(214,48,48,0.9)', scale: 1.06, duration: 0.2, ease: 'power2.out' }, 7.0)
+  .to('#pcard-03 .pc-purchased', { boxShadow: '0 0 0 rgba(214,48,48,0)', scale: 1, duration: 0.25, ease: 'power2.in' }, 7.22)
+
+  // ── Collapse: tilt + shrink (7.4 → 8.6) ──
+  .to('#pcard-03 .pc-3d-card', { rotateY: 0, duration: 0.1 }, 7.35)
   .to(['#pcard-03 .pc-tag', '#pcard-03 .pc-mid', '#pcard-03 .pc-bc-wrap', '#pcard-03 .pc-purchased', '#pcard-03 .pm', '#pcard-03 .pc-ing'],
-    { opacity: 0, duration: 0.5 }, 7.5)
-  .to('#pcard-03 .pc-top', { borderBottomColor: 'transparent', duration: 0.3 }, 7.5)
-  .to('#pcard-03 .pc-bot', { borderTopColor:    'transparent', duration: 0.3 }, 7.5)
-  .to('#pcard-03', { width: 110, height: 110, minHeight: 110, ease: 'power2.inOut', duration: 0.8 }, 7.8)
-  .to('#pcard-03 .num-current',   { x: -60, opacity: 0, duration: 0.4 }, 8.2)
-  .to('#pcard-03 .label-current', { x: -40, opacity: 0, duration: 0.4 }, 8.2)
-  .to('#pcard-03 .num-next',      { x: 0,   opacity: 1, duration: 0.4, ease: 'power2.out' }, 8.4)
-  .to('#pcard-03 .label-next',    { x: 0,   opacity: 1, duration: 0.4, ease: 'power2.out' }, 8.4);
+    { opacity: 0, duration: 0.5 }, 7.4)
+  .to('#pcard-03 .pc-top', { borderBottomColor: 'transparent', duration: 0.3 }, 7.4)
+  .to('#pcard-03 .pc-bot', { borderTopColor:    'transparent', duration: 0.3 }, 7.4)
+  .to('#pcard-03', { width: 110, height: 110, minHeight: 110, ease: 'power2.inOut', duration: 0.8 }, 7.7)
+  .to('#pcard-03 .num-current',   { x: -60, opacity: 0, duration: 0.4 }, 8.1)
+  .to('#pcard-03 .label-current', { x: -40, opacity: 0, duration: 0.4 }, 8.1)
+  .to('#pcard-03 .num-next',      { x: 0,   opacity: 1, duration: 0.4, ease: 'power2.out' }, 8.3)
+  .to('#pcard-03 .label-next',    { x: 0,   opacity: 1, duration: 0.4, ease: 'power2.out' }, 8.3);
 
 setupCardAnimation('pcard-04', '#s-scan-04', false, window.innerHeight);
 // end card animations
