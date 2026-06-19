@@ -667,7 +667,111 @@ card03CollapseTl
   .to('#pcard-03 .num-next',      { x: 0,   opacity: 1, duration: 0.4, ease: 'power2.out' }, 8.3)
   .to('#pcard-03 .label-next',    { x: 0,   opacity: 1, duration: 0.4, ease: 'power2.out' }, 8.3);
 
-setupCardAnimation('pcard-04', '#s-scan-04', false, window.innerHeight);
+// ── CARD #04 CUSTOM 3D FLIP TIMELINE ──────────────────
+gsap.set('#pcard-04', { overflow: 'hidden' });
+gsap.set(['#pcard-04 .num-current', '#pcard-04 .label-current', '#pcard-04 .pc-bc-wrap', '#pcard-04 .pc-purchased', '#pcard-04 .pm'], { opacity: 0, x: -30 });
+gsap.set(['#pcard-04 .pc-tag', '#pcard-04 .pc-ing'], { opacity: 0, x: 30 });
+gsap.set('#pcard-04 .pc-mid', { opacity: 0 });
+gsap.set('#pcard-04 .pc-top', { borderBottomColor: 'transparent' });
+gsap.set('#pcard-04 .pc-bot', { borderTopColor: 'transparent' });
+gsap.set('#pcard-04 .pc-3d-card', { rotateY: 0 });
+gsap.set('#pcard-04 .nc-row, #pcard-04 .nc-detail', { opacity: 0, y: 5 });
+gsap.set('#pcard-04 .gc-slot, #pcard-04 .gc-pts-row, #pcard-04 .gc-badge, #pcard-04 .gc-reward-line', { opacity: 0 });
+gsap.set('#pcard-04 .lc-fill-04', { width: '0%' });
+
+const card04RevealTl = gsap.timeline({
+  scrollTrigger: { trigger: '#s-scan-04', start: 'top 80%', end: 'top top', scrub: 1.2 }
+});
+card04RevealTl
+  .to('#pcard-04 .pc-top', { borderBottomColor: 'rgba(0,0,0,0.1)', duration: 0.3 }, 0)
+  .to('#pcard-04 .pc-bot', { borderTopColor: 'rgba(0,0,0,0.12)',   duration: 0.3 }, 0)
+  .to('#pcard-04 .num-current',   { opacity: 1, x: 0, duration: 0.5 }, 0.1)
+  .to('#pcard-04 .label-current', { opacity: 1, x: 0, duration: 0.5 }, 0.2)
+  .to('#pcard-04 .pc-tag',        { opacity: 1, x: 0, duration: 0.5 }, 0.25)
+  .to('#pcard-04 .pc-mid',        { opacity: 1,        duration: 0.5 }, 0.4)
+  .to('#pcard-04 .pc-bc-wrap',    { opacity: 1, x: 0, duration: 0.5 }, 0.5)
+  .to('#pcard-04 .pc-purchased',  { opacity: 1, x: 0, duration: 0.5 }, 0.6)
+  .to('#pcard-04 .pm',            { opacity: 1, x: 0, stagger: 0.05, duration: 0.4 }, 0.7)
+  .to('#pcard-04 .pc-ing',        { opacity: 1, x: 0, duration: 0.5 }, 1.0);
+
+const lcPts04    = { val: 0 };
+const gcPts04    = { val: 2600 };
+
+const card04CollapseTl = gsap.timeline({
+  scrollTrigger: {
+    trigger: '#s-scan-04',
+    start: 'top top',
+    end: `+=${window.innerHeight * 6.0}`,
+    scrub: 1.5,
+    pin: true,
+    onUpdate: (self) => {
+      const startPct = 0.78;
+      const p = Math.max(0, (self.progress - startPct) / (1 - startPct));
+      gsap.set('#footer', { yPercent: 100 - p * 100 });
+    }
+  }
+});
+
+card04CollapseTl
+  .set('#pcard-04 .pc-3d-card', { rotateY: 0 })
+  .call(() => {
+    document.querySelectorAll('#pcard-04 .pc-3d-front').forEach(el => el.classList.remove('is-deducting'));
+  }, null, 0.0)
+
+  // ── View 1: points count up, bar fills (0.2 → 2.5) ──
+  .to(lcPts04, {
+    val: 2600, duration: 1.4, ease: 'power1.out',
+    onUpdate: () => {
+      document.querySelectorAll('#pcard-04 .lc-pts-04').forEach(el => {
+        el.textContent = Math.round(lcPts04.val).toLocaleString();
+      });
+    }
+  }, 0.2)
+  .to('#pcard-04 .lc-fill-04', { width: '87%', duration: 1.4, ease: 'power2.out' }, 0.2)
+
+  // ── Flip 1: Front → Back (2.5 → 3.3) ──
+  .to('#pcard-04 .pc-3d-card', { rotateY: 180, ease: 'power1.inOut', duration: 0.8 }, 2.5)
+
+  // ── View 2: notification rows stagger in (3.4 → 4.4) ──
+  .to('#pcard-04 .nc-row', { opacity: 1, y: 0, duration: 0.35, stagger: 0.25, ease: 'power2.out' }, 3.4)
+  .to('#pcard-04 .nc-detail', { opacity: 1, y: 0, duration: 0.3, ease: 'power2.out' }, 4.0)
+
+  // ── Flip 2: Back → Front (4.5 → 5.3) ──
+  .to('#pcard-04 .pc-3d-card', { rotateY: 360, ease: 'power1.inOut', duration: 0.8 }, 4.5)
+  .call(() => {
+    document.querySelectorAll('#pcard-04 .pc-3d-front').forEach(el => el.classList.add('is-deducting'));
+  }, null, 5.3)
+
+  // ── View 3: calendar slot + points count up + GOLD (5.4 → 6.8) ──
+  .to('#pcard-04 .gc-slot',       { opacity: 1, duration: 0.35, ease: 'power2.out' }, 5.4)
+  .to('#pcard-04 .gc-pts-row',    { opacity: 1, duration: 0.3,  ease: 'power2.out' }, 5.7)
+  .to(gcPts04, {
+    val: 3000, duration: 0.8, ease: 'power1.out',
+    onUpdate: () => {
+      document.querySelectorAll('#pcard-04 .gc-pts-val').forEach(el => {
+        el.textContent = Math.round(gcPts04.val).toLocaleString();
+      });
+    }
+  }, 5.7)
+  .to('#pcard-04 .gc-badge', {
+    opacity: 1, boxShadow: '0 0 14px rgba(240,192,64,0.4)', duration: 0.4, ease: 'power2.out'
+  }, 6.3)
+  .to('#pcard-04 .gc-reward-line', { opacity: 1, duration: 0.3 }, 6.6)
+
+  // ── Beep + pill flash (7.0) ──
+  .call(() => { playScannerBeep(); triggerCardBump('pcard-04'); }, null, 7.0)
+  .to('#pcard-04 .pc-purchased', { boxShadow: '0 0 15px rgba(214,48,48,0.9)', scale: 1.06, duration: 0.2, ease: 'power2.out' }, 7.0)
+  .to('#pcard-04 .pc-purchased', { boxShadow: '0 0 0 rgba(214,48,48,0)', scale: 1, duration: 0.25, ease: 'power2.in' }, 7.22)
+
+  // ── Collapse (7.5 → 8.8) ──
+  .to('#pcard-04 .pc-3d-card', { rotateY: 0, duration: 0.1 }, 7.4)
+  .to(['#pcard-04 .pc-tag', '#pcard-04 .pc-mid', '#pcard-04 .pc-bc-wrap', '#pcard-04 .pc-purchased', '#pcard-04 .pm', '#pcard-04 .pc-ing'],
+    { opacity: 0, duration: 0.5 }, 7.5)
+  .to('#pcard-04 .pc-top', { borderBottomColor: 'transparent', duration: 0.3 }, 7.5)
+  .to('#pcard-04 .pc-bot', { borderTopColor:    'transparent', duration: 0.3 }, 7.5)
+  .to('#pcard-04', { width: 110, height: 110, minHeight: 110, ease: 'power2.inOut', duration: 0.8 }, 7.8)
+  .to({}, { duration: 2.0 });
+
 // end card animations
 
 // ── START YOUR FREE TRIAL — hero only ──────────────────
