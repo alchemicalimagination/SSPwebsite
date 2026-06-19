@@ -1180,7 +1180,7 @@ function openWaitlist() {
   overlay.classList.add('open');
   overlay.setAttribute('aria-hidden', 'false');
   document.body.style.overflow = 'hidden';
-  initWaitlistMetal();
+  setTimeout(() => { if (window._initShaders) window._initShaders(); }, 50);
 }
 function closeWaitlist() {
   const overlay = document.getElementById('waitlist-overlay');

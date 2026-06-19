@@ -2493,9 +2493,9 @@ section {
   position: fixed;
   inset: 0;
   z-index: 9999;
-  background: rgba(10, 8, 20, 0.72);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  background: rgba(58, 52, 72, 0.2);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
   justify-content: center;

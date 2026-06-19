@@ -762,7 +762,7 @@
       u_offsetY: 0.0
     };
     const initShaders = () => {
-      ['liquid-metal-btn', 'liquid-metal-back', 'liquid-metal-works', 'liquid-metal-brand', 'liquid-metal-audio'].forEach(id => {
+      ['liquid-metal-btn', 'liquid-metal-back', 'liquid-metal-works', 'liquid-metal-brand', 'liquid-metal-audio', 'liquid-metal-wl'].forEach(id => {
         const el = document.getElementById(id);
         if (el && !el.dataset.shaderInitialized) {
           el.dataset.shaderInitialized = 'true';
@@ -770,6 +770,7 @@
         }
       });
     };
+    window._initShaders = initShaders;
     initShaders();
     document.addEventListener('DOMContentLoaded', initShaders);
     window.addEventListener('load', initShaders);

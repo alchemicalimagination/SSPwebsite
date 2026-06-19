@@ -723,10 +723,17 @@
       u_offsetX: 0.0,
       u_offsetY: 0.0
     };
-    ['liquid-metal-btn', 'liquid-metal-back', 'liquid-metal-works', 'liquid-metal-brand'].forEach(id => {
-      const el = document.getElementById(id);
-      if (el) new ShaderMount(el, liquidMetalFragmentShader, shaderParams, undefined, 0.5);
-    });
+    const initShaders = () => {
+      ['liquid-metal-btn', 'liquid-metal-back', 'liquid-metal-works', 'liquid-metal-brand', 'liquid-metal-wl'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el && !el.dataset.shaderInitialized) {
+          el.dataset.shaderInitialized = 'true';
+          new ShaderMount(el, liquidMetalFragmentShader, shaderParams, undefined, 0.5);
+        }
+      });
+    };
+    window._initShaders = initShaders;
+    initShaders();
   </script>
 </body>
 
