@@ -625,6 +625,199 @@ section {
   box-shadow: inset 0 1px 1px rgba(255,255,255,0.05);
 }
 
+/* --- 3D Flip System for Card #01 --- */
+.pc-3d-container {
+  background: transparent !important;
+  border: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+  perspective: 1000px;
+}
+.pc-3d-card {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+}
+.pc-3d-face {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.06);
+  background: rgba(255,255,255,0.03);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: inset 0 1px 1px rgba(255,255,255,0.05);
+  box-sizing: border-box;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+.pc-3d-front {
+  transform: rotateY(0deg);
+}
+.pc-3d-back {
+  transform: rotateY(180deg);
+}
+
+/* Step labels at the top of the card */
+.pc-3d-step {
+  font-size: 8px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  color: #ff007f; /* Bright Fuchsia */
+  text-align: center;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+/* Step descriptions at the bottom of the card */
+.pc-3d-desc {
+  font-size: 8.5px;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+  text-transform: uppercase;
+  width: 100%;
+  margin-top: 4px;
+}
+/* Inner content areas */
+.pc-3d-inner {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* --- View 2: Archiving Face Specific --- */
+.inner-archiving {
+  gap: 8px;
+  width: 100%;
+}
+.cc-back-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: rgba(168, 218, 220, 0.08);
+  border: 1px solid rgba(168, 218, 220, 0.2);
+  color: #a8dadc;
+}
+.cc-cloud-icon {
+  width: 12px;
+  height: 12px;
+}
+.cc-back-badge span {
+  font-size: 8px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+}
+.cc-back-client, .cc-back-formula {
+  font-family: monospace;
+  font-size: 10px;
+  letter-spacing: -0.01em;
+  color: rgba(255, 255, 255, 0.9);
+  display: flex;
+  gap: 6px;
+  width: 100%;
+  justify-content: center;
+}
+.cc-client-label, .cc-formula-label {
+  color: rgba(255, 255, 255, 0.4);
+}
+.cc-client-value, .cc-formula-value {
+  font-weight: bold;
+}
+.cc-back-status {
+  font-size: 9px;
+  color: #a8dadc;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  border: 1px solid rgba(168, 218, 220, 0.3);
+  padding: 3px 10px;
+  border-radius: 12px;
+  background: rgba(168, 218, 220, 0.05);
+}
+
+/* --- View 3: Deducting Face Specific --- */
+.inner-deducting {
+  width: 100%;
+  gap: 8px;
+  padding: 0 4px;
+}
+.stock-title {
+  font-size: 9px;
+  letter-spacing: 0.05em;
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 500;
+}
+.stock-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.stock-name {
+  font-family: monospace;
+  font-size: 9px;
+  color: rgba(255, 255, 255, 0.9);
+  width: 60px;
+  text-align: left;
+}
+.stock-bar-wrap {
+  flex: 1;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.stock-bar-fill {
+  height: 100%;
+  background: #a8dadc;
+  border-radius: 2px;
+  width: 100%; /* Will be animated or set */
+}
+.stock-badge {
+  font-family: monospace;
+  font-size: 9px;
+  color: #ff6b6b;
+  font-weight: bold;
+}
+.stock-footer-badge {
+  font-size: 8px;
+  color: #00f5d4; /* Bright Teal */
+  border: 1px solid rgba(0, 245, 212, 0.3);
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: rgba(0, 245, 212, 0.05);
+  letter-spacing: 0.05em;
+  font-weight: 500;
+}
+
+/* Swap classes for front face */
+.pc-3d-front.is-deducting .step-mixing,
+.pc-3d-front.is-deducting .inner-mixing,
+.pc-3d-front.is-deducting .desc-mixing {
+  display: none !important;
+}
+.pc-3d-front:not(.is-deducting) .step-deducting,
+.pc-3d-front:not(.is-deducting) .inner-deducting,
+.pc-3d-front:not(.is-deducting) .desc-deducting {
+  display: none !important;
+}
+
 /* --- Visual 1: Scale --- */
 .visual-scale {
   padding: 8px;
@@ -1002,7 +1195,14 @@ section {
   border-top: 1px solid rgba(0,0,0,0.12);
   padding: 10px 12px;
 }
-.pc-bc-wrap { margin-bottom: 6px; }
+.pc-bot-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  width: 100%;
+}
+.pc-bc-wrap { margin-bottom: 0; }
 .pc-barcode {
   width: 110px;
   height: 32px;
@@ -1019,7 +1219,7 @@ section {
   font-weight: 500;
   letter-spacing: 0.15em;
   padding: 3px 10px;
-  margin-bottom: 8px;
+  margin-bottom: 0;
 }
 
 .pc-data {

@@ -248,24 +248,151 @@ const cardCollapseTl = gsap.timeline({
   scrollTrigger: {
     trigger: '#s-scan',
     start: 'top top',
-    end: `+=${window.innerHeight}`,
+    end: `+=${window.innerHeight * 4.0}`, // Expanded scroll range for slow, fine scrub control
     scrub: 1.5,
     pin: true
   }
 });
+
+// Setup references and translations for the bilingual scrub
+const isIt = window.location.pathname.includes('/it/');
+const trans = {
+  colour: isIt ? 'COLORE' : 'COLOUR',
+  toner: isIt ? 'TONER' : 'TONER',
+  ox: isIt ? 'OSSIGENO' : 'OX 20 VOL',
+  measuring: isIt ? 'MISURAZIONE' : 'MEASURING',
+  active: isIt ? 'ATTIVO' : 'ACTIVE',
+  saved: isIt ? 'SALVATO' : 'SAVED'
+};
+
+const scaleValueEls = document.querySelectorAll('#pcard-01 .scale-value');
+const scaleLabelEls = document.querySelectorAll('#pcard-01 .scale-label');
+const scaleStatusEls = document.querySelectorAll('#pcard-01 .scale-status');
+const scaleDrop = document.querySelector('#pcard-01 .scale-drop');
+const scaleLiquid = document.querySelector('#pcard-01 .scale-liquid');
+const weightVal = { val: 0.0 };
+
+// Ensure everything starts from View 1's initial state
 cardCollapseTl
-  .to(['#pcard-01 .pc-tag',
-       '#pcard-01 .pc-mid', '#pcard-01 .pc-bc-wrap', '#pcard-01 .pc-purchased',
-       '#pcard-01 .pm', '#pcard-01 .pc-ing'],
-    { opacity: 0, duration: 0.6 }, 0)
-  .to('#pcard-01 .pc-top', { borderBottomColor: 'transparent', duration: 0.3 }, 0)
-  .to('#pcard-01 .pc-bot', { borderTopColor:    'transparent', duration: 0.3 }, 0)
-  .to('#pcard-01', { width: 110, height: 110, minHeight: 110, ease: 'power2.inOut', duration: 1 }, 0.5)
-  // PHASE 3: #01+INTELLIGENT INVENTORY slide out left, #02+CLIENT ARCHIVE slide in right
-  .to('#pcard-01 .num-current',   { x: -60, opacity: 0, duration: 0.5 }, 1.8)
-  .to('#pcard-01 .label-current', { x: -40, opacity: 0, duration: 0.5 }, 1.8)
-  .to('#pcard-01 .num-next',      { x: 0,   opacity: 1, duration: 0.5, ease: 'power2.out' }, 2.0)
-  .to('#pcard-01 .label-next',    { x: 0,   opacity: 1, duration: 0.5, ease: 'power2.out' }, 2.0);
+  .set('#pcard-01 .pc-3d-card', { rotateY: 0 })
+  .set(scaleLiquid, { scaleY: 0.05, transformOrigin: 'bottom center' })
+  .call(() => {
+    document.querySelectorAll('#pcard-01 .pc-3d-front').forEach(el => el.classList.remove('is-deducting'));
+    scaleLabelEls.forEach(el => el.textContent = trans.colour);
+    scaleValueEls.forEach(el => el.textContent = '0.0 g');
+    scaleStatusEls.forEach(el => {
+      el.textContent = trans.measuring;
+      el.style.color = 'rgba(255,255,255,0.5)';
+      el.style.borderColor = 'rgba(255,255,255,0.3)';
+    });
+  }, null, 0.0)
+
+  // ── Step 1: COLOUR (0.0 to 0.7) ──
+  // Drop falls
+  .fromTo(scaleDrop, { y: 0, opacity: 0 }, { opacity: 1, duration: 0.1 }, 0.0)
+  .to(scaleDrop, { y: 38, duration: 0.4, ease: 'power2.in' }, 0.1)
+  .to(scaleDrop, { opacity: 0, duration: 0.1 }, 0.5)
+  // Liquid rises
+  .to(scaleLiquid, { scaleY: 0.33, duration: 0.3, ease: 'power2.out' }, 0.4)
+  // Weight counts up to 36.0g
+  .to(weightVal, {
+    val: 36.0,
+    duration: 0.45,
+    ease: 'power1.out',
+    onUpdate: () => {
+      scaleValueEls.forEach(el => el.textContent = weightVal.val.toFixed(1) + ' g');
+    }
+  }, 0.25)
+
+  // ── Step 2: TONER (0.7 to 1.5) ──
+  .call(() => {
+    scaleLabelEls.forEach(el => el.textContent = trans.toner);
+    scaleValueEls.forEach(el => el.textContent = '0.0 g');
+    weightVal.val = 0.0;
+  }, null, 0.75)
+  // Drop falls
+  .fromTo(scaleDrop, { y: 0, opacity: 0 }, { opacity: 1, duration: 0.1 }, 0.8)
+  .to(scaleDrop, { y: 38, duration: 0.4, ease: 'power2.in' }, 0.9)
+  .to(scaleDrop, { opacity: 0, duration: 0.1 }, 1.3)
+  // Liquid rises
+  .to(scaleLiquid, { scaleY: 0.66, duration: 0.3, ease: 'power2.out' }, 1.2)
+  // Weight counts up to 12.0g
+  .to(weightVal, {
+    val: 12.0,
+    duration: 0.45,
+    ease: 'power1.out',
+    onUpdate: () => {
+      scaleValueEls.forEach(el => el.textContent = weightVal.val.toFixed(1) + ' g');
+    }
+  }, 1.05)
+
+  // ── Step 3: OX 20 VOL (1.5 to 2.3) ──
+  .call(() => {
+    scaleLabelEls.forEach(el => el.textContent = trans.ox);
+    scaleValueEls.forEach(el => el.textContent = '0.0 ml');
+    weightVal.val = 0.0;
+  }, null, 1.55)
+  // Drop falls
+  .fromTo(scaleDrop, { y: 0, opacity: 0 }, { opacity: 1, duration: 0.1 }, 1.6)
+  .to(scaleDrop, { y: 38, duration: 0.4, ease: 'power2.in' }, 1.7)
+  .to(scaleDrop, { opacity: 0, duration: 0.1 }, 2.1)
+  // Liquid rises
+  .to(scaleLiquid, { scaleY: 1.0, duration: 0.3, ease: 'power2.out' }, 2.0)
+  // Weight counts up to 60.0ml
+  .to(weightVal, {
+    val: 60.0,
+    duration: 0.45,
+    ease: 'power1.out',
+    onUpdate: () => {
+      scaleValueEls.forEach(el => el.textContent = weightVal.val.toFixed(1) + ' ml');
+    }
+  }, 1.85)
+
+  // Finalize Mix status
+  .call(() => {
+    scaleStatusEls.forEach(el => {
+      el.textContent = trans.saved;
+      el.style.color = '#a8dadc';
+      el.style.borderColor = '#a8dadc';
+    });
+  }, null, 2.35)
+
+  // ── Flip 1: Front to Back (2.4 to 3.2) ──
+  .to('#pcard-01 .pc-3d-card', { rotateY: 180, ease: 'power1.inOut', duration: 0.8 }, 2.5)
+  .call(() => {
+    document.querySelectorAll('#pcard-01 .pc-3d-front').forEach(el => el.classList.remove('is-deducting'));
+  }, null, 2.5)
+
+  // Pause on View 2 (3.2 to 4.2)
+
+  // ── Flip 2: Back to Front (4.2 to 5.0) ──
+  .to('#pcard-01 .pc-3d-card', { rotateY: 360, ease: 'power1.inOut', duration: 0.8 }, 4.2)
+  .call(() => {
+    document.querySelectorAll('#pcard-01 .pc-3d-front').forEach(el => el.classList.add('is-deducting'));
+  }, null, 4.6)
+  .call(() => { playScannerBeep(); triggerCardBump(); }, null, 4.7)
+  .fromTo('#pcard-01 .pc-purchased', 
+    { boxShadow: '0 0 0 rgba(214, 48, 48, 0)', scale: 1 }, 
+    { boxShadow: '0 0 15px rgba(214, 48, 48, 0.9)', scale: 1.1, duration: 0.25, yoyo: true, repeat: 1, ease: 'power2.out' }, 
+    4.7
+  )
+
+  // Animate stock bars draining inside View 3
+  .fromTo('#pcard-01 .fill-7n', { width: '85%' }, { width: '60%', duration: 0.6, ease: 'power2.out' }, 4.7)
+  .fromTo('#pcard-01 .fill-8gg', { width: '90%' }, { width: '80%', duration: 0.6, ease: 'power2.out' }, 4.7)
+  .fromTo('#pcard-01 .fill-ox', { width: '100%' }, { width: '50%', duration: 0.6, ease: 'power2.out' }, 4.7)
+
+  // Collapse and shrink the card at the end of the scroll
+  .to(['#pcard-01 .pc-tag', '#pcard-01 .pc-mid', '#pcard-01 .pc-bc-wrap', '#pcard-01 .pc-purchased', '#pcard-01 .pm', '#pcard-01 .pc-ing'], { opacity: 0, duration: 0.5 }, 6.0)
+  .to('#pcard-01 .pc-top', { borderBottomColor: 'transparent', duration: 0.3 }, 6.0)
+  .to('#pcard-01 .pc-bot', { borderTopColor:    'transparent', duration: 0.3 }, 6.0)
+  .to('#pcard-01', { width: 110, height: 110, minHeight: 110, ease: 'power2.inOut', duration: 0.8 }, 6.2)
+  
+  // Slide out #01 label and slide in #02 label
+  .to('#pcard-01 .num-current',   { x: -60, opacity: 0, duration: 0.4 }, 6.6)
+  .to('#pcard-01 .label-current', { x: -40, opacity: 0, duration: 0.4 }, 6.6)
+  .to('#pcard-01 .num-next',      { x: 0,   opacity: 1, duration: 0.4, ease: 'power2.out' }, 6.8)
+  .to('#pcard-01 .label-next',    { x: 0,   opacity: 1, duration: 0.4, ease: 'power2.out' }, 6.8);
 
 // ── CARDS #02 #03 #04 — same 3-phase animation ──────────
 function setupCardAnimation(cardId, sectionId, hasNext, pinExtra = 0) {
@@ -410,86 +537,7 @@ document.querySelectorAll('.d-badge, .d-hot, .d-icons, .circle-badge, .d-sub, .d
 
 // ── CARD INLINE ANIMATIONS ─────────────────────────────
 function initScaleAnimation() {
-  const valueEl  = document.querySelector('.scale-value');
-  const statusEl = document.querySelector('.scale-status');
-  const labelEl  = document.querySelector('.scale-label');
-  const drop     = document.querySelector('.scale-drop');
-  const liquid   = document.querySelector('.scale-liquid');
-  const readout  = document.querySelector('.scale-readout');
-
-  if (!valueEl || !drop || !liquid || !labelEl) return;
-
-  // Formula: 3 ingredients added to the same bowl, liquid accumulates
-  const steps = [
-    { name: 'COLOUR',    unit: 'g',  target: 36.0, fill: 0.33 },
-    { name: 'TONER',     unit: 'g',  target: 12.0, fill: 0.66 },
-    { name: 'OX 20 VOL', unit: 'ml', target: 60.0, fill: 1.0  },
-  ];
-
-  gsap.set(readout, { opacity: 0 });
-
-  let scaleRunning = false, scaleTl = null, scaleDelay = null;
-
-  function scaleStop() {
-    scaleRunning = false;
-    if (scaleDelay) { scaleDelay.kill(); scaleDelay = null; }
-    if (scaleTl)    { scaleTl.kill();    scaleTl    = null; }
-    gsap.killTweensOf([drop, liquid, readout]);
-    gsap.set(drop,    { y: 0, opacity: 0 });
-    gsap.set(liquid,  { scaleY: 0.05, transformOrigin: 'bottom center' });
-    gsap.set(readout, { opacity: 0 });
-  }
-
-  function runFormula() {
-    if (!scaleRunning) return;
-    gsap.set(drop, { y: 0, opacity: 0 });
-    gsap.set(liquid, { scaleY: 0.05, transformOrigin: 'bottom center' });
-    labelEl.textContent        = steps[0].name;
-    valueEl.textContent        = '0.0 g';
-    statusEl.textContent       = 'MEASURING';
-    statusEl.style.color       = 'rgba(255,255,255,0.5)';
-    statusEl.style.borderColor = 'rgba(255,255,255,0.3)';
-
-    scaleTl = gsap.timeline();
-
-    scaleTl.to(readout, { opacity: 1, duration: 0.3 });
-
-    steps.forEach((step, i) => {
-      const weight = { val: 0.0 };
-      if (i > 0) {
-        scaleTl.to({}, { duration: 0.65 })
-          .call(() => {
-            labelEl.textContent = step.name;
-            valueEl.textContent = '0.0 ' + step.unit;
-          });
-      }
-      scaleTl.set(drop, { y: 0, opacity: 0 })
-        .to(drop, { opacity: 1, duration: 0.06, delay: 0.25 })
-        .to(drop, { y: 38, duration: 0.5, ease: 'power2.in' })
-        .to(drop, { opacity: 0, duration: 0.06 })
-        .to(liquid, { scaleY: step.fill, duration: 0.4, ease: 'power2.out' }, '-=0.06')
-        .to(weight, {
-          val: step.target, duration: 0.52, ease: 'power1.out',
-          onUpdate: () => { valueEl.textContent = weight.val.toFixed(1) + ' ' + step.unit; }
-        }, '-=0.3');
-    });
-
-    scaleTl.call(() => {
-        statusEl.textContent       = 'SAVED';
-        statusEl.style.color       = '#a8dadc';
-        statusEl.style.borderColor = '#a8dadc';
-      });
-    // hold final state — no drain, no restart
-  }
-
-  ScrollTrigger.create({
-    trigger: '#pcard-01 .pc-visual',
-    start: 'top 85%', end: 'bottom 15%',
-    onEnter:      () => { if (!scaleRunning) { scaleRunning = true; runFormula(); } },
-    onEnterBack:  () => { if (!scaleRunning) { scaleRunning = true; runFormula(); } },
-    onLeave:      scaleStop,
-    onLeaveBack:  scaleStop,
-  });
+  // Logic moved into scrubbed scrollTrigger collapse timeline to animate on scroll
 }
 
 function initArchiveAnimation() {
@@ -510,9 +558,9 @@ function initArchiveAnimation() {
       title: 'FORMULA HISTORY',
       sw:   ['#EED6A5', '#D4A373', '#B5838D'],
       rows: [
-        { label: 'BASE',       value: '7N + 8GG (1:1)', badge: false },
-        { label: 'DEV',        value: '20 VOL',          badge: false },
-        { label: 'ALLERGY',    value: 'PPD FREE',         badge: true  },
+        { label: 'BASE',       value: '7N (36g)',        badge: false },
+        { label: 'TONER',      value: '8GG (12g)',       badge: false },
+        { label: 'DEV',        value: '20 VOL (60g)',    badge: false },
       ],
       tag: 'SAVED 2 MINS AGO'
     },
@@ -917,6 +965,52 @@ function initUnmuteButton() {
   };
   document.addEventListener('click', silentUnlock);
   document.addEventListener('keydown', silentUnlock);
+}
+
+let lastBeepTime = 0;
+function playScannerBeep() {
+  if (_isSoundMuted) return;
+  const now = Date.now();
+  if (now - lastBeepTime < 800) return;
+  lastBeepTime = now;
+  try {
+    const ctx = getAudioCtx();
+    if (!ctx) return;
+    if (ctx.state === 'suspended') {
+      ctx.resume();
+    }
+    if (ctx.state === 'suspended') return;
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(2000, ctx.currentTime);
+    gain.gain.setValueAtTime(0.06, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.12);
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start();
+    osc.stop(ctx.currentTime + 0.12);
+  } catch (e) {
+    console.warn("Scanner beep failed:", e);
+  }
+}
+
+let lastBumpTime = 0;
+function triggerCardBump() {
+  const now = Date.now();
+  if (now - lastBumpTime < 800) return;
+  lastBumpTime = now;
+  try {
+    if (navigator.vibrate) {
+      navigator.vibrate(25);
+    }
+  } catch (e) {}
+  
+  // Real-time visual bump on desktop & mobile (non-scrubbed)
+  gsap.fromTo('#pcard-01 .pc-visual', 
+    { y: 0, scale: 1 }, 
+    { y: -10, scale: 1.04, duration: 0.12, yoyo: true, repeat: 1, ease: 'power2.out', clearProps: 'y,scale' }
+  );
 }
 
 function playTypeClick() {
