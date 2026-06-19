@@ -253,7 +253,7 @@ section {
   border-radius: 0;
   width: 374px;
   height: 202px;
-  clip-path: path('M 108 198 Q 117 202 125 202 L 360 202 Q 374 202 374 182 L 374 101 Q 374 91 365 88 L 299 62 Q 292 59 292 49 L 292 19 Q 292 0 273 0 L 91 0 Q 81 0 81 9 L 81 72 Q 81 82 73 82 L 9 82 Q 0 82 0 91 L 0 145 Q 0 155 9 160 L 108 198 Z');
+  clip-path: path('M 108 198 Q 117 202 125 202 L 360 202 Q 374 202 374 182 L 374 101 Q 374 91 365 88 L 299 62 Q 292 59 292 49 L 292 19 Q 292 0 273 0 L 269 0 Q 255 0 255 14 L 255 39 Q 255 53 241 53 L 123 53 Q 109 53 109 39 L 109 14 Q 109 0 95 0 L 91 0 Q 81 0 81 9 L 81 72 Q 81 82 73 82 L 9 82 Q 0 82 0 91 L 0 145 Q 0 155 9 160 L 108 198 Z');
   background: #0c0c0c;
   color: #0c0c0c;
   overflow: hidden;
@@ -263,7 +263,7 @@ section {
   content: '';
   position: absolute;
   inset: 0;
-  clip-path: path('M 108 198 Q 117 202 125 202 L 360 202 Q 374 202 374 182 L 374 101 Q 374 91 365 88 L 299 62 Q 292 59 292 49 L 292 19 Q 292 0 273 0 L 91 0 Q 81 0 81 9 L 81 72 Q 81 82 73 82 L 9 82 Q 0 82 0 91 L 0 145 Q 0 155 9 160 L 108 198 Z');
+  clip-path: path('M 108 198 Q 117 202 125 202 L 360 202 Q 374 202 374 182 L 374 101 Q 374 91 365 88 L 299 62 Q 292 59 292 49 L 292 19 Q 292 0 273 0 L 269 0 Q 255 0 255 14 L 255 39 Q 255 53 241 53 L 123 53 Q 109 53 109 39 L 109 14 Q 109 0 95 0 L 91 0 Q 81 0 81 9 L 81 72 Q 81 82 73 82 L 9 82 Q 0 82 0 91 L 0 145 Q 0 155 9 160 L 108 198 Z');
   border: 1px solid rgba(255,255,255,0.6);
   pointer-events: none;
   z-index: 2;
@@ -2586,8 +2586,8 @@ section {
 /* ── Unmute Toggle Button with Purple Wave ── */
 #audio-unmute-btn {
   position: absolute;
-  top: 1.7cm;
-  right: calc(2cm + 266px);
+  top: calc(2cm - 18px - 3mm);
+  right: calc(1cm + 127px);
   z-index: 9999;
   display: flex;
   align-items: center;
