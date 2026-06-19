@@ -2398,12 +2398,16 @@ section {
   }
   .hero-for { display: none; }
 
-  /* ── Mobile: globe moves to left ── */
+  /* ── Mobile: globe moves to left, bigger ── */
   .lang-switch {
     position: absolute !important;
     top: 3mm !important;
     left: 0.5cm !important;
     right: auto !important;
+  }
+  .lang-switch .globe-icon {
+    width: 64px !important;
+    height: 64px !important;
   }
 
   /* ── Mobile: transparent overlay with blur only ── */
