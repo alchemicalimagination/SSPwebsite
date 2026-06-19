@@ -2334,6 +2334,11 @@ section {
     top: 1.5cm !important;
     right: 1.5cm !important;
   }
+
+  /* ── iPad: reduce large type ── */
+  .hero-title { font-size: clamp(64px, 9vw, 100px) !important; }
+  .d-title,
+  .d-title--01 { font-size: clamp(60px, 8vw, 100px) !important; }
 }
 
 /* ══════════════════════════════════════
