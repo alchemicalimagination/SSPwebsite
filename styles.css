@@ -70,6 +70,7 @@ body {
   transition: background 0.3s, color 0.3s;
 }
 #enter-btn:hover { background: var(--fg); color: var(--bg); }
+#enter-btn:active { transform: scale(0.96); transition: transform 0.08s ease; }
 
 /* ══════════════════════════════════════
    SITE
@@ -449,6 +450,7 @@ section {
   transition: background 0.3s, color 0.3s;
 }
 .read-btn:hover { background: var(--fg); color: var(--bg); }
+.read-btn:active { transform: scale(0.96); transition: transform 0.08s ease; }
 
 /* ── Fixed persistent product badge ── */
 .fixed-badge {
@@ -2011,7 +2013,7 @@ section {
   z-index: 2;
 }
 .footer-talk:hover { opacity: 0.92; }
-.footer-talk:active { opacity: 1; }
+.footer-talk:active { opacity: 1; transform: scale(0.96); transition: transform 0.08s ease; }
 
 @keyframes btnBounce {
   0%   { transform: translateY(0); }
@@ -2375,6 +2377,10 @@ section {
 #audio-unmute-btn:hover {
   transform: scale(1.03) translateY(-1px);
 }
+#audio-unmute-btn:active {
+  transform: scale(0.96);
+  transition: transform 0.08s ease;
+}
 
 /* ── Theme 1: Glass Effect ── */
 #audio-unmute-btn.glass-theme {
@@ -2614,6 +2620,7 @@ section {
   z-index: 2;
 }
 .wl-btn:hover { opacity: 0.92; }
+.wl-btn:active { transform: scale(0.96); transition: transform 0.08s ease; }
 #liquid-metal-wl {
   position: absolute;
   inset: 0;
