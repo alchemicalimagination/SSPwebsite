@@ -2334,11 +2334,6 @@ section {
     top: 1.5cm !important;
     right: 1.5cm !important;
   }
-  #audio-unmute-btn {
-    position: absolute !important;
-    top: 1.7cm !important;
-    right: calc(2cm + 266px) !important;
-  }
 }
 
 /* ══════════════════════════════════════
