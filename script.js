@@ -248,7 +248,7 @@ const cardCollapseTl = gsap.timeline({
   scrollTrigger: {
     trigger: '#s-scan',
     start: 'top top',
-    end: `+=${window.innerHeight * 4.0}`, // Expanded scroll range for slow, fine scrub control
+    end: `+=${window.innerHeight * 5.0}`,
     scrub: 1.5,
     pin: true
   }
@@ -357,42 +357,43 @@ cardCollapseTl
     });
   }, null, 2.35)
 
-  // ── Flip 1: Front to Back (2.4 to 3.2) ──
+  // ── Flip 1: Front to Back (2.5 → 3.3) ──
   .to('#pcard-01 .pc-3d-card', { rotateY: 180, ease: 'power1.inOut', duration: 0.8 }, 2.5)
-  .call(() => {
-    document.querySelectorAll('#pcard-01 .pc-3d-front').forEach(el => el.classList.remove('is-deducting'));
-  }, null, 2.5)
 
-  // Pause on View 2 (3.2 to 4.2)
+  // Pause on View 2 (3.3 to 4.5)
 
-  // ── Flip 2: Back to Front (4.2 to 5.0) ──
-  .to('#pcard-01 .pc-3d-card', { rotateY: 360, ease: 'power1.inOut', duration: 0.8 }, 4.2)
-  .call(() => {
-    document.querySelectorAll('#pcard-01 .pc-3d-front').forEach(el => el.classList.add('is-deducting'));
-  }, null, 4.6)
-  .call(() => { playScannerBeep(); triggerCardBump(); }, null, 4.7)
-  .fromTo('#pcard-01 .pc-purchased', 
-    { boxShadow: '0 0 0 rgba(214, 48, 48, 0)', scale: 1 }, 
-    { boxShadow: '0 0 15px rgba(214, 48, 48, 0.9)', scale: 1.1, duration: 0.25, yoyo: true, repeat: 1, ease: 'power2.out' }, 
-    4.7
-  )
+  // ── Flip 2: Back → Front (4.5 → 5.3) — is-deducting swapped at midpoint 4.9s via onUpdate ──
+  .to('#pcard-01 .pc-3d-card', { rotateY: 360, ease: 'power1.inOut', duration: 0.8 }, 4.5)
 
-  // Animate stock bars draining inside View 3
-  .fromTo('#pcard-01 .fill-7n', { width: '85%' }, { width: '60%', duration: 0.6, ease: 'power2.out' }, 4.7)
-  .fromTo('#pcard-01 .fill-8gg', { width: '90%' }, { width: '80%', duration: 0.6, ease: 'power2.out' }, 4.7)
-  .fromTo('#pcard-01 .fill-ox', { width: '100%' }, { width: '50%', duration: 0.6, ease: 'power2.out' }, 4.7)
+  // ── View 3: stock bars drain (5.4 → 6.1) ──
+  .fromTo('#pcard-01 .fill-7n',  { width: '85%' }, { width: '60%', duration: 0.6, ease: 'power2.out' }, 5.4)
+  .fromTo('#pcard-01 .fill-8gg', { width: '90%' }, { width: '80%', duration: 0.6, ease: 'power2.out' }, 5.4)
+  .fromTo('#pcard-01 .fill-ox',  { width: '100%' }, { width: '50%', duration: 0.6, ease: 'power2.out' }, 5.4)
 
-  // Collapse and shrink the card at the end of the scroll
-  .to(['#pcard-01 .pc-tag', '#pcard-01 .pc-mid', '#pcard-01 .pc-bc-wrap', '#pcard-01 .pc-purchased', '#pcard-01 .pm', '#pcard-01 .pc-ing'], { opacity: 0, duration: 0.5 }, 6.0)
-  .to('#pcard-01 .pc-top', { borderBottomColor: 'transparent', duration: 0.3 }, 6.0)
-  .to('#pcard-01 .pc-bot', { borderTopColor:    'transparent', duration: 0.3 }, 6.0)
-  .to('#pcard-01', { width: 110, height: 110, minHeight: 110, ease: 'power2.inOut', duration: 0.8 }, 6.2)
-  
-  // Slide out #01 label and slide in #02 label
-  .to('#pcard-01 .num-current',   { x: -60, opacity: 0, duration: 0.4 }, 6.6)
-  .to('#pcard-01 .label-current', { x: -40, opacity: 0, duration: 0.4 }, 6.6)
-  .to('#pcard-01 .num-next',      { x: 0,   opacity: 1, duration: 0.4, ease: 'power2.out' }, 6.8)
-  .to('#pcard-01 .label-next',    { x: 0,   opacity: 1, duration: 0.4, ease: 'power2.out' }, 6.8);
+  // ── Beep + pill flash after content visible (6.2) ──
+  .call(() => { playScannerBeep(); triggerCardBump(); }, null, 6.2)
+  .to('#pcard-01 .pc-purchased', { boxShadow: '0 0 15px rgba(214,48,48,0.9)', scale: 1.06, duration: 0.2, ease: 'power2.out' }, 6.2)
+  .to('#pcard-01 .pc-purchased', { boxShadow: '0 0 0 rgba(214,48,48,0)', scale: 1, duration: 0.25, ease: 'power2.in' }, 6.42)
+
+  // ── Collapse: tilt + shrink (6.8 → 8.0) ──
+  .to('#pcard-01 .pc-3d-card', { rotateY: 0, duration: 0.1 }, 6.7)
+  .to(['#pcard-01 .pc-tag', '#pcard-01 .pc-mid', '#pcard-01 .pc-bc-wrap', '#pcard-01 .pc-purchased', '#pcard-01 .pm', '#pcard-01 .pc-ing'], { opacity: 0, duration: 0.5 }, 6.8)
+  .to('#pcard-01 .pc-top', { borderBottomColor: 'transparent', duration: 0.3 }, 6.8)
+  .to('#pcard-01 .pc-bot', { borderTopColor:    'transparent', duration: 0.3 }, 6.8)
+  .to('#pcard-01', { width: 110, height: 110, minHeight: 110, ease: 'power2.inOut', duration: 0.8 }, 7.1)
+  .to('#pcard-01 .num-current',   { x: -60, opacity: 0, duration: 0.4 }, 7.5)
+  .to('#pcard-01 .label-current', { x: -40, opacity: 0, duration: 0.4 }, 7.5)
+  .to('#pcard-01 .num-next',      { x: 0,   opacity: 1, duration: 0.4, ease: 'power2.out' }, 7.7)
+  .to('#pcard-01 .label-next',    { x: 0,   opacity: 1, duration: 0.4, ease: 'power2.out' }, 7.7);
+
+// is-deducting toggled at midpoint of Flip 2 (4.9s) — onUpdate handles both scroll directions cleanly
+cardCollapseTl.eventCallback('onUpdate', function() {
+  const t = this.time();
+  document.querySelectorAll('#pcard-01 .pc-3d-front').forEach(el => {
+    if (t >= 4.9) el.classList.add('is-deducting');
+    else el.classList.remove('is-deducting');
+  });
+});
 
 // ── CARD #02 CUSTOM 3D FLIP TIMELINES ──────────────────
 const card02 = document.getElementById('pcard-02');
@@ -405,6 +406,9 @@ gsap.set(['#pcard-02 .pc-tag', '#pcard-02 .pc-ing'], { opacity: 0, x: 30 });
 gsap.set('#pcard-02 .pc-mid', { opacity: 0 });
 gsap.set('#pcard-02 .pc-top', { borderBottomColor: 'transparent' });
 gsap.set('#pcard-02 .pc-bot', { borderTopColor: 'transparent' });
+gsap.set('#pcard-02 .th-row', { opacity: 0, x: 8 });
+gsap.set(['#pcard-02 .th-total', '#pcard-02 .pc-3d-back .pc-3d-desc'], { opacity: 0 });
+gsap.set(['#pcard-02 .befaft-panel', '#pcard-02 .befaft-meta'], { opacity: 0 });
 
 const card02RevealTl = gsap.timeline({
   scrollTrigger: {
@@ -430,7 +434,7 @@ const card02CollapseTl = gsap.timeline({
   scrollTrigger: {
     trigger: '#s-scan-02',
     start: 'top top',
-    end: `+=${window.innerHeight * 4.0}`,
+    end: `+=${window.innerHeight * 5.0}`,
     scrub: 1.5,
     pin: true
   }
@@ -438,39 +442,46 @@ const card02CollapseTl = gsap.timeline({
 
 card02CollapseTl
   .set('#pcard-02 .pc-3d-card', { rotateY: 0 })
-  .call(() => {
-    document.querySelectorAll('#pcard-02 .pc-3d-front').forEach(el => el.classList.remove('is-deducting'));
-  }, null, 0.0)
 
-  // ── Flip 1: Front to Back (2.5 to 3.3) ──
-  .to('#pcard-02 .pc-3d-card', { rotateY: 180, ease: 'power1.inOut', duration: 0.8 }, 2.5)
-  .call(() => {
-    document.querySelectorAll('#pcard-02 .pc-3d-front').forEach(el => el.classList.remove('is-deducting'));
-  }, null, 2.5)
+  // ── Flip 1: Front → Back (1.5 → 2.3) ──
+  .to('#pcard-02 .pc-3d-card', { rotateY: 180, ease: 'power1.inOut', duration: 0.8 }, 1.5)
 
-  // ── Flip 2: Back to Front (4.2 to 5.0) ──
-  .to('#pcard-02 .pc-3d-card', { rotateY: 360, ease: 'power1.inOut', duration: 0.8 }, 4.2)
-  .call(() => {
-    document.querySelectorAll('#pcard-02 .pc-3d-front').forEach(el => el.classList.add('is-deducting'));
-  }, null, 4.6)
-  .call(() => { playScannerBeep(); triggerCardBump('pcard-02'); }, null, 4.7)
-  .fromTo('#pcard-02 .pc-purchased', 
-    { boxShadow: '0 0 0 rgba(214, 48, 48, 0)', scale: 1 }, 
-    { boxShadow: '0 0 15px rgba(214, 48, 48, 0.9)', scale: 1.1, duration: 0.25, yoyo: true, repeat: 1, ease: 'power2.out' }, 
-    4.7
-  )
+  // ── View 2: history rows stagger in, then total + note (2.4 → 3.8) ──
+  .to('#pcard-02 .th-row', { opacity: 1, x: 0, duration: 0.3, stagger: 0.2, ease: 'power2.out' }, 2.4)
+  .to('#pcard-02 .th-total', { opacity: 1, duration: 0.3, ease: 'power2.out' }, 3.4)
+  .to('#pcard-02 .pc-3d-back .pc-3d-desc', { opacity: 1, duration: 0.25, ease: 'power2.out' }, 3.6)
 
-  // Collapse and shrink at the end of the scroll
-  .to(['#pcard-02 .pc-tag', '#pcard-02 .pc-mid', '#pcard-02 .pc-bc-wrap', '#pcard-02 .pc-purchased', '#pcard-02 .pm', '#pcard-02 .pc-ing'], { opacity: 0, duration: 0.5 }, 6.0)
-  .to('#pcard-02 .pc-top', { borderBottomColor: 'transparent', duration: 0.3 }, 6.0)
-  .to('#pcard-02 .pc-bot', { borderTopColor:    'transparent', duration: 0.3 }, 6.0)
-  .to('#pcard-02', { width: 110, height: 110, minHeight: 110, ease: 'power2.inOut', duration: 0.8 }, 6.2)
+  // ── Flip 2: Back → Front (4.0 → 4.8) — is-deducting swapped at midpoint 4.4s via onUpdate ──
+  .to('#pcard-02 .pc-3d-card', { rotateY: 360, ease: 'power1.inOut', duration: 0.8 }, 4.0)
 
-  // Slide out #02 label and slide in #03 label
-  .to('#pcard-02 .num-current',   { x: -60, opacity: 0, duration: 0.4 }, 6.6)
-  .to('#pcard-02 .label-current', { x: -40, opacity: 0, duration: 0.4 }, 6.6)
-  .to('#pcard-02 .num-next',      { x: 0,   opacity: 1, duration: 0.4, ease: 'power2.out' }, 6.8)
-  .to('#pcard-02 .label-next',    { x: 0,   opacity: 1, duration: 0.4, ease: 'power2.out' }, 6.8);
+  // ── View 3: before/after panels fade in (4.9 → 5.5) ──
+  .to('#pcard-02 .befaft-panel', { opacity: 1, duration: 0.35, stagger: 0.25, ease: 'power2.out' }, 4.9)
+  .to('#pcard-02 .befaft-meta',  { opacity: 1, duration: 0.3, ease: 'power2.out' }, 5.5)
+
+  // ── Beep + pill flash after content visible (6.0) ──
+  .call(() => { playScannerBeep(); triggerCardBump('pcard-02'); }, null, 6.0)
+  .to('#pcard-02 .pc-purchased', { boxShadow: '0 0 15px rgba(214,48,48,0.9)', scale: 1.06, duration: 0.2, ease: 'power2.out' }, 6.0)
+  .to('#pcard-02 .pc-purchased', { boxShadow: '0 0 0 rgba(214,48,48,0)', scale: 1, duration: 0.25, ease: 'power2.in' }, 6.22)
+
+  // ── Collapse: tilt + shrink (6.6 → 7.8) ──
+  .to('#pcard-02 .pc-3d-card', { rotateY: 0, duration: 0.1 }, 6.5)
+  .to(['#pcard-02 .pc-tag', '#pcard-02 .pc-mid', '#pcard-02 .pc-bc-wrap', '#pcard-02 .pc-purchased', '#pcard-02 .pm', '#pcard-02 .pc-ing'], { opacity: 0, duration: 0.5 }, 6.6)
+  .to('#pcard-02 .pc-top', { borderBottomColor: 'transparent', duration: 0.3 }, 6.6)
+  .to('#pcard-02 .pc-bot', { borderTopColor:    'transparent', duration: 0.3 }, 6.6)
+  .to('#pcard-02', { width: 110, height: 110, minHeight: 110, ease: 'power2.inOut', duration: 0.8 }, 6.9)
+  .to('#pcard-02 .num-current',   { x: -60, opacity: 0, duration: 0.4 }, 7.3)
+  .to('#pcard-02 .label-current', { x: -40, opacity: 0, duration: 0.4 }, 7.3)
+  .to('#pcard-02 .num-next',      { x: 0,   opacity: 1, duration: 0.4, ease: 'power2.out' }, 7.5)
+  .to('#pcard-02 .label-next',    { x: 0,   opacity: 1, duration: 0.4, ease: 'power2.out' }, 7.5);
+
+// is-deducting toggled at midpoint of Flip 2 (4.4s) — onUpdate handles both scroll directions cleanly
+card02CollapseTl.eventCallback('onUpdate', function() {
+  const t = this.time();
+  document.querySelectorAll('#pcard-02 .pc-3d-front').forEach(el => {
+    if (t >= 4.4) el.classList.add('is-deducting');
+    else el.classList.remove('is-deducting');
+  });
+});
 
 // ── CARDS #02 #03 #04 — same 3-phase animation ──────────
 function setupCardAnimation(cardId, sectionId, hasNext, pinExtra = 0) {
@@ -792,16 +803,8 @@ document.querySelectorAll('.two-col p, .three-col p, .studio-cols p').forEach(el
 
 
 
-// ── FOOTER — slides up over pinned #04 square ──────────
+// ── FOOTER — hidden on load; card04CollapseTl onUpdate reveals it at 78%+ ──
 gsap.set('#footer', { yPercent: 100 });
-gsap.timeline({
-  scrollTrigger: {
-    trigger: '#s-scan-04',
-    start: `top+=${window.innerHeight} top`,
-    end:   `top+=${window.innerHeight * 2} top`,
-    scrub: 1
-  }
-}).to('#footer', { yPercent: 0, ease: 'none' });
 
 // ── SCROLL REVEAL ANIMATIONS ───────────────────────────
 // Simple opacity reveals — no clipPath hiding content
