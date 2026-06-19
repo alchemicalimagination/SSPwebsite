@@ -1172,3 +1172,64 @@ if (document.readyState === 'complete' || document.readyState === 'interactive')
   initLoyaltyAnimation();
   initUnmuteButton();
 }
+
+// ── WAITLIST POPUP ──────────────────────────────────────
+function openWaitlist() {
+  const overlay = document.getElementById('waitlist-overlay');
+  if (!overlay) return;
+  overlay.classList.add('open');
+  overlay.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+  initWaitlistMetal();
+}
+function closeWaitlist() {
+  const overlay = document.getElementById('waitlist-overlay');
+  if (!overlay) return;
+  overlay.classList.remove('open');
+  overlay.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+}
+document.addEventListener('DOMContentLoaded', function() {
+  const overlay = document.getElementById('waitlist-overlay');
+  const closeBtn = document.getElementById('waitlist-close');
+  const form = document.getElementById('waitlist-form');
+  const thanks = document.getElementById('waitlist-thanks');
+
+  if (closeBtn) closeBtn.addEventListener('click', closeWaitlist);
+  if (overlay) overlay.addEventListener('click', function(e) {
+    if (e.target === overlay) closeWaitlist();
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeWaitlist();
+  });
+
+  if (form) {
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const data = new FormData(form);
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: data,
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          form.hidden = true;
+          if (thanks) thanks.hidden = false;
+        }
+      } catch(err) {}
+    });
+  }
+});
+
+let _wlMetalDone = false;
+function initWaitlistMetal() {
+  if (_wlMetalDone) return;
+  const container = document.getElementById('liquid-metal-wl');
+  if (!container || typeof ShaderMount === 'undefined') return;
+  _wlMetalDone = true;
+  new ShaderMount(container, liquidMetalFragmentShader, {
+    color1: '#e8e0d8', color2: '#c8c0b8', color3: '#a89888',
+    speed: 0.6, scale: 1.2
+  });
+}

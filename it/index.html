@@ -107,7 +107,7 @@
         <h1 class="hero-title">LA GESTIONE<br>DEL SALONE<br>RIDEFINITA</h1>
       </div>
 
-      <a href="https://app.studiostylepro.com" class="ui-works">
+      <a href="#" onclick="openWaitlist();return false;" class="ui-works">
         <div id="liquid-metal-works"></div>
         <span>UNISCITI ALLA LISTA D'ATTESA</span>
       </a>
@@ -665,7 +665,7 @@
       <p class="footer-bridge">OGNI PIANO INIZIA CON UNA PROVA GRATUITA. NESSUN CONTRATTO. NESSUNA CARTA DI CREDITO.
         NESSUNA SCUSA.</p>
 
-      <a href="https://app.studiostylepro.com" class="footer-talk">
+      <a href="#" onclick="openWaitlist();return false;" class="footer-talk">
         <div id="liquid-metal-btn"></div>
         <span>LISTA D'ATTESA</span>
       </a>
@@ -675,6 +675,31 @@
     </footer>
 
   </div><!-- #site -->
+
+  <!-- ══ WAITLIST POPUP ══ -->
+  <div id="waitlist-overlay" aria-hidden="true">
+    <div id="waitlist-modal">
+      <button id="waitlist-close" aria-label="Chiudi">✕</button>
+      <p class="wl-eyebrow">STUDIO STYLE PRO</p>
+      <h2 class="wl-title">UNISCITI ALLA<br>LISTA D'ATTESA</h2>
+      <p class="wl-sub">SARAI TRA I PRIMI A SAPERE QUANDO LANCIAMO.</p>
+      <form id="waitlist-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        <div class="wl-field">
+          <input type="text" name="name" id="wl-name" placeholder="IL TUO NOME" required autocomplete="off"/>
+        </div>
+        <div class="wl-field">
+          <input type="email" name="email" id="wl-email" placeholder="LA TUA EMAIL" required autocomplete="off"/>
+        </div>
+        <button type="submit" class="wl-btn">
+          <div id="liquid-metal-wl"></div>
+          <span>UNISCITI</span>
+        </button>
+      </form>
+      <div id="waitlist-thanks" hidden>
+        <p class="wl-thanks-msg">✦ SEI DENTRO. TI CONTATTEREMO PRESTO. ✦</p>
+      </div>
+    </div>
+  </div>
 
   <script>window._BASE = '../';</script>
   <script src="https://unpkg.com/lenis@1.1.16/dist/lenis.min.js"></script>

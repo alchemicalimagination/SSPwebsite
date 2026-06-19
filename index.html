@@ -125,7 +125,7 @@
         <h1 class="hero-title">SALON<br>MANAGEMENT<br>REDEFINED</h1>
       </div>
 
-      <a href="https://app.studiostylepro.com" class="ui-works">
+      <a href="#" onclick="openWaitlist();return false;" class="ui-works">
         <div id="liquid-metal-works"></div>
         <span>JOIN THE WAITING LIST</span>
       </a>
@@ -705,7 +705,7 @@
 
       <p class="footer-bridge">EVERY PLAN STARTS WITH A FREE TRIAL. NO CONTRACTS. NO CREDIT CARD. NO EXCUSES.</p>
 
-      <a href="https://app.studiostylepro.com" class="footer-talk">
+      <a href="#" onclick="openWaitlist();return false;" class="footer-talk">
         <div id="liquid-metal-btn"></div>
         <span>JOIN THE WAITING LIST</span>
       </a>
@@ -714,6 +714,31 @@
     </footer>
 
   </div><!-- #site -->
+
+  <!-- ══ WAITLIST POPUP ══ -->
+  <div id="waitlist-overlay" aria-hidden="true">
+    <div id="waitlist-modal">
+      <button id="waitlist-close" aria-label="Close">✕</button>
+      <p class="wl-eyebrow">STUDIO STYLE PRO</p>
+      <h2 class="wl-title">JOIN THE<br>WAITING LIST</h2>
+      <p class="wl-sub">BE THE FIRST TO KNOW WHEN WE LAUNCH.</p>
+      <form id="waitlist-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        <div class="wl-field">
+          <input type="text" name="name" id="wl-name" placeholder="YOUR NAME" required autocomplete="off"/>
+        </div>
+        <div class="wl-field">
+          <input type="email" name="email" id="wl-email" placeholder="YOUR EMAIL" required autocomplete="off"/>
+        </div>
+        <button type="submit" class="wl-btn">
+          <div id="liquid-metal-wl"></div>
+          <span>JOIN THE LIST</span>
+        </button>
+      </form>
+      <div id="waitlist-thanks" hidden>
+        <p class="wl-thanks-msg">✦ YOU'RE IN. WE'LL BE IN TOUCH. ✦</p>
+      </div>
+    </div>
+  </div>
 
   <script src="https://unpkg.com/lenis@1.1.16/dist/lenis.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
