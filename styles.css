@@ -2323,7 +2323,7 @@ section {
 
 /* ── Language switcher (right side) ── */
 .lang-switcher {
-  position: fixed;
+  position: absolute;
   top: 1.5cm;
   right: 1.5cm;
   z-index: 1000;
@@ -2473,7 +2473,7 @@ section {
 
   /* ── Mobile: language switcher on right ── */
   .lang-switcher {
-    position: fixed !important;
+    position: absolute !important;
     top: 3mm !important;
     right: 0.5cm !important;
   }
