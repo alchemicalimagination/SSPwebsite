@@ -2299,7 +2299,7 @@ section {
 .lang-switch {
   position: absolute;
   top: 1.5cm;
-  right: 1.5cm;
+  left: 1.5cm;
   z-index: 1000;
   display: flex;
   align-items: center;
@@ -2393,7 +2393,8 @@ section {
   .lang-switch {
     position: absolute !important;
     top: 1.5cm !important;
-    right: 1.5cm !important;
+    left: 1.5cm !important;
+    right: auto !important;
   }
 
   /* ── iPad: reduce large type ── */
