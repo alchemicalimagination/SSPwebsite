@@ -64,12 +64,14 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@100;200;300;400;500;600&display=swap"
     rel="stylesheet" />
   <link rel="stylesheet" href="../styles.css" />
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon-globe.svg" />
 </head>
 
 <body>
 
 
-  <a href="../" class="lang-switch">
+  <!-- Logo globe (left) -->
+  <a href="../" class="lang-switch" aria-label="Studio Style Pro">
     <svg class="globe-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.3" stroke-linecap="round" xmlns="http://www.w3.org/2000/svg">
       <circle cx="12" cy="12" r="9.5"/>
       <ellipse cx="12" cy="12" rx="9.5" ry="3.5"/>
@@ -79,6 +81,21 @@
       <path fill="currentColor" stroke="none" d="M12 7.5 L13.2 10.8 L16.5 12 L13.2 13.2 L12 16.5 L10.8 13.2 L7.5 12 L10.8 10.8 Z"/>
     </svg>
   </a>
+
+  <!-- Language switcher (right) -->
+  <div class="lang-switcher" id="lang-switcher">
+    <button class="lang-btn" id="lang-toggle" aria-label="Select language">
+      <svg class="world-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="12" cy="12" r="9"/>
+        <path d="M3 12h18"/>
+        <path d="M12 3a15.3 15.3 0 0 1 4 9 15.3 15.3 0 0 1-4 9 15.3 15.3 0 0 1-4-9 15.3 15.3 0 0 1 4-9z"/>
+      </svg>
+    </button>
+    <div class="lang-dropdown" id="lang-dropdown" aria-hidden="true">
+      <a href="../" class="lang-opt">EN</a>
+      <a href="#" class="lang-opt lang-opt--active">IT</a>
+    </div>
+  </div>
 
   <canvas id="flower-canvas"></canvas>
   <canvas id="ascii-overlay"></canvas>

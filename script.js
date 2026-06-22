@@ -1452,3 +1452,19 @@ function initWaitlistMetal() {
     speed: 0.6, scale: 1.2
   });
 }
+
+// ── Language switcher dropdown ──
+(function() {
+  const toggle = document.getElementById('lang-toggle');
+  const dropdown = document.getElementById('lang-dropdown');
+  if (!toggle || !dropdown) return;
+  toggle.addEventListener('click', function(e) {
+    e.stopPropagation();
+    const open = dropdown.classList.toggle('open');
+    dropdown.setAttribute('aria-hidden', String(!open));
+  });
+  document.addEventListener('click', function() {
+    dropdown.classList.remove('open');
+    dropdown.setAttribute('aria-hidden', 'true');
+  });
+})();

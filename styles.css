@@ -2321,6 +2321,67 @@ section {
   display: block;
 }
 
+/* ── Language switcher (right side) ── */
+.lang-switcher {
+  position: fixed;
+  top: 1.5cm;
+  right: 1.5cm;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+.lang-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: rgba(255,255,255,0.75);
+  transition: color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.lang-btn:hover { color: #fff; }
+.world-icon {
+  width: 26px;
+  height: 26px;
+  display: block;
+}
+.lang-dropdown {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 10px;
+  padding: 8px 12px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-6px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.lang-dropdown.open {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+.lang-opt {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: rgba(255,255,255,0.5);
+  text-decoration: none;
+  padding: 4px 0;
+  transition: color 0.15s;
+}
+.lang-opt:hover { color: #fff; }
+.lang-opt--active { color: #fff; }
+
 /* ── iPad: give section 04 wider content area so title stays 2 lines ── */
 @media (max-width: 1366px) and (min-width: 769px) {
   #s-detail-04 { padding-left: calc(40px + 1cm); padding-right: 40px; }
@@ -2408,6 +2469,17 @@ section {
   .lang-switch .globe-icon {
     width: 64px !important;
     height: 64px !important;
+  }
+
+  /* ── Mobile: language switcher on right ── */
+  .lang-switcher {
+    position: fixed !important;
+    top: 3mm !important;
+    right: 0.5cm !important;
+  }
+  .world-icon {
+    width: 36px !important;
+    height: 36px !important;
   }
 
   /* ── Mobile: transparent overlay with blur only ── */
