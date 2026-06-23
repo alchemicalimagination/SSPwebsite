@@ -1434,7 +1434,8 @@ document.addEventListener('DOMContentLoaded', function() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             email: fd.get('EMAIL'),
-            name: fd.get('name') || ''
+            name: fd.get('name') || '',
+            lang: isIt ? 'it' : 'en'
           })
         });
         if (!res.ok) throw new Error();

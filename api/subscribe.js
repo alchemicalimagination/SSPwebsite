@@ -3,12 +3,13 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { email, name } = req.body;
+  const { email, name, lang } = req.body;
 
   if (!email) {
     return res.status(400).json({ error: 'Email is required' });
   }
 
+  const isIt = lang === 'it';
   const FROM = 'Studio Style Pro <noreply@studiostylepro.com>';
   const NOTIFY = 'thealchemicalimagination@gmail.com';
 
@@ -26,13 +27,32 @@ export default async function handler(req, res) {
         subject: '✦ New waitlist signup — Studio Style Pro',
         html: `<p>New signup on the waiting list:</p>
                <p><strong>Email:</strong> ${email}</p>
-               ${name ? `<p><strong>Name:</strong> ${name}</p>` : ''}`,
+               ${name ? `<p><strong>Name:</strong> ${name}</p>` : ''}
+               <p><strong>Language:</strong> ${isIt ? 'Italian' : 'English'}</p>`,
       }),
     });
 
     // Confirmation email to the subscriber
-    const greeting = name ? `Hi ${name},` : 'Hello,';
-    const textBody = `STUDIO STYLE PRO\n\nYOU ARE ON THE LIST.\n\n${greeting}\n\nThank you for joining the Studio Style Pro waiting list. We will be in touch as soon as we launch.\n\n— The Studio Style Pro Team\n\nstudiostylepro.com`;
+    const greeting = isIt
+      ? (name ? `Ciao ${name},` : 'Ciao,')
+      : (name ? `Hi ${name},` : 'Hello,');
+
+    const bodyText = isIt
+      ? `Grazie per esserti iscritto alla lista d'attesa di Studio Style Pro. Costruiamo per i titolari di salone che vogliono distinguersi con sicurezza — e sarai tra i primi a sapere quando lanciamo.`
+      : `Thank you for joining the Studio Style Pro waiting list. We build for salon owners who want to lead with confidence — and you will be the first to know when we launch.`;
+
+    const signoff = isIt ? '— Il Team di Studio Style Pro' : '— The Studio Style Pro Team';
+    const subject = isIt ? 'Sei in lista d\'attesa - Studio Style Pro' : 'You are on the waiting list - Studio Style Pro';
+    const ctaLabel = isIt ? 'VISITA IL SITO' : 'VISIT THE SITE';
+    const footerText = isIt
+      ? `Hai ricevuto questa email perché ti sei iscritto su studiostylepro.com`
+      : `You received this email because you signed up at studiostylepro.com`;
+
+    const headline = isIt ? 'SEI NELLA<br>LISTA.' : 'YOU ARE<br>ON THE LIST.';
+
+    const textBody = isIt
+      ? `STUDIO STYLE PRO\n\nSEI NELLA LISTA.\n\n${greeting}\n\n${bodyText}\n\n${signoff}\n\nstudiostylepro.com`
+      : `STUDIO STYLE PRO\n\nYOU ARE ON THE LIST.\n\n${greeting}\n\n${bodyText}\n\n${signoff}\n\nstudiostylepro.com`;
 
     await fetch('https://api.resend.com/emails', {
       method: 'POST',
@@ -43,7 +63,7 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         from: FROM,
         to: email,
-        subject: 'You are on the waiting list - Studio Style Pro',
+        subject,
         text: textBody,
         html: `<!DOCTYPE html>
 <html>
@@ -68,7 +88,7 @@ export default async function handler(req, res) {
 
           <!-- Headline -->
           <tr><td style="font-family:'DM Sans',Helvetica,sans-serif;font-size:48px;font-weight:200;line-height:0.95;letter-spacing:-0.03em;color:#ffffff;padding-bottom:40px;">
-            YOU ARE<br>ON THE LIST.
+            ${headline}
           </td></tr>
 
           <!-- Divider -->
@@ -79,22 +99,20 @@ export default async function handler(req, res) {
           <!-- Body -->
           <tr><td style="font-family:'DM Sans',Helvetica,sans-serif;font-size:15px;font-weight:300;line-height:1.8;color:rgba(255,255,255,0.75);padding-bottom:40px;">
             ${greeting}<br><br>
-            Thank you for joining the Studio Style Pro waiting list.
-            We build for salon owners who want to lead with confidence —
-            and you will be the first to know when we launch.<br><br>
-            — The Studio Style Pro Team
+            ${bodyText}<br><br>
+            ${signoff}
           </td></tr>
 
           <!-- CTA -->
           <tr><td style="padding-bottom:56px;">
             <a href="https://www.studiostylepro.com" style="display:inline-block;font-family:'DM Sans',Helvetica,sans-serif;font-size:10px;font-weight:600;letter-spacing:0.2em;color:#1a0e26;background:#ffffff;text-decoration:none;padding:16px 36px;border-radius:99px;">
-              VISIT THE SITE
+              ${ctaLabel}
             </a>
           </td></tr>
 
           <!-- Footer -->
           <tr><td style="font-family:'DM Sans',Helvetica,sans-serif;font-size:10px;color:rgba(255,255,255,0.25);border-top:1px solid rgba(255,255,255,0.1);padding-top:24px;line-height:1.8;">
-            You received this email because you signed up at studiostylepro.com<br>
+            ${footerText}<br>
             &copy; 2025 Studio Style Pro
           </td></tr>
 
