@@ -256,6 +256,8 @@ const cardCollapseTl = gsap.timeline({
 
 // Setup references and translations for the bilingual scrub
 const isIt = window.location.pathname.includes('/it/');
+const currencySymbol = isIt ? '€' : '$';
+const localLocale = isIt ? 'it-IT' : 'en-US';
 const trans = {
   colour: isIt ? 'COLORE' : 'COLOUR',
   toner: isIt ? 'TONER' : 'TONER',
@@ -599,7 +601,7 @@ card03CollapseTl
     val: 12400, duration: 1.2, ease: 'power1.out',
     onUpdate: () => {
       document.querySelectorAll('#pcard-03 .ad-value-03').forEach(el => {
-        el.textContent = '$' + Math.round(adVal03.val).toLocaleString();
+        el.textContent = currencySymbol + Math.round(adVal03.val).toLocaleString(localLocale);
       });
     }
   }, 0.2)
@@ -653,7 +655,7 @@ card03CollapseTl
     val: 8600, duration: 0.7, ease: 'power1.out',
     onUpdate: () => {
       document.querySelectorAll('#pcard-03 .pl-profit-val').forEach(el => {
-        el.textContent = '$' + Math.round(plProfit03.val).toLocaleString();
+        el.textContent = currencySymbol + Math.round(plProfit03.val).toLocaleString(localLocale);
       });
     }
   }, 6.1)
@@ -881,7 +883,7 @@ function initAdminAnimation() {
     if (adminTl)    { adminTl.kill();    adminTl    = null; }
     gsap.killTweensOf([line, dot, graphWrap, salesVal]);
     salesVal.val = 12400;
-    valueEl.textContent  = '$12,400';
+    valueEl.textContent  = currencySymbol + (isIt ? '12.400' : '12,400');
     changeEl.textContent = '+0.0%';
     gsap.set(line,      { strokeDashoffset: len });
     gsap.set(dot,       { opacity: 0, scale: 1 });
@@ -891,7 +893,7 @@ function initAdminAnimation() {
   function runAdminCycle() {
     if (!adminRunning) return;
     salesVal.val         = 12400;
-    valueEl.textContent  = '$12,400';
+    valueEl.textContent  = currencySymbol + (isIt ? '12.400' : '12,400');
     changeEl.textContent = '+0.0%';
 
     adminTl = gsap.timeline();
@@ -899,7 +901,7 @@ function initAdminAnimation() {
       .to(line, { strokeDashoffset: 0, duration: 1.8, ease: 'power2.out' })
       .to(salesVal, {
         val: 14820, duration: 1.8, ease: 'power2.out',
-        onUpdate: () => { valueEl.textContent = '$' + Math.floor(salesVal.val).toLocaleString(); }
+        onUpdate: () => { valueEl.textContent = currencySymbol + Math.floor(salesVal.val).toLocaleString(localLocale); }
       }, 0)
       .call(() => { changeEl.textContent = '+19.5%'; }, [], 1.1)
       .to(dot, { opacity: 1, scale: 1.5, duration: 0.25, ease: 'back.out(2)' })

@@ -1905,8 +1905,21 @@ section {
 #s-desc-02   { margin-top: -2cm; }
 #s-detail-03 { margin-top: -19cm; }
 #s-desc-03   { margin-top: -2cm; }
-#s-detail-04 { margin-top: -10cm; }
-#s-desc-04   { margin-top: -12cm; }
+#s-detail-04 { margin-top: -10cm; min-height: auto; }
+#s-desc-04   { margin-top: -2cm; }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 .three-col {
@@ -3001,3 +3014,54 @@ section {
   text-align: center;
   padding: 40px 0 20px;
 }
+
+/* Mobile readability: change grayish/opaque card texts to pure white */
+.pc-tag,
+.pc-slogan,
+.pc-3d-desc,
+.cc-client-label,
+.cc-formula-label,
+.cc-back-client,
+.cc-back-formula,
+.stock-title,
+.stock-name,
+.st-row,
+.st-header,
+.pl-label,
+.pl-val,
+.scale-label,
+.scale-status,
+.am-avatar,
+.am-sublabel,
+.am-contact span,
+.am-tag,
+.am-bl,
+.am-bv,
+.th-date,
+.th-svc,
+.th-who,
+.th-price,
+.befaft-label,
+.befaft-date,
+.ad-title,
+.ad-submetric span,
+.nc-app,
+.nc-message,
+.nc-label,
+.nc-detail,
+.gc-service,
+.gc-pts-before,
+.gc-reward-line,
+.lc-tier,
+.lc-pts-label,
+.lc-tier-row,
+.lc-meta-row {
+  color: #ffffff !important;
+}
+.scale-status {
+  border-color: #ffffff !important;
+}
+.lc-tier {
+  border-color: rgba(255, 255, 255, 0.6) !important;
+}
+
