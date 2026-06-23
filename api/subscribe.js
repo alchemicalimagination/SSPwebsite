@@ -66,11 +66,6 @@ export default async function handler(req, res) {
             <img src="https://www.studiostylepro.com/assets/logo.png" width="140" alt="Studio Style Pro" style="display:block;width:140px;height:auto;">
           </td></tr>
 
-          <!-- Eyebrow -->
-          <tr><td style="font-family:'DM Sans',Helvetica,sans-serif;font-size:9px;font-weight:600;letter-spacing:0.28em;color:rgba(255,255,255,0.45);padding-bottom:20px;">
-            STUDIO STYLE PRO
-          </td></tr>
-
           <!-- Headline -->
           <tr><td style="font-family:'DM Sans',Helvetica,sans-serif;font-size:48px;font-weight:200;line-height:0.95;letter-spacing:-0.03em;color:#ffffff;padding-bottom:40px;">
             YOU ARE<br>ON THE LIST.
