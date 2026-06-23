@@ -1,0 +1,28 @@
+{
+  "redirects": [
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "header",
+          "key": "x-vercel-ip-country",
+          "value": "IT"
+        }
+      ],
+      "destination": "/it/",
+      "permanent": false
+    },
+    {
+      "source": "/index.html",
+      "has": [
+        {
+          "type": "header",
+          "key": "x-vercel-ip-country",
+          "value": "IT"
+        }
+      ],
+      "destination": "/it/",
+      "permanent": false
+    }
+  ]
+}
