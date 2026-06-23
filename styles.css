@@ -2625,7 +2625,7 @@ section {
   }
   .footer-back {
     width: 56px; height: 56px;
-    top: 24px; right: 24px;
+    top: 16px; right: 16px;
     font-size: 10px;
   }
   .footer-headline { font-size: clamp(36px, 12vw, 60px); }
