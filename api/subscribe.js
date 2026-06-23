@@ -38,10 +38,10 @@ export default async function handler(req, res) {
       : (name ? `Hi ${name},` : 'Hello,');
 
     const bodyText = isIt
-      ? `Grazie per esserti iscritto alla lista d'attesa di Studio Style Pro. Costruiamo per i titolari di salone che vogliono distinguersi con sicurezza — e sarai tra i primi a sapere quando lanciamo.`
+      ? `Grazie per esserti iscritta alla lista d'attesa di Studio Style Pro.<br>Ti contatteremo non appena saremo pronti al lancio.`
       : `Thank you for joining the Studio Style Pro waiting list. We build for salon owners who want to lead with confidence — and you will be the first to know when we launch.`;
 
-    const signoff = isIt ? '— Il Team di Studio Style Pro' : '— The Studio Style Pro Team';
+    const signoff = isIt ? 'Il team di Studio Style Pro.' : '— The Studio Style Pro Team';
     const subject = isIt ? 'Sei in lista d\'attesa - Studio Style Pro' : 'You are on the waiting list - Studio Style Pro';
     const ctaLabel = isIt ? 'VISITA IL SITO' : 'VISIT THE SITE';
     const footerText = isIt
@@ -50,9 +50,13 @@ export default async function handler(req, res) {
 
     const headline = isIt ? 'SEI NELLA<br>LISTA.' : 'YOU ARE<br>ON THE LIST.';
 
+    const bodyTextPlain = isIt
+      ? `Grazie per esserti iscritta alla lista d'attesa di Studio Style Pro.\nTi contatteremo non appena saremo pronti al lancio.`
+      : bodyText;
+
     const textBody = isIt
-      ? `STUDIO STYLE PRO\n\nSEI NELLA LISTA.\n\n${greeting}\n\n${bodyText}\n\n${signoff}\n\nstudiostylepro.com`
-      : `STUDIO STYLE PRO\n\nYOU ARE ON THE LIST.\n\n${greeting}\n\n${bodyText}\n\n${signoff}\n\nstudiostylepro.com`;
+      ? `STUDIO STYLE PRO\n\nSEI NELLA LISTA.\n\n${greeting}\n\n${bodyTextPlain}\n\n${signoff}\n\nstudiostylepro.com`
+      : `STUDIO STYLE PRO\n\nYOU ARE ON THE LIST.\n\n${greeting}\n\n${bodyTextPlain}\n\n${signoff}\n\nstudiostylepro.com`;
 
     await fetch('https://api.resend.com/emails', {
       method: 'POST',
