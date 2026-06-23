@@ -45,8 +45,8 @@ export default async function handler(req, res) {
     const subject = isIt ? 'Sei in lista d\'attesa - Studio Style Pro' : 'You are on the waiting list - Studio Style Pro';
     const ctaLabel = isIt ? 'VISITA IL SITO' : 'VISIT THE SITE';
     const footerText = isIt
-      ? `Hai ricevuto questa email perché ti sei iscritto su studiostylepro.com`
-      : `You received this email because you signed up at studiostylepro.com`;
+      ? `Hai ricevuto questa email perché ti sei iscritta su studiostylepro.com.<br>Per cancellarti, rispondi a questa email con oggetto "Cancellami".`
+      : `You received this email because you signed up at studiostylepro.com.<br>To unsubscribe, reply to this email with "Unsubscribe" in the subject.`;
 
     const headline = isIt ? 'SEI NELLA<br>LISTA.' : 'YOU ARE<br>ON THE LIST.';
 
@@ -117,7 +117,7 @@ export default async function handler(req, res) {
           <!-- Footer -->
           <tr><td style="font-family:'DM Sans',Helvetica,sans-serif;font-size:10px;color:rgba(255,255,255,0.25);border-top:1px solid rgba(255,255,255,0.1);padding-top:24px;line-height:1.8;">
             ${footerText}<br>
-            &copy; 2025 Studio Style Pro
+            &copy; 2026 Studio Style Pro
           </td></tr>
 
         </table>
