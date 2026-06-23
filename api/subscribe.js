@@ -11,7 +11,7 @@ export default async function handler(req, res) {
 
   const isIt = lang === 'it';
   const FROM = 'Studio Style Pro <noreply@studiostylepro.com>';
-  const NOTIFY = 'thealchemicalimagination@gmail.com';
+  const NOTIFY = 'hello@studiostylepro.com';
 
   try {
     // Add to Resend Audience (waitlist contact list)
