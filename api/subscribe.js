@@ -69,8 +69,8 @@ export default async function handler(req, res) {
     const subject = isIt ? 'Sei in lista d\'attesa - Studio Style Pro' : 'You are on the waiting list - Studio Style Pro';
     const ctaLabel = isIt ? 'VISITA IL SITO' : 'VISIT THE SITE';
     const footerText = isIt
-      ? `Hai ricevuto questa email perché ti sei iscritta su studiostylepro.com.<br>Per cancellarti, rispondi a questa email con oggetto "Cancellami".`
-      : `You received this email because you signed up at studiostylepro.com.<br>To unsubscribe, reply to this email with "Unsubscribe" in the subject.`;
+      ? `Hai ricevuto questa email perché ti sei iscritta su studiostylepro.com.<br><a href="mailto:thealchemicalimagination@gmail.com?subject=Cancellami" style="color:rgba(255,255,255,0.35);">Clicca qui per cancellarti</a>.`
+      : `You received this email because you signed up at studiostylepro.com.<br><a href="mailto:thealchemicalimagination@gmail.com?subject=Unsubscribe" style="color:rgba(255,255,255,0.35);">Click here to unsubscribe</a>.`;
 
     const headline = isIt ? 'SEI NELLA<br>LISTA.' : 'YOU ARE<br>ON THE LIST.';
 
