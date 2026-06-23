@@ -2568,8 +2568,10 @@ section {
 
   /* ── Desc sections ── */
   /* ── Reset ALL desktop negative margins ── */
-  #s-desc-01, #s-desc-02, #s-desc-03, #s-desc-04 { margin-top: 0; }
+  #s-desc-01, #s-desc-02, #s-desc-03 { margin-top: 0; }
+  #s-desc-04 { margin-top: 1.5cm !important; }
   #s-detail-02, #s-detail-03, #s-detail-04 { margin-top: calc(-50vh + 55px) !important; }
+
 
   /* ── Consistent section spacing ── */
   .s-scan-card {
