@@ -34,8 +34,6 @@ export default async function handler(req, res) {
     const greeting = name ? `Hi ${name},` : 'Hello,';
     const textBody = `STUDIO STYLE PRO\n\nYOU ARE ON THE LIST.\n\n${greeting}\n\nThank you for joining the Studio Style Pro waiting list. We will be in touch as soon as we launch.\n\n— The Studio Style Pro Team\n\nstudiostylepro.com`;
 
-    const globeSvg = `<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="0.35" stroke-linecap="round" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9.5"/><ellipse cx="12" cy="12" rx="9.5" ry="3.5"/><ellipse cx="12" cy="12" rx="3.5" ry="9.5"/><ellipse cx="12" cy="12" rx="3.5" ry="9.5" transform="rotate(45 12 12)"/><ellipse cx="12" cy="12" rx="3.5" ry="9.5" transform="rotate(-45 12 12)"/><path fill="rgba(255,255,255,0.85)" stroke="none" d="M12 7.5 L13.2 10.8 L16.5 12 L13.2 13.2 L12 16.5 L10.8 13.2 L7.5 12 L10.8 10.8 Z"/></svg>`;
-
     await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
@@ -52,33 +50,35 @@ export default async function handler(req, res) {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@200;300;400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,200;0,300;0,400;0,600&display=swap" rel="stylesheet">
 </head>
 <body style="margin:0;padding:0;background:#0c0c0c;">
-<table width="100%" cellpadding="0" cellspacing="0" style="background:#0c0c0c;min-height:100vh;">
-  <tr><td align="center" style="padding:48px 24px;">
-    <table width="100%" cellpadding="0" cellspacing="0" style="max-width:480px;">
+<table width="100%" cellpadding="0" cellspacing="0" style="background:#0c0c0c;">
+  <tr><td align="center" style="padding:56px 24px 48px;">
+    <table width="100%" cellpadding="0" cellspacing="0" style="max-width:500px;">
 
-      <!-- Logo -->
-      <tr><td style="padding-bottom:40px;">
-        ${globeSvg}
+      <!-- Logo image -->
+      <tr><td style="padding-bottom:48px;">
+        <img src="https://www.studiostylepro.com/assets/logo.png" width="120" alt="Studio Style Pro" style="display:block;width:120px;height:auto;opacity:0.9;">
       </td></tr>
 
       <!-- Eyebrow -->
-      <tr><td style="font-family:'DM Sans',Helvetica,sans-serif;font-size:10px;font-weight:600;letter-spacing:0.22em;color:rgba(255,255,255,0.4);padding-bottom:16px;">
-        STUDIO STYLE PRO
+      <tr><td style="font-family:'DM Sans',Helvetica,sans-serif;font-size:9px;font-weight:600;letter-spacing:0.28em;color:rgba(255,255,255,0.35);padding-bottom:20px;text-transform:uppercase;">
+        Studio Style Pro
       </td></tr>
 
       <!-- Headline -->
-      <tr><td style="font-family:'DM Sans',Helvetica,sans-serif;font-size:42px;font-weight:200;line-height:1.0;letter-spacing:-0.02em;color:#ffffff;padding-bottom:32px;">
+      <tr><td style="font-family:'DM Sans',Helvetica,sans-serif;font-size:48px;font-weight:200;line-height:0.95;letter-spacing:-0.03em;color:#ffffff;padding-bottom:40px;">
         YOU ARE<br>ON THE LIST.
       </td></tr>
 
-      <!-- Divider -->
-      <tr><td style="height:1px;background:rgba(255,255,255,0.1);padding:0;margin:0 0 32px;">&nbsp;</td></tr>
+      <!-- Thin divider -->
+      <tr><td style="padding-bottom:36px;">
+        <div style="height:1px;background:rgba(255,255,255,0.12);font-size:0;line-height:0;">&nbsp;</div>
+      </td></tr>
 
       <!-- Body -->
-      <tr><td style="font-family:'DM Sans',Helvetica,sans-serif;font-size:15px;font-weight:300;line-height:1.75;color:rgba(255,255,255,0.75);padding-bottom:32px;">
+      <tr><td style="font-family:'DM Sans',Helvetica,sans-serif;font-size:15px;font-weight:300;line-height:1.8;color:rgba(255,255,255,0.65);padding-bottom:40px;">
         ${greeting}<br><br>
         Thank you for joining the Studio Style Pro waiting list.
         We build for salon owners who want to lead with confidence —
@@ -86,15 +86,15 @@ export default async function handler(req, res) {
         — The Studio Style Pro Team
       </td></tr>
 
-      <!-- CTA -->
-      <tr><td style="padding-bottom:48px;">
-        <a href="https://www.studiostylepro.com" style="display:inline-block;font-family:'DM Sans',Helvetica,sans-serif;font-size:11px;font-weight:600;letter-spacing:0.18em;color:#0c0c0c;background:#ffffff;text-decoration:none;padding:14px 32px;border-radius:99px;">
+      <!-- CTA button -->
+      <tr><td style="padding-bottom:56px;">
+        <a href="https://www.studiostylepro.com" style="display:inline-block;font-family:'DM Sans',Helvetica,sans-serif;font-size:10px;font-weight:600;letter-spacing:0.2em;color:#0c0c0c;background:#ffffff;text-decoration:none;padding:16px 36px;border-radius:99px;">
           VISIT THE SITE
         </a>
       </td></tr>
 
       <!-- Footer -->
-      <tr><td style="font-family:'DM Sans',Helvetica,sans-serif;font-size:10px;color:rgba(255,255,255,0.2);border-top:1px solid rgba(255,255,255,0.08);padding-top:24px;line-height:1.6;">
+      <tr><td style="font-family:'DM Sans',Helvetica,sans-serif;font-size:10px;color:rgba(255,255,255,0.18);border-top:1px solid rgba(255,255,255,0.07);padding-top:24px;line-height:1.8;">
         You received this email because you signed up at studiostylepro.com<br>
         &copy; 2025 Studio Style Pro
       </td></tr>
