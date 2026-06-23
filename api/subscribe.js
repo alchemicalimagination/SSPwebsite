@@ -31,6 +31,9 @@ export default async function handler(req, res) {
     });
 
     // Confirmation email to the subscriber
+    const greeting = name ? `Hi ${name},\n\n` : '';
+    const textBody = `${greeting}Thank you for joining the Studio Style Pro waiting list.\nWe will be in touch as soon as we launch.\n\n— The Studio Style Pro Team\n\nstudiostylepro.com`;
+
     await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
@@ -40,22 +43,13 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         from: FROM,
         to: email,
-        subject: 'You\'re on the list — Studio Style Pro',
-        html: `<div style="font-family:Helvetica,sans-serif;max-width:480px;margin:0 auto;color:#0c0c0c;">
-                 <p style="font-size:12px;letter-spacing:0.2em;color:#888;">STUDIO STYLE PRO</p>
-                 <h1 style="font-size:32px;font-weight:200;line-height:1.1;margin:8px 0 24px;">YOU'RE ON<br>THE LIST.</h1>
-                 <p style="font-size:15px;line-height:1.6;color:#444;">
-                   ${name ? `Hi ${name},<br><br>` : ''}
-                   Thank you for joining the Studio Style Pro waiting list.
-                   We'll be in touch as soon as we launch.
-                 </p>
-                 <p style="font-size:15px;line-height:1.6;color:#444;margin-top:24px;">
-                   — The Studio Style Pro Team
-                 </p>
-                 <hr style="border:none;border-top:1px solid #eee;margin:32px 0;">
-                 <p style="font-size:11px;color:#aaa;">
-                   You're receiving this because you signed up at studiostylepro.com
-                 </p>
+        subject: 'You are on the waiting list - Studio Style Pro',
+        text: textBody,
+        html: `<div style="font-family:Helvetica,sans-serif;max-width:480px;margin:0 auto;color:#0c0c0c;padding:32px 0;">
+                 <p style="font-size:11px;letter-spacing:0.15em;color:#888;margin:0 0 24px;">STUDIO STYLE PRO</p>
+                 <p style="font-size:15px;line-height:1.7;color:#333;margin:0 0 16px;">${name ? `Hi ${name},<br><br>` : ''}Thank you for joining the Studio Style Pro waiting list. We will be in touch as soon as we launch.</p>
+                 <p style="font-size:15px;line-height:1.7;color:#333;margin:0 0 32px;">— The Studio Style Pro Team</p>
+                 <p style="font-size:11px;color:#bbb;border-top:1px solid #eee;padding-top:16px;">You received this email because you signed up at studiostylepro.com</p>
                </div>`,
       }),
     });
