@@ -9,32 +9,58 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Email is required' });
   }
 
-  const payload = {
-    email,
-    listIds: [3],
-    updateEnabled: true,
-  };
-
-  if (name) {
-    payload.attributes = { FIRSTNAME: name };
-  }
+  const FROM = 'Studio Style Pro <noreply@studiostylepro.com>';
+  const NOTIFY = 'thealchemicalimagination@gmail.com';
 
   try {
-    const brevoRes = await fetch('https://api.brevo.com/v3/contacts', {
+    // Email to you — new signup notification
+    await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
+        'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
         'Content-Type': 'application/json',
-        'api-key': process.env.BREVO_API_KEY,
       },
-      body: JSON.stringify(payload),
+      body: JSON.stringify({
+        from: FROM,
+        to: NOTIFY,
+        subject: '✦ New waitlist signup — Studio Style Pro',
+        html: `<p>New signup on the waiting list:</p>
+               <p><strong>Email:</strong> ${email}</p>
+               ${name ? `<p><strong>Name:</strong> ${name}</p>` : ''}`,
+      }),
     });
 
-    if (brevoRes.status === 201 || brevoRes.status === 204) {
-      return res.status(200).json({ success: true });
-    }
+    // Confirmation email to the subscriber
+    await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        from: FROM,
+        to: email,
+        subject: 'You\'re on the list — Studio Style Pro',
+        html: `<div style="font-family:Helvetica,sans-serif;max-width:480px;margin:0 auto;color:#0c0c0c;">
+                 <p style="font-size:12px;letter-spacing:0.2em;color:#888;">STUDIO STYLE PRO</p>
+                 <h1 style="font-size:32px;font-weight:200;line-height:1.1;margin:8px 0 24px;">YOU'RE ON<br>THE LIST.</h1>
+                 <p style="font-size:15px;line-height:1.6;color:#444;">
+                   ${name ? `Hi ${name},<br><br>` : ''}
+                   Thank you for joining the Studio Style Pro waiting list.
+                   We'll be in touch as soon as we launch.
+                 </p>
+                 <p style="font-size:15px;line-height:1.6;color:#444;margin-top:24px;">
+                   — The Studio Style Pro Team
+                 </p>
+                 <hr style="border:none;border-top:1px solid #eee;margin:32px 0;">
+                 <p style="font-size:11px;color:#aaa;">
+                   You're receiving this because you signed up at studiostylepro.com
+                 </p>
+               </div>`,
+      }),
+    });
 
-    const data = await brevoRes.json();
-    return res.status(500).json({ error: data.message || 'Brevo error' });
+    return res.status(200).json({ success: true });
   } catch (err) {
     return res.status(500).json({ error: 'Server error' });
   }
