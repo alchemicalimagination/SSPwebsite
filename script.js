@@ -1427,12 +1427,17 @@ document.addEventListener('DOMContentLoaded', function() {
   if (form) {
     form.addEventListener('submit', async function(e) {
       e.preventDefault();
+      const fd = new FormData(form);
       try {
-        await fetch(form.action, {
+        const res = await fetch('/api/subscribe', {
           method: 'POST',
-          body: new URLSearchParams(new FormData(form)),
-          mode: 'no-cors'
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email: fd.get('EMAIL'),
+            name: fd.get('name') || ''
+          })
         });
+        if (!res.ok) throw new Error();
       } catch(err) {}
       form.hidden = true;
       if (thanks) thanks.hidden = false;
