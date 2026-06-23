@@ -14,6 +14,24 @@ export default async function handler(req, res) {
   const NOTIFY = 'thealchemicalimagination@gmail.com';
 
   try {
+    // Add to Resend Audience (waitlist contact list)
+    if (process.env.RESEND_AUDIENCE_ID) {
+      const nameParts = name ? name.trim().split(' ') : [];
+      await fetch(`https://api.resend.com/audiences/${process.env.RESEND_AUDIENCE_ID}/contacts`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email,
+          first_name: nameParts[0] || '',
+          last_name: nameParts.slice(1).join(' ') || '',
+          unsubscribed: false,
+        }),
+      });
+    }
+
     // Email to you — new signup notification
     await fetch('https://api.resend.com/emails', {
       method: 'POST',
