@@ -15,9 +15,15 @@ export default async function handler(req, res) {
 
   try {
     // Add to Resend Audience (waitlist contact list)
-    if (process.env.RESEND_AUDIENCE_ID) {
+    const audiencesRes = await fetch('https://api.resend.com/audiences', {
+      headers: { 'Authorization': `Bearer ${process.env.RESEND_API_KEY}` },
+    });
+    const audiencesData = await audiencesRes.json();
+    const audienceId = process.env.RESEND_AUDIENCE_ID || audiencesData?.data?.[0]?.id;
+
+    if (audienceId) {
       const nameParts = name ? name.trim().split(' ') : [];
-      await fetch(`https://api.resend.com/audiences/${process.env.RESEND_AUDIENCE_ID}/contacts`, {
+      await fetch(`https://api.resend.com/audiences/${audienceId}/contacts`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
