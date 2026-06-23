@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Allow: /it/
+Disallow: /.vercel/
+Disallow: /api/
+
+Sitemap: https://www.studiostylepro.com/sitemap.xml
