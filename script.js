@@ -1427,18 +1427,15 @@ document.addEventListener('DOMContentLoaded', function() {
   if (form) {
     form.addEventListener('submit', async function(e) {
       e.preventDefault();
-      const data = new FormData(form);
       try {
-        const res = await fetch(form.action, {
+        await fetch(form.action, {
           method: 'POST',
-          body: data,
-          headers: { 'Accept': 'application/json' }
+          body: new URLSearchParams(new FormData(form)),
+          mode: 'no-cors'
         });
-        if (res.ok) {
-          form.hidden = true;
-          if (thanks) thanks.hidden = false;
-        }
       } catch(err) {}
+      form.hidden = true;
+      if (thanks) thanks.hidden = false;
     });
   }
 });
@@ -1470,3 +1467,42 @@ function initWaitlistMetal() {
     dropdown.setAttribute('aria-hidden', 'true');
   });
 })();
+
+// ── Cookie Consent Banner Logic ──
+document.addEventListener('DOMContentLoaded', function() {
+  const banner = document.getElementById('cookie-banner');
+  const acceptBtn = document.getElementById('cookie-accept');
+  const declineBtn = document.getElementById('cookie-decline');
+
+  if (!banner || !acceptBtn || !declineBtn) return;
+
+  // Check if consent has already been given or declined
+  const consent = localStorage.getItem('cookie-consent');
+  if (!consent) {
+    // Show the banner with a slight delay
+    setTimeout(() => {
+      banner.classList.add('show');
+      banner.setAttribute('aria-hidden', 'false');
+    }, 1500);
+  } else if (consent === 'accepted') {
+    enableTracking();
+  }
+
+  acceptBtn.addEventListener('click', function() {
+    localStorage.setItem('cookie-consent', 'accepted');
+    banner.classList.remove('show');
+    banner.setAttribute('aria-hidden', 'true');
+    enableTracking();
+  });
+
+  declineBtn.addEventListener('click', function() {
+    localStorage.setItem('cookie-consent', 'declined');
+    banner.classList.remove('show');
+    banner.setAttribute('aria-hidden', 'true');
+  });
+
+  function enableTracking() {
+    // In the future, this is where tracking scripts (like Vercel Analytics or Google Analytics) can be dynamically initialized.
+    console.log('Tracking cookies enabled.');
+  }
+});
