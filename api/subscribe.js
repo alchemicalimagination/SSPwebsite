@@ -68,9 +68,10 @@ export default async function handler(req, res) {
     const signoff = isIt ? 'Il team di Studio Style Pro.' : '— The Studio Style Pro Team';
     const subject = isIt ? 'Sei in lista d\'attesa - Studio Style Pro' : 'You are on the waiting list - Studio Style Pro';
     const ctaLabel = isIt ? 'VISITA IL SITO' : 'VISIT THE SITE';
+    const encodedEmail = encodeURIComponent(email);
     const footerText = isIt
-      ? `Hai ricevuto questa email perché ti sei iscritta su studiostylepro.com.<br><a href="mailto:thealchemicalimagination@gmail.com?subject=Cancellami" style="color:rgba(255,255,255,0.35);">Clicca qui per cancellarti</a>.`
-      : `You received this email because you signed up at studiostylepro.com.<br><a href="mailto:thealchemicalimagination@gmail.com?subject=Unsubscribe" style="color:rgba(255,255,255,0.35);">Click here to unsubscribe</a>.`;
+      ? `Hai ricevuto questa email perché ti sei iscritta su studiostylepro.com.<br><a href="https://www.studiostylepro.com/unsubscribe?email=${encodedEmail}&lang=it" style="color:rgba(255,255,255,0.35);">Clicca qui per cancellarti</a>.`
+      : `You received this email because you signed up at studiostylepro.com.<br><a href="https://www.studiostylepro.com/unsubscribe?email=${encodedEmail}&lang=en" style="color:rgba(255,255,255,0.35);">Click here to unsubscribe</a>.`;
 
     const headline = isIt ? 'SEI NELLA<br>LISTA.' : 'YOU ARE<br>ON THE LIST.';
 

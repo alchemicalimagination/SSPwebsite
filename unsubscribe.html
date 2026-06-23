@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Unsubscribe — Studio Style Pro</title>
+  <link rel="icon" type="image/svg+xml" href="./assets/favicon-globe.svg">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@200;300;400;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      height: 100%;
+      background: #3a3448;
+      font-family: 'DM Sans', Helvetica, sans-serif;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    body {
+      background-image: url('./flower sequence/ezgif-8a7cfed939556aa3-jpg/ezgif-frame-060.jpg');
+      background-size: cover;
+      background-position: center;
+    }
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(22, 14, 38, 0.78);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .card {
+      max-width: 480px;
+      width: 100%;
+      text-align: left;
+    }
+    .logo {
+      width: 130px;
+      margin-bottom: 48px;
+      display: block;
+    }
+    .headline {
+      font-size: clamp(36px, 8vw, 52px);
+      font-weight: 200;
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      margin-bottom: 24px;
+    }
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: rgba(255,255,255,0.15);
+      margin-bottom: 28px;
+    }
+    .body-text {
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 40px;
+    }
+    .email-display {
+      color: rgba(255,255,255,0.9);
+      font-weight: 400;
+    }
+    .btn {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      color: #1a0e26;
+      background: #fff;
+      border: none;
+      cursor: pointer;
+      padding: 16px 36px;
+      border-radius: 99px;
+      font-family: 'DM Sans', Helvetica, sans-serif;
+      transition: opacity 0.2s;
+    }
+    .btn:hover { opacity: 0.85; }
+    .btn:disabled { opacity: 0.5; cursor: default; }
+    .success {
+      display: none;
+      font-size: 13px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.55);
+      margin-top: 24px;
+      line-height: 1.7;
+    }
+    .success.visible { display: block; }
+    .error-msg {
+      display: none;
+      font-size: 13px;
+      color: rgba(255,120,120,0.8);
+      margin-top: 16px;
+    }
+    .error-msg.visible { display: block; }
+  </style>
+</head>
+<body>
+  <div class="overlay">
+    <div class="card">
+      <img src="./assets/logo.png" alt="Studio Style Pro" class="logo">
+      <h1 class="headline" id="headline">UNSUBSCRIBE<br>FROM LIST.</h1>
+      <div class="divider"></div>
+      <p class="body-text" id="body-text">
+        We're sorry to see you go.<br>
+        Click below to remove <span class="email-display" id="email-display"></span> from our waitlist.
+      </p>
+      <button class="btn" id="unsub-btn">CONFIRM UNSUBSCRIBE</button>
+      <p class="success" id="success-msg">You have been removed from our list. We wish you well.</p>
+      <p class="error-msg" id="error-msg">Something went wrong. Please try again.</p>
+    </div>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const email = params.get('email') || '';
+    const lang = params.get('lang') || 'en';
+    const isIt = lang === 'it';
+
+    if (isIt) {
+      document.documentElement.lang = 'it';
+      document.title = 'Cancellazione — Studio Style Pro';
+      document.getElementById('headline').innerHTML = 'CANCELLA<br>ISCRIZIONE.';
+      document.getElementById('body-text').innerHTML =
+        'Ci dispiace vederti andare.<br>Clicca qui sotto per rimuovere <span class="email-display" id="email-display"></span> dalla nostra lista d\'attesa.';
+      document.getElementById('unsub-btn').textContent = 'CONFERMA CANCELLAZIONE';
+    }
+
+    if (email) {
+      const displays = document.querySelectorAll('#email-display, .email-display');
+      displays.forEach(el => el.textContent = email);
+    }
+
+    document.getElementById('unsub-btn').addEventListener('click', async function() {
+      const btn = this;
+      btn.disabled = true;
+      btn.textContent = isIt ? 'ATTENDERE...' : 'PROCESSING...';
+
+      try {
+        const res = await fetch('/api/unsubscribe', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email })
+        });
+        if (!res.ok) throw new Error();
+        btn.style.display = 'none';
+        document.getElementById('success-msg').textContent = isIt
+          ? 'Sei stata rimossa dalla nostra lista. Ti auguriamo il meglio.'
+          : 'You have been removed from our list. We wish you well.';
+        document.getElementById('success-msg').classList.add('visible');
+      } catch {
+        btn.disabled = false;
+        btn.textContent = isIt ? 'CONFERMA CANCELLAZIONE' : 'CONFIRM UNSUBSCRIBE';
+        document.getElementById('error-msg').classList.add('visible');
+      }
+    });
+  </script>
+</body>
+</html>
