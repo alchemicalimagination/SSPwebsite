@@ -147,10 +147,15 @@
         <h1 class="hero-title">SALON<br>MANAGEMENT<br>REDEFINED</h1>
       </div>
 
-      <a href="#" onclick="openWaitlist();return false;" class="ui-works">
-        <div id="liquid-metal-works"></div>
-        <span>JOIN THE WAITING LIST</span>
-      </a>
+      <div class="hero-buttons">
+        <a href="#" onclick="openWaitlist();return false;" class="ui-works">
+          <div id="liquid-metal-works"></div>
+          <span>JOIN THE WAITING LIST</span>
+        </a>
+        <a href="#" onclick="openBeta();return false;" class="ui-works ui-works--black">
+          <span>APPLY FOR PRIVATE BETA</span>
+        </a>
+      </div>
 
       <p class="scroll-cta">SCROLL TO DISCOVER</p>
     </section>
@@ -844,10 +849,15 @@
 
       <p class="footer-bridge">EVERY PLAN STARTS WITH A FREE TRIAL. NO CONTRACTS. NO CREDIT CARD. NO EXCUSES.</p>
 
-      <a href="#" onclick="openWaitlist();return false;" class="footer-talk">
-        <div id="liquid-metal-btn"></div>
-        <span>JOIN THE WAITING LIST</span>
-      </a>
+      <div class="footer-buttons">
+        <a href="#" onclick="openWaitlist();return false;" class="footer-talk">
+          <div id="liquid-metal-btn"></div>
+          <span>JOIN THE WAITING LIST</span>
+        </a>
+        <a href="#" onclick="openBeta();return false;" class="footer-talk footer-talk--black">
+          <span>APPLY FOR PRIVATE BETA</span>
+        </a>
+      </div>
       <p class="footer-note">✦ NO CREDIT CARD REQUIRED ✦</p>
       <p class="footer-copy">© 2026 STUDIO STYLE PRO — USAGE RIGHTS & IP COVERED IN OUR <a href="/privacy.html" style="color: inherit; text-decoration: underline;">TERMS OF SERVICE & PRIVACY POLICY</a>.</p>
     </footer>
@@ -875,6 +885,46 @@
       </form>
       <div id="waitlist-thanks" hidden>
         <p class="wl-thanks-msg">✦ YOU'RE IN. WE'LL BE IN TOUCH. ✦</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ BETA TESTER POPUP ══ -->
+  <div id="beta-overlay" aria-hidden="true">
+    <div id="beta-modal">
+      <button id="beta-close" aria-label="Close">✕</button>
+      <p class="wl-eyebrow">STUDIO STYLE PRO</p>
+      <h2 class="wl-title">APPLY FOR<br>PRIVATE BETA</h2>
+      <p class="wl-sub">LIMITED TO 10 FOUNDING SALONS.</p>
+      <form id="beta-form" action="/api/subscribe-beta" method="POST">
+        <div class="wl-field">
+          <input type="text" name="name" id="beta-name" placeholder="YOUR NAME" required autocomplete="off"/>
+        </div>
+        <div class="wl-field">
+          <input type="email" name="EMAIL" id="beta-email" placeholder="YOUR EMAIL" required autocomplete="off"/>
+        </div>
+        <div class="wl-field">
+          <input type="text" name="salon_name" id="beta-salon" placeholder="SALON NAME" required autocomplete="off"/>
+        </div>
+        <div class="wl-field">
+          <select name="role" id="beta-role" required>
+            <option value="" disabled selected hidden>YOUR ROLE</option>
+            <option value="owner">SALON OWNER</option>
+            <option value="manager">SALON MANAGER</option>
+            <option value="stylist">INDEPENDENT HAIRDRESSER / STYLIST</option>
+            <option value="other">BEAUTY PROFESSIONAL / OTHER</option>
+          </select>
+        </div>
+        <div class="wl-field">
+          <input type="number" name="team_size" id="beta-team" placeholder="TEAM SIZE (NUMBER OF STYLISTS)" min="1" required autocomplete="off"/>
+        </div>
+        <button type="submit" class="wl-btn">
+          <div id="liquid-metal-beta-wl"></div>
+          <span>SUBMIT APPLICATION</span>
+        </button>
+      </form>
+      <div id="beta-thanks" hidden>
+        <p class="wl-thanks-msg">✦ APPLICATION RECEIVED. WE WILL REVIEW AND CONTACT YOU SHORTLY. ✦</p>
       </div>
     </div>
   </div>
@@ -912,7 +962,7 @@
       u_offsetY: 0.0
     };
     const initShaders = () => {
-      ['liquid-metal-btn', 'liquid-metal-back', 'liquid-metal-works', 'liquid-metal-brand', 'liquid-metal-audio', 'liquid-metal-wl'].forEach(id => {
+      ['liquid-metal-btn', 'liquid-metal-back', 'liquid-metal-works', 'liquid-metal-brand', 'liquid-metal-audio', 'liquid-metal-wl', 'liquid-metal-beta-wl'].forEach(id => {
         const el = document.getElementById(id);
         if (el && !el.dataset.shaderInitialized) {
           el.dataset.shaderInitialized = 'true';

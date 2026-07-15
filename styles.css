@@ -2497,7 +2497,7 @@ section {
   }
 
   /* ── Mobile: transparent overlay with blur only ── */
-  #waitlist-overlay {
+  #waitlist-overlay, #beta-overlay {
     background: transparent !important;
     backdrop-filter: blur(12px) !important;
     -webkit-backdrop-filter: blur(12px) !important;
@@ -2506,7 +2506,7 @@ section {
   .wl-title { font-weight: 300 !important; color: #000 !important; }
   .wl-sub   { font-weight: 600 !important; color: #000 !important; }
   .wl-eyebrow { font-weight: 700 !important; color: #000 !important; }
-  .wl-field input { font-weight: 500 !important; color: #000 !important; }
+  .wl-field input, .wl-field select { font-weight: 500 !important; color: #000 !important; }
   .wl-field input::placeholder { color: rgba(0,0,0,0.6) !important; }
   #audio-unmute-btn {
     position: absolute !important;
@@ -2867,7 +2867,7 @@ section {
 /* ══════════════════════════════════════
    WAITLIST POPUP
 ══════════════════════════════════════ */
-#waitlist-overlay {
+#waitlist-overlay, #beta-overlay {
   position: fixed;
   inset: 0;
   z-index: 9999;
@@ -2881,11 +2881,11 @@ section {
   pointer-events: none;
   transition: opacity 0.35s ease;
 }
-#waitlist-overlay.open {
+#waitlist-overlay.open, #beta-overlay.open {
   opacity: 1;
   pointer-events: auto;
 }
-#waitlist-modal {
+#waitlist-modal, #beta-modal {
   position: relative;
   width: min(480px, 90vw);
   background: rgba(255,255,255,0.14);
@@ -2899,10 +2899,10 @@ section {
   transition: transform 0.35s ease;
   color: #0c0c0c;
 }
-#waitlist-overlay.open #waitlist-modal {
+#waitlist-overlay.open #waitlist-modal, #beta-overlay.open #beta-modal {
   transform: translateY(0);
 }
-#waitlist-close {
+#waitlist-close, #beta-close {
   position: absolute;
   top: 18px;
   right: 20px;
@@ -2914,7 +2914,7 @@ section {
   font-family: var(--f);
   transition: color 0.2s;
 }
-#waitlist-close:hover { color: #000; }
+#waitlist-close:hover, #beta-close:hover { color: #000; }
 .wl-eyebrow {
   font-size: 9px;
   font-weight: 600;
@@ -2940,7 +2940,7 @@ section {
 .wl-field {
   margin-bottom: 16px;
 }
-.wl-field input {
+.wl-field input, .wl-field select {
   width: 100%;
   background: rgba(0,0,0,0.05);
   border: 1px solid rgba(0,0,0,0.15);
@@ -2956,8 +2956,25 @@ section {
   box-sizing: border-box;
   text-transform: uppercase;
 }
+.wl-field select {
+  color: rgba(0,0,0,0.55);
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 20px center;
+  background-size: 14px;
+  cursor: pointer;
+}
+.wl-field select option {
+  background: #f5f3f0;
+  color: #000;
+}
+.wl-field select:valid {
+  color: #000;
+}
 .wl-field input::placeholder { color: rgba(0,0,0,0.55); }
-.wl-field input:focus {
+.wl-field input:focus, .wl-field select:focus {
   border-color: rgba(0,0,0,0.3);
   background: rgba(0,0,0,0.08);
 }
@@ -3139,4 +3156,82 @@ section {
 .cookie-btn:hover {
   opacity: 0.9;
 }
+
+/* ─── Hero and Footer Button Containers ─── */
+.hero-buttons {
+  position: absolute;
+  bottom: 2cm;
+  left: calc(var(--margin) - 2cm);
+  z-index: 200;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+}
+.hero-buttons .ui-works {
+  position: relative !important;
+  bottom: auto !important;
+  left: auto !important;
+  margin: 0 !important;
+}
+
+.footer-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin-top: 1cm;
+}
+.footer-buttons .footer-talk {
+  margin: 0 !important;
+}
+
+@media (max-width: 768px) {
+  .hero-buttons {
+    position: relative !important;
+    bottom: auto !important;
+    left: auto !important;
+    margin: 1.2cm auto 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 12px !important;
+    width: 100% !important;
+  }
+  .hero-buttons .ui-works {
+    margin: 0 !important;
+    width: fit-content !important;
+  }
+}
+
+/* ─── Solid Black Buttons Styling ─── */
+.ui-works.ui-works--black,
+.footer-talk.footer-talk--black {
+  background: #0c0c0c !important;
+}
+.ui-works.ui-works--black span,
+.footer-talk.footer-talk--black span {
+  color: #ffffff !important;
+  mix-blend-mode: normal !important;
+}
+
+/* ─── Liquid Metal Canvas Sizing for Beta Modal Submit ─── */
+#liquid-metal-beta-wl {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+#liquid-metal-beta-wl canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+@media (min-width: 769px) {
+  .footer-talk {
+    font-size: 24px !important;
+    padding: 12px 48px !important;
+  }
+}
+
 

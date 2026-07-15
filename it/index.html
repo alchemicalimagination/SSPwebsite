@@ -129,10 +129,15 @@
         <h1 class="hero-title">LA GESTIONE<br>DEI SALONI<br>RIDEFINITA</h1>
       </div>
 
-      <a href="#" onclick="openWaitlist();return false;" class="ui-works">
-        <div id="liquid-metal-works"></div>
-        <span>UNISCITI ALLA LISTA D'ATTESA</span>
-      </a>
+      <div class="hero-buttons">
+        <a href="#" onclick="openWaitlist();return false;" class="ui-works">
+          <div id="liquid-metal-works"></div>
+          <span>UNISCITI ALLA LISTA D'ATTESA</span>
+        </a>
+        <a href="#" onclick="openBeta();return false;" class="ui-works ui-works--black">
+          <span>CANDIDATI PER LA BETA PRIVATA</span>
+        </a>
+      </div>
 
       <p class="scroll-cta">SCORRI PER SCOPRIRE</p>
     </section>
@@ -789,10 +794,15 @@
 
       <p class="footer-bridge">Ogni piano include una prova gratuita. Nessun contratto. Nessuna carta di credito richiesta. Nessuna scusa.</p>
 
-      <a href="#" onclick="openWaitlist();return false;" class="footer-talk">
-        <div id="liquid-metal-btn"></div>
-        <span>LISTA D'ATTESA</span>
-      </a>
+      <div class="footer-buttons">
+        <a href="#" onclick="openWaitlist();return false;" class="footer-talk">
+          <div id="liquid-metal-btn"></div>
+          <span>LISTA D'ATTESA</span>
+        </a>
+        <a href="#" onclick="openBeta();return false;" class="footer-talk footer-talk--black">
+          <span>CANDIDATI PER LA BETA PRIVATA</span>
+        </a>
+      </div>
       <p class="footer-note">✦ NESSUNA CARTA DI CREDITO RICHIESTA ✦</p>
       <p class="footer-copy">© 2026 STUDIO STYLE PRO — DIRITTI DI UTILIZZO & IP COPERTI DAI NOSTRI <a href="/it/privacy.html" style="color: inherit; text-decoration: underline;">TERMINI DI SERVIZIO E PRIVACY</a>.</p>
     </footer>
@@ -820,6 +830,46 @@
       </form>
       <div id="waitlist-thanks" hidden>
         <p class="wl-thanks-msg">✦ GRAZIE PER ESSERTI ISCRITTO! TI CONTATTEREMO PRESTO. ✦</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ BETA TESTER POPUP ══ -->
+  <div id="beta-overlay" aria-hidden="true">
+    <div id="beta-modal">
+      <button id="beta-close" aria-label="Chiudi">✕</button>
+      <p class="wl-eyebrow">STUDIO STYLE PRO</p>
+      <h2 class="wl-title">CANDIDATI PER LA<br>BETA PRIVATA</h2>
+      <p class="wl-sub">RISERVATO A 10 SALONI SELEZIONATI.</p>
+      <form id="beta-form" action="/api/subscribe-beta" method="POST">
+        <div class="wl-field">
+          <input type="text" name="name" id="beta-name" placeholder="IL TUO NOME" required autocomplete="off"/>
+        </div>
+        <div class="wl-field">
+          <input type="email" name="EMAIL" id="beta-email" placeholder="LA TUA EMAIL" required autocomplete="off"/>
+        </div>
+        <div class="wl-field">
+          <input type="text" name="salon_name" id="beta-salon" placeholder="NOME DEL SALONE" required autocomplete="off"/>
+        </div>
+        <div class="wl-field">
+          <select name="role" id="beta-role" required>
+            <option value="" disabled selected hidden>IL TUO RUOLO</option>
+            <option value="owner">TITOLARE DEL SALONE</option>
+            <option value="manager">GESTORE DEL SALONE</option>
+            <option value="stylist">PARRUCCHIERE INDIPENDENTE / STYLIST</option>
+            <option value="other">PROFESSIONISTA DELLA BELLEZZA / ALTRO</option>
+          </select>
+        </div>
+        <div class="wl-field">
+          <input type="number" name="team_size" id="beta-team" placeholder="NUMERO DI COLLABORATORI" min="1" required autocomplete="off"/>
+        </div>
+        <button type="submit" class="wl-btn">
+          <div id="liquid-metal-beta-wl"></div>
+          <span>INVIA CANDIDATURA</span>
+        </button>
+      </form>
+      <div id="beta-thanks" hidden>
+        <p class="wl-thanks-msg">✦ CANDIDATURA RICEVUTA. TI CONTATTEREMO PRESTO. ✦</p>
       </div>
     </div>
   </div>
@@ -858,7 +908,7 @@
       u_offsetY: 0.0
     };
     const initShaders = () => {
-      ['liquid-metal-btn', 'liquid-metal-back', 'liquid-metal-works', 'liquid-metal-brand', 'liquid-metal-wl'].forEach(id => {
+      ['liquid-metal-btn', 'liquid-metal-back', 'liquid-metal-works', 'liquid-metal-brand', 'liquid-metal-wl', 'liquid-metal-beta-wl'].forEach(id => {
         const el = document.getElementById(id);
         if (el && !el.dataset.shaderInitialized) {
           el.dataset.shaderInitialized = 'true';

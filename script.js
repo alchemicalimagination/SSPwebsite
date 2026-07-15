@@ -4,13 +4,19 @@ gsap.registerPlugin(ScrollTrigger);
 
 
 // ── FREE TRIAL BUTTON BOUNCE ────────────────────────────
-['.footer-talk', '.footer-back'].forEach(sel => {
-  document.querySelector(sel)?.addEventListener('click', function () {
+document.querySelectorAll('.footer-talk').forEach(el => {
+  el.addEventListener('click', function () {
     this.classList.remove('bouncing');
     void this.offsetWidth;
     this.classList.add('bouncing');
     this.addEventListener('animationend', () => this.classList.remove('bouncing'), { once: true });
   });
+});
+document.querySelector('.footer-back')?.addEventListener('click', function () {
+  this.classList.remove('bouncing');
+  void this.offsetWidth;
+  this.classList.add('bouncing');
+  this.addEventListener('animationend', () => this.classList.remove('bouncing'), { once: true });
 });
 
 // ── SMOOTH SCROLL ──────────────────────────────────────
@@ -1410,18 +1416,47 @@ function closeWaitlist() {
   overlay.setAttribute('aria-hidden', 'true');
   document.body.style.overflow = '';
 }
+function openBeta() {
+  const overlay = document.getElementById('beta-overlay');
+  if (!overlay) return;
+  overlay.classList.add('open');
+  overlay.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+  setTimeout(() => { if (window._initShaders) window._initShaders(); }, 50);
+}
+function closeBeta() {
+  const overlay = document.getElementById('beta-overlay');
+  if (!overlay) return;
+  overlay.classList.remove('open');
+  overlay.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+}
 document.addEventListener('DOMContentLoaded', function() {
   const overlay = document.getElementById('waitlist-overlay');
   const closeBtn = document.getElementById('waitlist-close');
   const form = document.getElementById('waitlist-form');
   const thanks = document.getElementById('waitlist-thanks');
 
+  const betaOverlay = document.getElementById('beta-overlay');
+  const betaCloseBtn = document.getElementById('beta-close');
+  const betaForm = document.getElementById('beta-form');
+  const betaThanks = document.getElementById('beta-thanks');
+
   if (closeBtn) closeBtn.addEventListener('click', closeWaitlist);
   if (overlay) overlay.addEventListener('click', function(e) {
     if (e.target === overlay) closeWaitlist();
   });
+
+  if (betaCloseBtn) betaCloseBtn.addEventListener('click', closeBeta);
+  if (betaOverlay) betaOverlay.addEventListener('click', function(e) {
+    if (e.target === betaOverlay) closeBeta();
+  });
+
   document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') closeWaitlist();
+    if (e.key === 'Escape') {
+      closeWaitlist();
+      closeBeta();
+    }
   });
 
   if (form) {
@@ -1443,6 +1478,36 @@ document.addEventListener('DOMContentLoaded', function() {
       form.hidden = true;
       if (thanks) thanks.hidden = false;
     });
+  }
+
+  if (betaForm) {
+    betaForm.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const fd = new FormData(betaForm);
+      try {
+        const res = await fetch('/api/subscribe-beta', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email: fd.get('EMAIL'),
+            name: fd.get('name') || '',
+            salon_name: fd.get('salon_name') || '',
+            role: fd.get('role') || '',
+            team_size: fd.get('team_size') || '',
+            lang: isIt ? 'it' : 'en'
+          })
+        });
+        if (!res.ok) throw new Error();
+      } catch(err) {}
+      betaForm.hidden = true;
+      if (betaThanks) betaThanks.hidden = false;
+    });
+  }
+
+  // Auto-open beta application modal if query param is set (useful for ManyChat DMs)
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('ref') === 'beta' || urlParams.get('beta') === 'true') {
+    setTimeout(openBeta, 500);
   }
 });
 
