@@ -3238,42 +3238,56 @@ section {
 .pricing-promise-sec {
   position: relative;
   width: 100%;
-  padding: 120px var(--margin);
+  min-height: 100vh;
+  padding: 100px 0;
   box-sizing: border-box;
   background: transparent;
   z-index: 5;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
 }
 .promise-container {
-  max-width: 1200px;
-  margin: 0 auto;
+  width: 100%;
 }
 .promise-headline {
-  font-size: clamp(36px, 5.5vw, 64px);
+  font-size: clamp(32px, 5vw, 60px);
   font-weight: 200;
   line-height: 0.95;
   letter-spacing: -0.03em;
   color: #ffffff;
   text-align: center;
-  margin-bottom: 80px;
+  margin-bottom: 60px;
   text-transform: uppercase;
 }
+.promise-track-wrap {
+  width: 100%;
+  overflow: visible;
+}
 .promise-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 24px;
+  display: flex;
+  flex-direction: row;
+  gap: 32px;
+  width: max-content;
+  padding: 0 var(--margin);
+  will-change: transform;
 }
 .promise-card {
   position: relative;
+  width: 360px;
+  flex-shrink: 0;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 28px;
-  padding: 44px 36px 36px;
+  padding: 40px 32px 32px;
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255,255,255,0.1);
   transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
   display: flex;
   flex-direction: column;
+  min-height: 380px;
 }
 .promise-card:hover {
   transform: translateY(-6px);
@@ -3327,13 +3341,35 @@ section {
 
 @media (max-width: 768px) {
   .pricing-promise-sec {
-    padding: 80px 24px;
+    min-height: auto;
+    padding: 80px 0;
   }
   .promise-headline {
-    margin-bottom: 48px;
+    margin-bottom: 40px;
+    padding: 0 24px;
+  }
+  .promise-track-wrap {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 20px;
+  }
+  .promise-track-wrap::-webkit-scrollbar {
+    display: none;
+  }
+  .promise-track-wrap {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .promise-grid {
+    gap: 16px;
+    padding: 0 24px;
   }
   .promise-card {
-    padding: 36px 28px 28px;
+    width: 290px;
+    min-height: 340px;
+    padding: 32px 24px 24px;
+    scroll-snap-align: center;
   }
   .promise-card-subtitle {
     font-size: 18px;

@@ -806,18 +806,61 @@ document.querySelectorAll('.two-col p, .three-col p, .studio-cols p').forEach(el
 
 
 
-// ── FOOTER — hidden on load; revealed on pricing promise section scroll ──
+// ── FOOTER — hidden on load ──
 gsap.set('#footer', { yPercent: 100 });
 
-ScrollTrigger.create({
-  trigger: '#s-pricing-promise',
-  start: 'bottom bottom',
-  end: `+=${window.innerHeight * 1.0}`,
-  scrub: 1.5,
-  pin: true,
-  onUpdate: (self) => {
-    gsap.set('#footer', { yPercent: 100 - self.progress * 100 });
-  }
+let mm = gsap.matchMedia();
+
+mm.add("(min-width: 769px)", () => {
+  const grid = document.querySelector('#s-pricing-promise .promise-grid');
+  if (!grid) return;
+  const scrollAmount = grid.scrollWidth - window.innerWidth;
+
+  const pricingPromiseTl = gsap.timeline({
+    scrollTrigger: {
+      trigger: '#s-pricing-promise',
+      start: 'top top',
+      end: `+=${scrollAmount + window.innerHeight * 1.2}`,
+      scrub: 1.5,
+      pin: true
+    }
+  });
+
+  // Step 1: Slide cards horizontally
+  pricingPromiseTl.to(grid, {
+    x: -scrollAmount,
+    ease: 'none',
+    duration: 1
+  });
+
+  // Step 2: Slide footer up
+  pricingPromiseTl.to('#footer', {
+    yPercent: 0,
+    ease: 'power1.out',
+    duration: 0.5
+  }, '+=0.1');
+
+  return () => {
+    gsap.set(grid, { x: 0 });
+    gsap.set('#footer', { yPercent: 100 });
+  };
+});
+
+mm.add("(max-width: 768px)", () => {
+  ScrollTrigger.create({
+    trigger: '#s-pricing-promise',
+    start: 'bottom bottom',
+    end: `+=${window.innerHeight * 0.8}`,
+    scrub: 1.5,
+    pin: true,
+    onUpdate: (self) => {
+      gsap.set('#footer', { yPercent: 100 - self.progress * 100 });
+    }
+  });
+
+  return () => {
+    gsap.set('#footer', { yPercent: 100 });
+  };
 });
 
 // ── SCROLL REVEAL ANIMATIONS ───────────────────────────
