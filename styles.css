@@ -3246,7 +3246,7 @@ section {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  overflow: hidden;
+  overflow: clip;
 }
 .promise-container {
   width: 100%;
@@ -3268,7 +3268,7 @@ section {
 .promise-grid {
   display: flex;
   flex-direction: row;
-  gap: 32px;
+  gap: 28px;
   width: max-content;
   padding: 0 var(--margin);
   will-change: transform;

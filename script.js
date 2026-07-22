@@ -814,26 +814,32 @@ let mm = gsap.matchMedia();
 mm.add("(min-width: 769px)", () => {
   const grid = document.querySelector('#s-pricing-promise .promise-grid');
   if (!grid) return;
-  const scrollAmount = grid.scrollWidth - window.innerWidth;
+
+  // Defer calculation so layout is fully settled
+  ScrollTrigger.refresh();
+  const scrollAmount = () => grid.scrollWidth - window.innerWidth;
 
   const pricingPromiseTl = gsap.timeline({
     scrollTrigger: {
       trigger: '#s-pricing-promise',
       start: 'top top',
-      end: `+=${scrollAmount + window.innerHeight * 1.2}`,
+      end: () => `+=${scrollAmount() + window.innerHeight * 1.0}`,
       scrub: 1.5,
-      pin: true
+      pin: true,
+      invalidateOnRefresh: true,
+      anticipatePin: 1
     }
   });
 
   // Step 1: Slide cards horizontally
   pricingPromiseTl.to(grid, {
-    x: -scrollAmount,
+    x: () => -scrollAmount(),
     ease: 'none',
-    duration: 1
+    duration: 1,
+    invalidateOnRefresh: true
   });
 
-  // Step 2: Slide footer up
+  // Step 2: Slide footer up after cards finish
   pricingPromiseTl.to('#footer', {
     yPercent: 0,
     ease: 'power1.out',
