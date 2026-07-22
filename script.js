@@ -815,36 +815,35 @@ mm.add("(min-width: 769px)", () => {
   const grid = document.querySelector('#s-pricing-promise .promise-grid');
   if (!grid) return;
 
-  // Defer calculation so layout is fully settled
-  ScrollTrigger.refresh();
-  const scrollAmount = () => grid.scrollWidth - window.innerWidth;
+  // Function so GSAP recalculates on resize/invalidate
+  const getScrollAmt = () => -(grid.scrollWidth - window.innerWidth);
 
-  const pricingPromiseTl = gsap.timeline({
+  const tl = gsap.timeline({
     scrollTrigger: {
       trigger: '#s-pricing-promise',
       start: 'top top',
-      end: () => `+=${scrollAmount() + window.innerHeight * 1.0}`,
+      end: () => `+=${Math.abs(getScrollAmt()) + window.innerHeight * 0.5}`,
       scrub: 1.5,
       pin: true,
-      invalidateOnRefresh: true,
-      anticipatePin: 1
+      anticipatePin: 1,
+      invalidateOnRefresh: true
     }
   });
 
-  // Step 1: Slide cards horizontally
-  pricingPromiseTl.to(grid, {
-    x: () => -scrollAmount(),
+  // Slide cards left
+  tl.to(grid, {
+    x: getScrollAmt,
     ease: 'none',
     duration: 1,
     invalidateOnRefresh: true
   });
 
-  // Step 2: Slide footer up after cards finish
-  pricingPromiseTl.to('#footer', {
+  // Then reveal footer
+  tl.to('#footer', {
     yPercent: 0,
     ease: 'power1.out',
-    duration: 0.5
-  }, '+=0.1');
+    duration: 0.4
+  }, '+=0.05');
 
   return () => {
     gsap.set(grid, { x: 0 });

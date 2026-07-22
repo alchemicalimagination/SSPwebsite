@@ -3246,7 +3246,8 @@ section {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  overflow: clip;
+  overflow-x: clip;
+  overflow-y: visible;
 }
 .promise-container {
   width: 100%;
@@ -3337,6 +3338,18 @@ section {
   border-top: 1px dashed rgba(255, 255, 255, 0.15);
   padding-top: 16px;
   margin-top: auto;
+}
+.promise-card-disclaimer {
+  font-size: 11px;
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.45);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 14px;
+  margin-top: auto;
+  text-transform: none;
+  letter-spacing: 0;
 }
 
 @media (max-width: 768px) {
