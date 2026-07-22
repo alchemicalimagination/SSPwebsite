@@ -722,12 +722,7 @@ const card04CollapseTl = gsap.timeline({
     start: 'top top',
     end: `+=${window.innerHeight * 6.0}`,
     scrub: 1.5,
-    pin: true,
-    onUpdate: (self) => {
-      const startPct = 0.78;
-      const p = Math.max(0, (self.progress - startPct) / (1 - startPct));
-      gsap.set('#footer', { yPercent: 100 - p * 100 });
-    }
+    pin: true
   }
 });
 
@@ -811,8 +806,19 @@ document.querySelectorAll('.two-col p, .three-col p, .studio-cols p').forEach(el
 
 
 
-// ── FOOTER — hidden on load; card04CollapseTl onUpdate reveals it at 78%+ ──
+// ── FOOTER — hidden on load; revealed on pricing promise section scroll ──
 gsap.set('#footer', { yPercent: 100 });
+
+ScrollTrigger.create({
+  trigger: '#s-pricing-promise',
+  start: 'bottom bottom',
+  end: `+=${window.innerHeight * 1.0}`,
+  scrub: 1.5,
+  pin: true,
+  onUpdate: (self) => {
+    gsap.set('#footer', { yPercent: 100 - self.progress * 100 });
+  }
+});
 
 // ── SCROLL REVEAL ANIMATIONS ───────────────────────────
 // Simple opacity reveals — no clipPath hiding content
