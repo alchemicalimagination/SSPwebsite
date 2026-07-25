@@ -262,8 +262,8 @@ const cardCollapseTl = gsap.timeline({
 
 // Setup references and translations for the bilingual scrub
 const isIt = window.location.pathname.includes('/it/');
-const currencySymbol = isIt ? '€' : '$';
-const localLocale = isIt ? 'it-IT' : 'en-US';
+const currencySymbol = isIt ? '€' : '£';
+const localLocale = isIt ? 'it-IT' : 'en-GB';
 const trans = {
   colour: isIt ? 'COLORE' : 'COLOUR',
   toner: isIt ? 'TONER' : 'TONER',
